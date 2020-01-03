@@ -25,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, -0.5f);
         }
-        Debug.Log(rb.velocity.y);
     }
     private void FixedUpdate()
     {
