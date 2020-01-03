@@ -13,9 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Space]
     [Header("Booleans")]
-    public bool isJump = false;
+    public bool isJumpUp = false;
     public bool canMove = true;
-    public bool isWallJump = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -25,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (coll.OnGround()) { Jump(); }
+            if (coll.OnGround()) Jump();
             if (IsPushWall() && !coll.OnGround()) WallJump();
         }
         if (IsPushWall())
         {
-            rb.velocity = new Vector2(rb.velocity.x, -0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, -0.8f);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) && canMove)
         {
@@ -40,11 +39,15 @@ public class PlayerMovement : MonoBehaviour
         {
             canMove = true;
         }
-        if (coll.OnGround())
-        {
-            isWallJump = false;
+        Debug.Log(Input.GetAxis("Horizontal"));
+        if(rb.velocity.y<0){
+            isJumpUp = false;
         }
-
+        if(isJumpUp){
+            if(Input.GetButtonUp("Jump")){
+            rb.velocity = new Vector3(rb.velocity.x,0);
+        }
+        }
     }
     private void FixedUpdate()
     {
@@ -56,14 +59,12 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         float movement = Input.GetAxis("Horizontal") * speed;
-        if (!isWallJump)
-        {
-            rb.velocity = new Vector2(movement, rb.velocity.y);
-        }
+        rb.velocity = new Vector2(movement, rb.velocity.y);
     }
     void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce);
+        isJumpUp = true;
     }
 
 
@@ -87,14 +88,9 @@ public class PlayerMovement : MonoBehaviour
     {
         StopCoroutine(DisableMovement(0));
         StartCoroutine(DisableMovement(.1f));
-        rb.AddForce(Vector3.up * jumpForce / 1.5f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.3f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.3f);
-        isWallJump = true;
-        if (isWallJump)
-        {
-            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y)), 10 * Time.deltaTime);
-        }
+        rb.AddForce(Vector3.up * jumpForce*1f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * .8f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * .8f);
     }
     IEnumerator DisableMovement(float time)
     {
