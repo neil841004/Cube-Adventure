@@ -4,27 +4,47 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Rigidbody rb;
+    private Collision coll;
+    [HideInInspector]
+    public Rigidbody rb;
     public float margin;
     public float speed = 5f;
     public float jumpForce = 500f;
+
+    [Space]
+    [Header("Booleans")]
     public bool isJump = false;
     public bool canMove = true;
+    public bool isWallJump = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        coll = GetComponent<Collision>();
     }
     private void Update()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (IsGrounded()) Jump();
-            if (IsPushWall() && !IsGrounded()) WallJump();
+            if (coll.OnGround()) { Jump(); }
+            if (IsPushWall() && !coll.OnGround()) WallJump();
         }
         if (IsPushWall())
         {
             rb.velocity = new Vector2(rb.velocity.x, -0.5f);
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow) && canMove)
+        {
+            canMove = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && !canMove)
+        {
+            canMove = true;
+        }
+        if (coll.OnGround())
+        {
+            isWallJump = false;
+        }
+
     }
     private void FixedUpdate()
     {
@@ -35,57 +55,46 @@ public class PlayerMovement : MonoBehaviour
     }
     void Move()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
         float movement = Input.GetAxis("Horizontal") * speed;
-        rb.velocity = new Vector2(movement, rb.velocity.y);
+        if (!isWallJump)
+        {
+            rb.velocity = new Vector2(movement, rb.velocity.y);
+        }
     }
     void Jump()
     {
         rb.AddForce(Vector3.up * jumpForce);
     }
-    bool IsGrounded()
-    {
-        Vector3 v3a = new Vector3(transform.position.x - 0.25f, transform.position.y, transform.position.z);
-        Vector3 v3b = new Vector3(transform.position.x + 0.25f, transform.position.y, transform.position.z);
-        if (Physics.Raycast(v3a, -Vector3.up, margin) || Physics.Raycast(v3b, -Vector3.up, margin))
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-    int IsWallSide()
-    {
-        Vector3 v3a = new Vector3(transform.position.x, transform.position.y - 0.24f, transform.position.z);
-        Vector3 v3b = new Vector3(transform.position.x, transform.position.y + 0.24f, transform.position.z);
-        if (Physics.Raycast(v3a, Vector3.right, margin) || Physics.Raycast(v3b, Vector3.right, margin))
-        {
-            return 1; //右邊是牆壁
-        }
-        else if (Physics.Raycast(v3a, -Vector3.right, margin) || Physics.Raycast(v3b, -Vector3.right, margin))
-        {
-            return -1; //左邊是牆壁
-        }
-        else return 0;
-    }
+
+
     bool IsPushWall()
     {
-        if (IsWallSide() == 1 && Input.GetAxis("Horizontal") > 0)
+        if (coll.OnWall())
         {
-            return true;
-        }
-        else if (IsWallSide() == -1 && Input.GetAxis("Horizontal") < 0)
-        {
-            return true;
+            if (coll.wallSide == 1 && Input.GetAxis("Horizontal") > 0)
+            {
+                return true;
+            }
+            else if (coll.wallSide == -1 && Input.GetAxis("Horizontal") < 0)
+            {
+                return true;
+            }
+            else return false;
         }
         else return false;
     }
     void WallJump()
     {
         StopCoroutine(DisableMovement(0));
-        StartCoroutine(DisableMovement(.12f));
-        rb.AddForce(Vector3.up * jumpForce);
-        rb.AddForce(-Vector3.right * jumpForce);
+        StartCoroutine(DisableMovement(.1f));
+        rb.AddForce(Vector3.up * jumpForce / 1.5f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.3f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.3f);
+        isWallJump = true;
+        if (isWallJump)
+        {
+            rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(Input.GetAxis("Horizontal") * speed, rb.velocity.y)), 10 * Time.deltaTime);
+        }
     }
     IEnumerator DisableMovement(float time)
     {

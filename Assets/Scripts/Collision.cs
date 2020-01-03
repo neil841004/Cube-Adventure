@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
+    [Header("Layers")]
     public LayerMask groundLayer;
+    
+    [Space]
 
     public Collider[] onGround;
     public Collider[] onRightWall;
     public Collider[] onLeftWall;
     public int wallSide;
 
+    [Space]
+
+    [Header("Collision")]
     public Vector3 collisoinRadius;
     public Vector3 bottomOffset, rightOffset, leftOffset;
 
@@ -26,7 +32,7 @@ public class Collision : MonoBehaviour
         OnGround();
         OnWall();
     }
-    bool OnGround()
+    public bool OnGround()
     {
         onGround = Physics.OverlapBox(transform.position + bottomOffset, collisoinRadius, Quaternion.identity, groundLayer);
         if (onGround.Length > 0)
@@ -35,7 +41,7 @@ public class Collision : MonoBehaviour
         }
         else return false;
     }
-    bool OnWall(){
+    public bool OnWall(){
         onRightWall = Physics.OverlapBox(transform.position + rightOffset, collisoinRadius, Quaternion.Euler(0,0,90), groundLayer);
         onLeftWall = Physics.OverlapBox(transform.position + leftOffset, collisoinRadius, Quaternion.Euler(0,0,-90), groundLayer);
         if(onRightWall.Length >0)wallSide = 1;
