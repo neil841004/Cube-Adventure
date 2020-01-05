@@ -27,7 +27,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(GetComponent<BetterJumping>().fallMultiplier);
+        
+        if(!IsPushWall()){
+            GetComponent<BetterJumping>().fallMultiplier = 2.5f;
+        }
+        if (rb.velocity.y < 0)
+        {
+            isJumpUp = false;
+        }
+        if(Input.GetKeyDown(KeyCode.R)){
+            transform.position = new Vector3(0,2.75f,-0.5f);
+        }
+    }
+    private void FixedUpdate()
+    {
         Move();
         if (Input.GetButtonDown("Jump")) // 跳躍狀態判斷
         {
@@ -38,13 +51,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             GetComponent<BetterJumping>().fallMultiplier = 0.2f;
-        }
-        if(!IsPushWall()){
-            GetComponent<BetterJumping>().fallMultiplier = 2.5f;
-        }
-        if (rb.velocity.y < 0)
-        {
-            isJumpUp = false;
         }
         if (isJumpUp)
         {
