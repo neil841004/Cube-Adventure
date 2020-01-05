@@ -31,14 +31,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, -0.8f);
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow) && canMove)
-        {
-            canMove = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && !canMove)
-        {
-            canMove = true;
-        }
         Debug.Log(Input.GetAxis("Horizontal"));
         if(rb.velocity.y<0){
             isJumpUp = false;
