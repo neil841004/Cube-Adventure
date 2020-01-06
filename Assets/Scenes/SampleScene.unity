@@ -3368,7 +3368,7 @@ MonoBehaviour:
   onLeftWall: []
   wallSide: 0
   collisoinRadius: {x: 0.23, y: 0.06, z: 0.25}
-  bottomOffset: {x: 0, y: -0.23, z: 0}
+  bottomOffset: {x: 0, y: -0.26, z: 0}
   rightOffset: {x: 0.23, y: 0, z: 0}
   leftOffset: {x: -0.23, y: 0, z: 0}
 --- !u!64 &876615638

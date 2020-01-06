@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        
         if (Input.GetButtonDown("Jump")) // 跳躍狀態判斷
         {
             if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround())) startJump = true;
@@ -88,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (startJump)
         {
+            rb.velocity = new Vector3(rb.velocity.x, 0);
             rb.AddForce(Vector3.up * jumpForce);
             isJumpUp = true;
             startJump = false;
@@ -120,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             StopCoroutine(DisableMovement(0));
             StartCoroutine(DisableMovement(.1f));
-            rb.AddForce(Vector3.up * jumpForce * 1f);
+            
+            
             if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 0.8f);
             if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 0.8f);
         }
