@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Float")]
     public float margin;
-    public float speed = 5f;
+    public float speed = 8f;
     public float jumpForce = 500f;
     public float fallSpeedMax = -15f;
 
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallJump = false;
     public bool isJumpUp = false;
     public bool canMove = true;
+    bool speedTime;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
+
         if (Input.GetButtonDown("Jump")) // 跳躍狀態判斷
         {
             if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround())) startJump = true;
@@ -75,6 +76,15 @@ public class PlayerMovement : MonoBehaviour
         if (!IsPushWall())
         {
             GetComponent<BetterJumping>().fallMultiplier = 2.5f;
+        }
+        if (speedTime)
+        {
+            if (speed < 8) speed += 0.9f;
+            if (speed >= 8)
+            {
+                speed = 8;
+                speedTime = false;
+            }
         }
     }
 
@@ -122,18 +132,19 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0);
             StopCoroutine(DisableMovement(0));
             StartCoroutine(DisableMovement(.1f));
-            
-            
-            if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 0.8f);
-            if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 0.8f);
+            rb.AddForce(Vector3.up * jumpForce * 1f);
+            if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1f);
+            if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1f);
         }
     }
 
     IEnumerator DisableMovement(float time)
     {
         canMove = false;
+        speed = 0;
         yield return new WaitForSeconds(time);
         canMove = true;
         isWallJump = false;
+        speedTime = true;
     }
 }
