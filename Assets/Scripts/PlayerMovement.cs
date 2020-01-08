@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
     public bool isStickWall = false; //跳躍到另一個牆上時
     public bool canStickWall = false; //從牆壁跳躍後的一個短瞬間內為true
-    public bool speedTime;
+    public bool speedTime = false;
     public bool fall = false; //判斷是否放開跳躍鍵
 
     [Space]
@@ -68,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         if ((IsPushWall() && !coll.OnGround() && !isWallJump && callWallJump) || (isStickWall && !coll.OnGround() && !isWallJump && callWallJump)) WallJump();
 
-        Debug.Log(rb.velocity.y);
         // 短按跳躍落下
         if (isJumpUp)
         {
@@ -147,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
         // 蹬牆跳返回加速度
         if (speedTime)
         {
-            if (speed < 8) speed += 0.6f;
+            if (speed < 8) speed += 0.4f;
             if (speed >= 8)
             {
                 speed = 8;
@@ -212,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         speed = 0;
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.18f);
         canMove = true;
         isWallJump = false;
         if (!isStickWall) speedTime = true;
@@ -232,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         rb.velocity = new Vector2(0, rb.velocity.y);
         cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.35f);
         speedTime = true;
         isStickWall = false;
         GetComponent<BetterJumping>().fallMultiplier = 2.5f;
