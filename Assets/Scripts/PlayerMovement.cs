@@ -71,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //方塊轉向
-        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0) ,0.7f);
-        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0),.1f);
+        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0), 0.07f);
+        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0), .18f);
     }
     private void FixedUpdate()
     {
@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         if (speedTime)
         {
             // if (speed < 8) speed = Mathf.Lerp(speed,8,Time.deltaTime*8f);
-            if (speed < 8) speed += 0.4f;
+            if (speed < 8) speed += 0.45f;
             if (speed >= 7)
             {
                 speed = 8;
