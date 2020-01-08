@@ -103,8 +103,6 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             GetComponent<BetterJumping>().fallMultiplier = 0.15f;
-            if (!isStickWall)
-                cube.transform.eulerAngles = new Vector3(0, Input.GetAxis("Horizontal") * -90, 0);
             if (rb.velocity.y <= fallSpeedMax * 0.4f)
             {
                 rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.4f);
@@ -113,10 +111,12 @@ public class PlayerMovement : MonoBehaviour
         if (!IsPushWall() && !isWallJump && !isStickWall)
         {
             GetComponent<BetterJumping>().fallMultiplier = 2.5f;
-            if (!isStickWall)
-                cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0);
+            // if (!isStickWall)
+            // cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0);
         }
 
+        if (isStickWall || IsPushWall()) cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
+        else if (!isStickWall) cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0);
         // 黏牆
         if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump)
         {
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
             isStickWall = true;
             speed = 0;
             rb.velocity = new Vector2(0, rb.velocity.y);
-            cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
+            // cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
             canStickWall = false;
         }
         if (!IsPushWall() && isStickWall && coll.OnWall() && !canStickWall)
@@ -147,8 +147,8 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
             isStickWall = false;
-            if(!isWallJump)
-            speedTime = true;
+            if (!isWallJump)
+                speedTime = true;
         }
 
         // 蹬牆跳返回加速度
@@ -239,7 +239,6 @@ public class PlayerMovement : MonoBehaviour
         speed = 0;
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         rb.velocity = new Vector2(0, rb.velocity.y);
-        cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
         yield return new WaitForSeconds(.35f);
         speedTime = true;
         isStickWall = false;
