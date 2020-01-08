@@ -61,6 +61,13 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(-1.494052f, 20.75f, -0.5f);
         }
+
+        // 蹬牆轉向時速度增加
+        if (isWallJump)
+        {
+            if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1) speed = 8;
+            else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = 8;
+        }
     }
     private void FixedUpdate()
     {
@@ -140,14 +147,16 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
             isStickWall = false;
+            if(!isWallJump)
             speedTime = true;
         }
 
         // 蹬牆跳返回加速度
         if (speedTime)
         {
+            // if (speed < 8) speed = Mathf.Lerp(speed,8,Time.deltaTime*8f);
             if (speed < 8) speed += 0.4f;
-            if (speed >= 8)
+            if (speed >= 7)
             {
                 speed = 8;
                 speedTime = false;
@@ -195,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
     void WallJump()
     {
         isWallJump = true;
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity = new Vector2(0, 0);
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         StopCoroutine("canStickWallEnumerator");
