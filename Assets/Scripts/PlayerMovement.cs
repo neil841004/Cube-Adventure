@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -68,6 +69,10 @@ public class PlayerMovement : MonoBehaviour
             if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1) speed = 8;
             else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = 8;
         }
+
+        //方塊轉向
+        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0) ,0.7f);
+        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0),.1f);
     }
     private void FixedUpdate()
     {
@@ -111,12 +116,8 @@ public class PlayerMovement : MonoBehaviour
         if (!IsPushWall() && !isWallJump && !isStickWall)
         {
             GetComponent<BetterJumping>().fallMultiplier = 2.5f;
-            // if (!isStickWall)
-            // cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0);
         }
 
-        if (isStickWall || IsPushWall()) cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
-        else if (!isStickWall) cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0);
         // 黏牆
         if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump)
         {
@@ -124,7 +125,6 @@ public class PlayerMovement : MonoBehaviour
             isStickWall = true;
             speed = 0;
             rb.velocity = new Vector2(0, rb.velocity.y);
-            // cube.transform.eulerAngles = new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0);
             canStickWall = false;
         }
         if (!IsPushWall() && isStickWall && coll.OnWall() && !canStickWall)
