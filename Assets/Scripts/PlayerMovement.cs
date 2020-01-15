@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     public bool canStickWall = false; //從牆壁跳躍後的一個短瞬間內為true
     public bool speedTime = false;
     public bool fall = false; //判斷是否放開跳躍鍵
+    public bool canEdgeJump = false;
+    public bool EdgeJumpFlag = false;
 
     [Space]
     [Header("Object")]
@@ -40,10 +42,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        EdgeJump();
+
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround())) startJump = true;
+            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge()&&!coll.OnGround()&&!coll.OnWall()&&canEdgeJump)) startJump = true;
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
@@ -60,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
-            transform.position = new Vector3(-1.494052f, 20.75f, -0.5f);
+            transform.position = new Vector3(6.038958f, 10.25f, -0.5f);
         }
 
         // 蹬牆轉向時速度增加
@@ -179,7 +183,28 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce);
             isJumpUp = true;
             startJump = false;
+            canEdgeJump = false;
+            StopCoroutine("EdgeJumpIEumerator");
         }
+    }
+    void EdgeJump(){
+        if(coll.OnGround()){
+            canEdgeJump = false;
+            EdgeJumpFlag = true;
+            StopCoroutine("EdgeJumpIEumerator");
+        }
+        if(canEdgeJump) return;
+        if(!coll.OnGround() && EdgeJumpFlag){
+            canEdgeJump = true;
+            StartCoroutine("EdgeJumpIEumerator");
+            EdgeJumpFlag = false;
+        }
+    }
+
+    IEnumerator EdgeJumpIEumerator(){
+        canEdgeJump = true;
+        yield return new WaitForSeconds(.2f);
+        canEdgeJump = false;
     }
 
     // 黏牆狀態

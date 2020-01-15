@@ -10,6 +10,7 @@ public class Collision : MonoBehaviour
     [Space]
 
     public Collider[] onGround;
+    public Collider[] onEdge;
     public Collider[] onRightWall;
     public Collider[] onLeftWall;
     public int wallSide;
@@ -18,7 +19,8 @@ public class Collision : MonoBehaviour
 
     [Header("Collision")]
     public Vector3 collisoinRadius;
-    public Vector3 bottomOffset, rightOffset, leftOffset;
+    public Vector3 collisoinEdgeRadius;
+    public Vector3 bottomOffset,bottomEdgeOffset , rightOffset, leftOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class Collision : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         OnGround();
         OnWall();
@@ -36,6 +38,15 @@ public class Collision : MonoBehaviour
     {
         onGround = Physics.OverlapBox(transform.position + bottomOffset, collisoinRadius, Quaternion.identity, groundLayer);
         if (onGround.Length > 0)
+        {
+            return true;
+        }
+        else return false;
+    }
+    public bool OnEdge()
+    {
+        onEdge = Physics.OverlapBox(transform.position + bottomEdgeOffset, collisoinEdgeRadius, Quaternion.identity, groundLayer);
+        if (onEdge.Length > 0)
         {
             return true;
         }
@@ -55,5 +66,6 @@ public class Collision : MonoBehaviour
         
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinRadius*2);
+        Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius*2);
     }
 }
