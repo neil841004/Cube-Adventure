@@ -6,11 +6,11 @@ using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
     private Collision coll;
+    private Animator anim;
     [HideInInspector]
     public Rigidbody rb;
 
     [Header("Float")]
-    public float margin;
     public float speed = 8f;
     public float jumpForce = 500f;
     public float fallSpeedMax = -15f;
@@ -18,25 +18,29 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed = 20;
 
     float x;
-    float y;
     float xRaw;
-    float yRaw;
 
     [Space]
+
     [Header("Booleans")]
+    public bool isJumpUp = false; // Y軸速度>0
     public bool startJump = false;
     public bool isWallJump = false; // 開始跳躍並持續一段時間
-    public bool callWallJump = false; // 開始跳躍後即關閉
-    public bool isJumpUp = false; // Y軸速度>0
+    public bool isJump = false;
+    bool callWallJump = false; // 開始跳躍後即關閉
+    bool fall = false; //判斷是否放開跳躍鍵
+
     public bool canMove = true;
+
     public bool isStickWall = false; //跳躍到另一個牆上時
-    public bool canStickWall = false; //從牆壁跳躍後的一個短瞬間內為true
-    public bool speedTime = false;
-    public bool fall = false; //判斷是否放開跳躍鍵
-    public bool canEdgeJump = false;
-    public bool EdgeJumpFlag = false;
-    public bool hasDashed = false;
-    public bool isDash = false;
+    bool canStickWall = false; //從牆壁跳躍後的一個短瞬間內為true
+
+    public bool canEdgeJump = false; //是否可以GhostJump
+    bool EdgeJumpFlag = false; //GhostJump的Flag
+
+    public bool hasDashed = false; //擁有衝刺能量
+    public bool isDash = false; //衝刺過程
+    public bool isAnimDash = false; //衝刺動畫
 
     [Space]
     [Header("Object")]
@@ -46,15 +50,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
         x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
         xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
-
 
         EdgeJump();
 
@@ -66,13 +68,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Fire1") && hasDashed && !isStickWall)
+        if (Input.GetButtonDown("Dash") && hasDashed && !isStickWall && canMove)
         {
             if (xRaw != 0) Dash(xRaw);
         }
-        if(!isDash && !IsPushWall()){
-            if(coll.OnGroundDash()) hasDashed = true;
+        if (!isDash && !IsPushWall())
+        {
+            if (coll.OnGroundDash()) hasDashed = true;
         }
+
+        if (IsPushWall() || coll.OnGround()) isJump = false;
 
         //判斷落下
         if (rb.velocity.y < 0)
@@ -161,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
         if (coll.OnGround())
         {
             StopCoroutine("StickWall");
-            speedTime = true;
+            if(isStickWall)speed = 8;
             isStickWall = false;
         }
         if (isWallJump && coll.OnWall() && canStickWall)
@@ -174,20 +179,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
             isStickWall = false;
-            if (!isWallJump)
-                speedTime = true;
-        }
-
-        // 蹬牆跳返回加速度
-        if (speedTime)
-        {
-            // if (speed < 8) speed = Mathf.Lerp(speed,8,Time.deltaTime*8f);
-            if (speed < 8) speed += 0.45f;
-            if (speed >= 7)
-            {
-                speed = 8;
-                speedTime = false;
-            }
+            if (!isWallJump) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
         }
     }
 
@@ -202,6 +194,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (startJump)
         {
+            isJump = true;
+            hasDashed = true;
             rb.velocity = new Vector3(rb.velocity.x, 0);
             rb.AddForce(Vector3.up * jumpForce);
             isJumpUp = true;
@@ -236,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // 黏牆狀態
-    bool IsPushWall()
+    public bool IsPushWall()
     {
         if (coll.OnWall())
         {
@@ -269,22 +263,20 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void RigidbodyDrag(float x)
-    {
-        rb.drag = x;
-    }
-
+    // 衝刺
     void Dash(float x)
     {
+        StopCoroutine("DashWait");
+        StopCoroutine("NextDash");
         hasDashed = false;
         isDash = true;
+        isAnimDash = true;
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
     }
-
     IEnumerator DashWait()
     {
         DOVirtual.Float(7, 0, 1f, RigidbodyDrag);
@@ -293,13 +285,29 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = false;
         yield return new WaitForSeconds(.15f);
         canMove = true;
+        isAnimDash = false;
         GetComponent<BetterJumping>().enabled = true;
         rb.useGravity = true;
     }
-    IEnumerator NextDash(){
+    IEnumerator NextDash()
+    {
         yield return new WaitForSeconds(.6f);
-        isDash =false;
-        if(coll.OnGroundDash() && !IsPushWall())hasDashed = true;
+        isDash = false;
+        if (coll.OnGroundDash() && !IsPushWall()) hasDashed = true;
+    }
+
+    //衝刺時的阻力
+    void RigidbodyDrag(float x)
+    {
+        rb.drag = x;
+    }
+
+    //返回至原速度
+    void speedBackOrigin(float x)
+    {
+        if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1 && !coll.OnGround()) { speed = 8; return; }
+        if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1 && !coll.OnGround()) { speed = 8; return; }
+        speed = x;
     }
 
     IEnumerator DisableMovement()
@@ -309,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.18f);
         canMove = true;
         isWallJump = false;
-        if (!isStickWall) speedTime = true;
+        if (!isStickWall) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
     }
 
     IEnumerator canStickWallEnumerator()
@@ -326,7 +334,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         rb.velocity = new Vector2(0, rb.velocity.y);
         yield return new WaitForSeconds(.35f);
-        speedTime = true;
+        DOVirtual.Float(0, 8, .5f, speedBackOrigin);
         isStickWall = false;
         GetComponent<BetterJumping>().fallMultiplier = 2.5f;
     }
