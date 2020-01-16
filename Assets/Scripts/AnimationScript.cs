@@ -24,9 +24,11 @@ public class AnimationScript : MonoBehaviour
         anim.SetBool("onGround",coll.OnGround());
         anim.SetBool("isJump",move.isJump);
         anim.SetBool("isDash",move.isAnimDash);
-        anim.SetBool("isWallJump",move.isWallJump);
-        anim.SetBool("isPushWall",move.IsPushWall());
+        anim.SetBool("isWallJump",move.isWallJumpAnim);
+        anim.SetBool("isPushWall",move.isStickWall);
         anim.SetFloat("ySpeed",rb.velocity.y);
         anim.SetFloat("xSpeed",Mathf.Abs(rb.velocity.x));
+        anim.SetFloat("fallLandSpeed",move.fallLandSpeed);
+        anim.SetInteger("wallSide",coll.wallSide);
     }
 }

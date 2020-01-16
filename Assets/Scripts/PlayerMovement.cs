@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float fallSpeedMax = -15f;
     public float UpSpeedMimi = 3.5f;
     public float dashSpeed = 20;
+    public float fallLandSpeed;
+    public float fallMultiplier = 2.35f;
 
     float x;
     float xRaw;
@@ -26,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumpUp = false; // Y軸速度>0
     public bool startJump = false;
     public bool isWallJump = false; // 開始跳躍並持續一段時間
+    public bool isWallJumpAnim = false;
     public bool isJump = false;
     bool callWallJump = false; // 開始跳躍後即關閉
     bool fall = false; //判斷是否放開跳躍鍵
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !isStickWall && canMove)
+        if (Input.GetButtonDown("Dash") && hasDashed && !isStickWall)
         {
             if (xRaw != 0) Dash(xRaw);
         }
@@ -102,9 +105,14 @@ public class PlayerMovement : MonoBehaviour
             else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = 8;
         }
 
+        //牆跳動畫
+        if(isWallJumpAnim){
+            if(IsPushWall() || coll.OnGround() || isDash) isWallJumpAnim = false;
+        }
+
         //方塊轉向
-        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0), 0.07f);
-        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, x * -60, 0), .18f);
+        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
+        else if (!isStickWall) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
     }
     private void FixedUpdate()
     {
@@ -147,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!IsPushWall() && !isWallJump && !isStickWall)
         {
-            GetComponent<BetterJumping>().fallMultiplier = 2.5f;
+            GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
         }
 
         // 黏牆
@@ -180,6 +188,10 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine("StickWall");
             isStickWall = false;
             if (!isWallJump) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
+        }
+
+        if(!coll.OnGround()){
+            fallLandSpeed = rb.velocity.y;
         }
     }
 
@@ -251,6 +263,7 @@ public class PlayerMovement : MonoBehaviour
     void WallJump()
     {
         isWallJump = true;
+        isWallJumpAnim = true;
         rb.velocity = new Vector2(0, 0);
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
