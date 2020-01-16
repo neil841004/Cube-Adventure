@@ -15,6 +15,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 500f;
     public float fallSpeedMax = -15f;
     public float UpSpeedMimi = 3.5f;
+    public float dashSpeed = 20;
+
+    float x;
+    float y;
+    float xRaw;
+    float yRaw;
 
     [Space]
     [Header("Booleans")]
@@ -29,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public bool fall = false; //判斷是否放開跳躍鍵
     public bool canEdgeJump = false;
     public bool EdgeJumpFlag = false;
+    public bool hasDashed = false;
+    public bool isDash = false;
 
     [Space]
     [Header("Object")]
@@ -42,13 +50,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+        xRaw = Input.GetAxisRaw("Horizontal");
+        yRaw = Input.GetAxisRaw("Vertical");
+
+
         EdgeJump();
 
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge()&&!coll.OnGround()&&!coll.OnWall()&&canEdgeJump)) startJump = true;
+            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge() && !coll.OnGround() && !coll.OnWall() && canEdgeJump)) startJump = true;
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
+        }
+
+        //衝刺
+        if (Input.GetButtonDown("Fire1") && hasDashed && !isStickWall)
+        {
+            if (xRaw != 0) Dash(xRaw);
+        }
+        if(!isDash && !IsPushWall()){
+            if(coll.OnGroundDash()) hasDashed = true;
         }
 
         //判斷落下
@@ -76,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
         //方塊轉向
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, coll.wallSide * -90, 0), 0.07f);
-        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, Input.GetAxis("Horizontal") * -60, 0), .18f);
+        else if (!isStickWall) cube.transform.DORotate(new Vector3(rb.velocity.y * 0.7f, x * -60, 0), .18f);
     }
     private void FixedUpdate()
     {
@@ -171,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         if (IsPushWall() || !canMove || isStickWall) return;
-        float movement = Input.GetAxis("Horizontal") * speed;
+        float movement = x * speed;
         rb.velocity = new Vector2(movement, rb.velocity.y);
     }
 
@@ -187,21 +210,26 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine("EdgeJumpIEumerator");
         }
     }
-    void EdgeJump(){
-        if(coll.OnGround()){
+
+    //Ghost Jump
+    void EdgeJump()
+    {
+        if (coll.OnGround())
+        {
             canEdgeJump = false;
             EdgeJumpFlag = true;
             StopCoroutine("EdgeJumpIEumerator");
         }
-        if(canEdgeJump) return;
-        if(!coll.OnGround() && EdgeJumpFlag){
+        if (canEdgeJump) return;
+        if (!coll.OnGround() && EdgeJumpFlag)
+        {
             canEdgeJump = true;
             StartCoroutine("EdgeJumpIEumerator");
             EdgeJumpFlag = false;
         }
     }
-
-    IEnumerator EdgeJumpIEumerator(){
+    IEnumerator EdgeJumpIEumerator()
+    {
         canEdgeJump = true;
         yield return new WaitForSeconds(.2f);
         canEdgeJump = false;
@@ -212,11 +240,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (coll.OnWall())
         {
-            if (coll.wallSide == 1 && Input.GetAxis("Horizontal") > 0)
+            if (coll.wallSide == 1 && x > 0)
             {
                 return true;
             }
-            else if (coll.wallSide == -1 && Input.GetAxis("Horizontal") < 0)
+            else if (coll.wallSide == -1 && x < 0)
             {
                 return true;
             }
@@ -239,6 +267,39 @@ public class PlayerMovement : MonoBehaviour
         if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * .8f);
         callWallJump = false;
 
+    }
+
+    void RigidbodyDrag(float x)
+    {
+        rb.drag = x;
+    }
+
+    void Dash(float x)
+    {
+        hasDashed = false;
+        isDash = true;
+        rb.velocity = Vector2.zero;
+        Vector3 dir = new Vector2(x, 0);
+        rb.velocity += dir.normalized * dashSpeed;
+        StartCoroutine("DashWait");
+        StartCoroutine("NextDash");
+    }
+
+    IEnumerator DashWait()
+    {
+        DOVirtual.Float(12, 0, .7f, RigidbodyDrag);
+        canMove = false;
+        GetComponent<BetterJumping>().enabled = false;
+        rb.useGravity = false;
+        yield return new WaitForSeconds(.25f);
+        canMove = true;
+        GetComponent<BetterJumping>().enabled = true;
+        rb.useGravity = true;
+    }
+    IEnumerator NextDash(){
+        yield return new WaitForSeconds(.6f);
+        isDash =false;
+        if(coll.OnGroundDash() && !IsPushWall())hasDashed = true;
     }
 
     IEnumerator DisableMovement()
