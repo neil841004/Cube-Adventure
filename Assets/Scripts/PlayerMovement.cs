@@ -287,11 +287,11 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DashWait()
     {
-        DOVirtual.Float(12, 0, .7f, RigidbodyDrag);
+        DOVirtual.Float(7, 0, 1f, RigidbodyDrag);
         canMove = false;
         GetComponent<BetterJumping>().enabled = false;
         rb.useGravity = false;
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         canMove = true;
         GetComponent<BetterJumping>().enabled = true;
         rb.useGravity = true;

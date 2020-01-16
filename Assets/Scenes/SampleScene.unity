@@ -3653,7 +3653,7 @@ MonoBehaviour:
   jumpForce: 450
   fallSpeedMax: -15
   UpSpeedMimi: 7
-  dashSpeed: 40
+  dashSpeed: 30
   startJump: 0
   isWallJump: 0
   callWallJump: 0
