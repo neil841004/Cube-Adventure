@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0.15f;
+        // Time.timeScale = 0.15f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
@@ -131,7 +131,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(coll.OnWall())Debug.Log(canStickWall);
         Move();
         Jump();
         EdgeJump();
@@ -299,8 +298,8 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 1f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * .9f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * .9f);
         callWallJump = false;
 
     }
@@ -363,10 +362,10 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         speed = 0;
-        yield return new WaitForSeconds(.18f);
+        yield return new WaitForSeconds(.21f);
         canMove = true;
         isWallJump = false;
-        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
+        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
     }
 
     //跳牆時極短瞬間無法黏牆
