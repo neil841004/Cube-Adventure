@@ -9,6 +9,7 @@ public class AnimationScript : MonoBehaviour
     private Collision coll;
     private Rigidbody rb;
 
+    int wallSide = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,10 @@ public class AnimationScript : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        if(rb.velocity.x>0)wallSide = 1;
+        else if(rb.velocity.x<0)wallSide = -1;
+        if(coll.onRightWall.Length >0)wallSide = 1;
+        if(coll.onLeftWall.Length >0)wallSide = -1;
         if (coll.OnGround() && !move.IsPushWall())
         {
             anim.SetBool("onGround", true);
@@ -36,6 +41,6 @@ public class AnimationScript : MonoBehaviour
         anim.SetFloat("ySpeed", rb.velocity.y);
         anim.SetFloat("xSpeed", Mathf.Abs(rb.velocity.x));
         anim.SetFloat("fallLandSpeed", move.fallLandSpeed);
-        anim.SetInteger("wallSide", coll.wallSide);
+        anim.SetInteger("wallSide", wallSide);
     }
 }

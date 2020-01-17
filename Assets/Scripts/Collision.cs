@@ -6,7 +6,7 @@ public class Collision : MonoBehaviour
 {
     [Header("Layers")]
     public LayerMask groundLayer;
-    
+
     [Space]
 
     public Collider[] onGround;
@@ -14,6 +14,7 @@ public class Collision : MonoBehaviour
     public Collider[] onEdge;
     public Collider[] onRightWall;
     public Collider[] onLeftWall;
+    public Collider[] onUpWall;
     public int wallSide = -1;
 
     [Space]
@@ -22,7 +23,7 @@ public class Collision : MonoBehaviour
     public Vector3 collisoinRadius;
     public Vector3 collisoinEdgeRadius;
     public Vector3 collisoinDashRadius;
-    public Vector3 bottomOffset,bottomEdgeOffset , rightOffset, leftOffset;
+    public Vector3 bottomOffset, bottomEdgeOffset, rightOffset, leftOffset, upOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,9 @@ public class Collision : MonoBehaviour
     {
         OnGround();
         OnWall();
+        OnEdge();
+        OnUpWall();
+        OnGroundDash();
     }
     public bool OnGround()
     {
@@ -54,6 +58,15 @@ public class Collision : MonoBehaviour
         }
         else return false;
     }
+    public bool OnUpWall()
+    {
+        onUpWall = Physics.OverlapBox(transform.position + upOffset, collisoinRadius, Quaternion.identity, groundLayer);
+        if (onUpWall.Length > 0)
+        {
+            return true;
+        }
+        else return false;
+    }
     public bool OnEdge()
     {
         onEdge = Physics.OverlapBox(transform.position + bottomEdgeOffset, collisoinEdgeRadius, Quaternion.identity, groundLayer);
@@ -63,21 +76,26 @@ public class Collision : MonoBehaviour
         }
         else return false;
     }
-    public bool OnWall(){
-        onRightWall = Physics.OverlapBox(transform.position + rightOffset, collisoinRadius, Quaternion.Euler(0,0,90), groundLayer);
-        onLeftWall = Physics.OverlapBox(transform.position + leftOffset, collisoinRadius, Quaternion.Euler(0,0,-90), groundLayer);
-        if(onRightWall.Length >0)wallSide = 1;
-        if(onLeftWall.Length >0)wallSide = -1;
-        if(onRightWall.Length >0 || onLeftWall.Length >0){
+    public bool OnWall()
+    {
+        if(OnUpWall())return false;
+        onRightWall = Physics.OverlapBox(transform.position + rightOffset, collisoinRadius, Quaternion.Euler(0, 0, 90), groundLayer);
+        onLeftWall = Physics.OverlapBox(transform.position + leftOffset, collisoinRadius, Quaternion.Euler(0, 0, -90), groundLayer);
+        if (onRightWall.Length > 0) wallSide = 1;
+        if (onLeftWall.Length > 0) wallSide = -1;
+        if (onRightWall.Length > 0 || onLeftWall.Length > 0)
+        {
             return true;
-        }else return false;
+        }
+        else return false;
     }
     void OnDrawGizmos()
     {
-        
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinRadius*2);
-        Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinDashRadius*2);
-        Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius*2);
+        Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinRadius * 2);
+        Gizmos.DrawWireCube(this.transform.position + upOffset, collisoinRadius * 2);
+        Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinDashRadius * 2);
+        Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius * 2);
     }
 }

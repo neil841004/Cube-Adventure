@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
 
     [Header("Float")]
-    public float speed = 8f;
+    public float speed = 7f;
+    public float speedOrigin = 7f;
     public float jumpForce = 500f;
     public float fallSpeedMax = -15f;
     public float UpSpeedMimi = 3.5f;
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // Time.timeScale = 0.5f;
+        // Time.timeScale = 0.25f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
@@ -64,12 +65,10 @@ public class PlayerMovement : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         xRaw = Input.GetAxisRaw("Horizontal");
 
-        EdgeJump();
-
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge() && !coll.OnGround() && !coll.OnWall() && canEdgeJump)) startJump = true;
+            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) startJump = true;
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
@@ -104,8 +103,8 @@ public class PlayerMovement : MonoBehaviour
         // 蹬牆轉向時速度增加
         if (isWallJump)
         {
-            if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1) speed = 8;
-            else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = 8;
+            if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1) speed = speedOrigin;
+            else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = speedOrigin;
         }
 
         //牆跳動畫
@@ -115,24 +114,27 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //黏牆動畫
-        if (IsPushWall() || isStickWall) { isPushWallAnim = true; }
+        if (IsPushWall() || isStickWall)
+        {
+            isPushWallAnim = true;
+            cubeMesh.transform.DOKill();
+            cubeMesh.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); ;
+        }
         if (!isStickWall || isWallJump) isPushWallAnim = false;
 
         //方塊轉向
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
         else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
 
-        if (isAnimDash)
-        {
-            if (xRaw == 1) cubeMesh.transform.DORotate(new Vector3(0, 0, -360), 0.18f,RotateMode.FastBeyond360);
-            else if (xRaw == -1) cubeMesh.transform.DORotate(new Vector3(0, 0, 360), 0.18f,RotateMode.FastBeyond360);
-        }
+
     }
 
     private void FixedUpdate()
     {
         Move();
         Jump();
+        EdgeJump();
+
         if ((IsPushWall() && !coll.OnGround() && !isWallJump && callWallJump) || (isStickWall && !coll.OnGround() && !isWallJump && callWallJump)) WallJump();
 
         // 短按跳躍落下
@@ -173,8 +175,8 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
         }
 
-        // 黏牆
-        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump)
+        // 黏牆相關
+        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump) //持續黏牆
         {
             StopCoroutine("StickWall");
             isStickWall = true;
@@ -182,33 +184,38 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(0, rb.velocity.y);
             canStickWall = false;
         }
-        if (!IsPushWall() && isStickWall && coll.OnWall() && !canStickWall)
+        if (!IsPushWall() && isStickWall && coll.OnWall() && !canStickWall) //黏牆時放開方向鍵
         {
             StartCoroutine("StickWall");
         }
         if (coll.OnGround())
         {
             StopCoroutine("StickWall");
-            if (isStickWall) speed = 8;
+            if (isStickWall) speed = speedOrigin;
             isStickWall = false;
         }
-        if (isWallJump && coll.OnWall() && canStickWall)
+        if (isWallJump && coll.OnWall() && canStickWall) //牆跳到另一牆壁時觸發黏牆
         {
             StopCoroutine("StickWall");
             StartCoroutine("StickWall");
+            StopCoroutine("DisableMovement");
             canStickWall = false;
+            canMove = true;
+            isWallJump = false;
         }
-        if (isStickWall && !coll.OnWall())
+        if (isStickWall && !coll.OnWall()) //黏牆滑落到離開牆面
         {
             StopCoroutine("StickWall");
             isStickWall = false;
-            if (!isWallJump) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
+            if (!isWallJump) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
         }
 
+        //判斷墜地速度
         if (!coll.OnGround())
         {
             fallLandSpeed = rb.velocity.y;
         }
+
     }
 
     void Move()
@@ -220,22 +227,30 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (startJump)
+        if ((rb.velocity.y < 1 && rb.velocity.y > -1) || canEdgeJump)
         {
-            isJump = true;
-            hasDashed = true;
-            rb.velocity = new Vector3(rb.velocity.x, 0);
-            rb.AddForce(Vector3.up * jumpForce);
-            isJumpUp = true;
-            startJump = false;
-            canEdgeJump = false;
-            StopCoroutine("EdgeJumpIEumerator");
+            if (startJump)
+            {
+                isJump = true;
+                hasDashed = true;
+                rb.velocity = new Vector3(rb.velocity.x, 0);
+                rb.AddForce(Vector3.up * jumpForce);
+                isJumpUp = true;
+                startJump = false;
+                canEdgeJump = false;
+                StopCoroutine("EdgeJumpIEumerator");
+            }
         }
     }
 
     //Ghost Jump
     void EdgeJump()
     {
+        if (isPushWallAnim)
+        {
+            canEdgeJump = false;
+            return;
+        }
         if (coll.OnGround())
         {
             canEdgeJump = false;
@@ -243,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine("EdgeJumpIEumerator");
         }
         if (canEdgeJump) return;
-        if (!coll.OnGround() && EdgeJumpFlag)
+        if (!coll.OnGround() && EdgeJumpFlag && !isJump)
         {
             canEdgeJump = true;
             StartCoroutine("EdgeJumpIEumerator");
@@ -253,7 +268,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator EdgeJumpIEumerator()
     {
         canEdgeJump = true;
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.3f);
         canEdgeJump = false;
     }
 
@@ -286,8 +301,8 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("canStickWallEnumerator");
         StartCoroutine("canStickWallEnumerator");
         rb.AddForce(Vector3.up * jumpForce * 1f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * .8f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * .8f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1f);
         callWallJump = false;
 
     }
@@ -297,6 +312,10 @@ public class PlayerMovement : MonoBehaviour
     {
         StopCoroutine("DashWait");
         StopCoroutine("NextDash");
+        StopCoroutine("DisableMovement");
+        isWallJump = false;
+        speed = speedOrigin;
+        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.4f, RotateMode.FastBeyond360);
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
@@ -335,8 +354,8 @@ public class PlayerMovement : MonoBehaviour
     //返回至原速度
     void speedBackOrigin(float x)
     {
-        if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1 && !coll.OnGround()) { speed = 8; return; }
-        if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1 && !coll.OnGround()) { speed = 8; return; }
+        if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1 && !coll.OnGround()) { speed = speedOrigin; return; }
+        if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1 && !coll.OnGround()) { speed = speedOrigin; return; }
         speed = x;
     }
 
@@ -347,9 +366,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.18f);
         canMove = true;
         isWallJump = false;
-        if (!isStickWall) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
+        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
     }
 
+    //跳牆時極短瞬間無法黏牆
     IEnumerator canStickWallEnumerator()
     {
         canStickWall = false;
@@ -364,7 +384,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         rb.velocity = new Vector2(0, rb.velocity.y);
         yield return new WaitForSeconds(.35f);
-        DOVirtual.Float(0, 8, .5f, speedBackOrigin);
+        DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
         isStickWall = false;
         GetComponent<BetterJumping>().fallMultiplier = 2.5f;
     }
