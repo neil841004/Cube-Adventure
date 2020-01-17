@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -126,7 +126,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14868
+  m_Name: pb_Mesh14876
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1307,7 +1307,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14890
+  m_Name: pb_Mesh14910
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2514,7 +2514,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14828
+  m_Name: pb_Mesh14826
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2986,7 +2986,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14814
+  m_Name: pb_Mesh14810
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3149,7 +3149,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-103072
+  m_Name: pb_Mesh14898
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3858,7 +3858,7 @@ MonoBehaviour:
   onLeftWall: []
   onUpWall: []
   wallSide: -1
-  collisoinRadius: {x: 0.21, y: 0.06, z: 0.25}
+  collisoinRadius: {x: 0.21, y: 0.08, z: 0.25}
   collisoinEdgeRadius: {x: 0.8, y: 0.15, z: 0.25}
   collisoinDashRadius: {x: 0.08, y: 0.12, z: 0.25}
   bottomOffset: {x: 0, y: -0.26, z: 0}
@@ -3875,7 +3875,7 @@ MeshCollider:
   m_GameObject: {fileID: 876615628}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
@@ -3920,7 +3920,7 @@ BoxCollider:
   m_GameObject: {fileID: 876615628}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
@@ -3997,7 +3997,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14776
+  m_Name: pb_Mesh14772
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4160,7 +4160,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14800
+  m_Name: pb_Mesh14796
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4401,7 +4401,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14788
+  m_Name: pb_Mesh14784
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4564,7 +4564,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14916
+  m_Name: pb_Mesh14936
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5036,7 +5036,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14728
+  m_Name: pb_Mesh14724
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5199,7 +5199,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14752
+  m_Name: pb_Mesh14748
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6444,7 +6444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2015180925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 1.5, z: 0}
+  m_LocalPosition: {x: -1.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6487,7 +6487,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14740
+  m_Name: pb_Mesh14736
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

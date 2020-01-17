@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // Time.timeScale = 0.25f;
+        Time.timeScale = 0.15f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !isStickWall)
+        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall())
         {
             if (xRaw != 0) Dash(xRaw);
         }
@@ -103,8 +103,8 @@ public class PlayerMovement : MonoBehaviour
         // 蹬牆轉向時速度增加
         if (isWallJump)
         {
-            if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1) speed = speedOrigin;
-            else if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1) speed = speedOrigin;
+            if (coll.wallSide == 1 && xRaw == -1) speed = speedOrigin;
+            else if (coll.wallSide == -1 && xRaw == 1) speed = speedOrigin;
         }
 
         //牆跳動畫
@@ -131,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(coll.OnWall())Debug.Log(canStickWall);
         Move();
         Jump();
         EdgeJump();
@@ -198,10 +199,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
             StartCoroutine("StickWall");
-            StopCoroutine("DisableMovement");
             canStickWall = false;
-            canMove = true;
-            isWallJump = false;
         }
         if (isStickWall && !coll.OnWall()) //黏牆滑落到離開牆面
         {
@@ -296,10 +294,10 @@ public class PlayerMovement : MonoBehaviour
         isWallJump = true;
         isWallJumpAnim = true;
         rb.velocity = new Vector2(0, 0);
-        StopCoroutine("DisableMovement");
-        StartCoroutine("DisableMovement");
         StopCoroutine("canStickWallEnumerator");
         StartCoroutine("canStickWallEnumerator");
+        StopCoroutine("DisableMovement");
+        StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 1f);
         if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1f);
         if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1f);
@@ -313,6 +311,8 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("DashWait");
         StopCoroutine("NextDash");
         StopCoroutine("DisableMovement");
+        StopCoroutine("StickWall");
+        isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
         cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.4f, RotateMode.FastBeyond360);
@@ -373,7 +373,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator canStickWallEnumerator()
     {
         canStickWall = false;
-        yield return new WaitForSeconds(.02f);
+        yield return new WaitForSeconds(.01f);
         canStickWall = true;
     }
 
