@@ -49,10 +49,11 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     [Header("Object")]
     public GameObject cube;
+    public GameObject cubeMesh;
 
     void Start()
     {
-        // Time.timeScale = 0.25f;
+        // Time.timeScale = 0.5f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
@@ -108,17 +109,24 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //牆跳動畫
-        if(isWallJumpAnim){
-            if((IsPushWall() || coll.OnGround() || isDash || isStickWall)&&!isWallJump) isWallJumpAnim = false;
+        if (isWallJumpAnim)
+        {
+            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump) isWallJumpAnim = false;
         }
 
         //黏牆動畫
-        if(IsPushWall() || isStickWall) {isPushWallAnim = true;}
-        if(!isStickWall || isWallJump) isPushWallAnim = false;
+        if (IsPushWall() || isStickWall) { isPushWallAnim = true; }
+        if (!isStickWall || isWallJump) isPushWallAnim = false;
 
         //方塊轉向
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
-        else if (!isStickWall) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
+        else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
+
+        if (isAnimDash)
+        {
+            if (xRaw == 1) cubeMesh.transform.DORotate(new Vector3(0, 0, -360), 0.18f,RotateMode.FastBeyond360);
+            else if (xRaw == -1) cubeMesh.transform.DORotate(new Vector3(0, 0, 360), 0.18f,RotateMode.FastBeyond360);
+        }
     }
 
     private void FixedUpdate()
@@ -181,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         if (coll.OnGround())
         {
             StopCoroutine("StickWall");
-            if(isStickWall)speed = 8;
+            if (isStickWall) speed = 8;
             isStickWall = false;
         }
         if (isWallJump && coll.OnWall() && canStickWall)
@@ -197,7 +205,8 @@ public class PlayerMovement : MonoBehaviour
             if (!isWallJump) DOVirtual.Float(0, 8, .5f, speedBackOrigin);
         }
 
-        if(!coll.OnGround()){
+        if (!coll.OnGround())
+        {
             fallLandSpeed = rb.velocity.y;
         }
     }
@@ -291,6 +300,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
+        anim.Play("Dash");
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
