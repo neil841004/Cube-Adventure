@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canMove = true;
 
     public bool isStickWall = false; //跳躍到另一個牆上時
+    public bool isPushWallAnim = false;
     bool canStickWall = false; //從牆壁跳躍後的一個短瞬間內為true
 
     public bool canEdgeJump = false; //是否可以GhostJump
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        // Time.timeScale = 0.25f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
@@ -107,13 +109,18 @@ public class PlayerMovement : MonoBehaviour
 
         //牆跳動畫
         if(isWallJumpAnim){
-            if(IsPushWall() || coll.OnGround() || isDash) isWallJumpAnim = false;
+            if((IsPushWall() || coll.OnGround() || isDash || isStickWall)&&!isWallJump) isWallJumpAnim = false;
         }
+
+        //黏牆動畫
+        if(IsPushWall() || isStickWall) {isPushWallAnim = true;}
+        if(!isStickWall || isWallJump) isPushWallAnim = false;
 
         //方塊轉向
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
         else if (!isStickWall) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
     }
+
     private void FixedUpdate()
     {
         Move();

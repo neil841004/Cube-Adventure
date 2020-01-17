@@ -14,7 +14,7 @@ public class Collision : MonoBehaviour
     public Collider[] onEdge;
     public Collider[] onRightWall;
     public Collider[] onLeftWall;
-    public int wallSide;
+    public int wallSide = -1;
 
     [Space]
 

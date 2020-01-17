@@ -105,16 +105,10 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: 220, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: 5360440449230643066}
-    m_Position: {x: 790, y: 10, z: 0}
+    m_Position: {x: 790, y: 20, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 5360440449230643066}
-    second:
-    - {fileID: -6778636218103906710}
-    - {fileID: -7644419120454117573}
-    - {fileID: 2450215223664537907}
-    - {fileID: -1109910917682262032}
   - first: {fileID: 1379675009492735782}
     second:
     - {fileID: 3167215108214119613}
@@ -125,6 +119,12 @@ AnimatorStateMachine:
     - {fileID: -7833491288598985747}
     - {fileID: 8020966392009300633}
     - {fileID: 4136968628108090016}
+  - first: {fileID: 5360440449230643066}
+    second:
+    - {fileID: -6778636218103906710}
+    - {fileID: -7644419120454117573}
+    - {fileID: 2450215223664537907}
+    - {fileID: -1109910917682262032}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 70, y: 20, z: 0}
   m_EntryPosition: {x: 70, y: 120, z: 0}
@@ -275,6 +275,9 @@ AnimatorTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isWallJump
     m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: ySpeed
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 1379675009492735782}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -358,6 +361,15 @@ AnimatorTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: isWallJump
+    m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: ySpeed
+    m_EventTreshold: 1
+  - m_ConditionMode: 2
+    m_ConditionEvent: isPushWall
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: onGroundDash
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2805960690853801817}
@@ -772,6 +784,12 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isPushWall
     m_EventTreshold: 0
+  - m_ConditionMode: 4
+    m_ConditionEvent: ySpeed
+    m_EventTreshold: 1
+  - m_ConditionMode: 1
+    m_ConditionEvent: onGroundDash
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2805960690853801817}
   m_Solo: 0
@@ -1164,6 +1182,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: wallSide
     m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: onGroundDash
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -1722,7 +1746,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.01
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
@@ -1853,7 +1877,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.02
+  m_TransitionDuration: 0.05
   m_TransitionOffset: 0
   m_ExitTime: 0
   m_HasExitTime: 0

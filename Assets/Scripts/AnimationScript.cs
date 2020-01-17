@@ -19,16 +19,23 @@ public class AnimationScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        anim.SetBool("onGround",coll.OnGround());
-        anim.SetBool("isJump",move.isJump);
-        anim.SetBool("isDash",move.isAnimDash);
-        anim.SetBool("isWallJump",move.isWallJumpAnim);
-        anim.SetBool("isPushWall",move.isStickWall);
-        anim.SetFloat("ySpeed",rb.velocity.y);
-        anim.SetFloat("xSpeed",Mathf.Abs(rb.velocity.x));
-        anim.SetFloat("fallLandSpeed",move.fallLandSpeed);
-        anim.SetInteger("wallSide",coll.wallSide);
+        if (coll.OnGround() && !move.IsPushWall())
+        {
+            anim.SetBool("onGround", true);
+        }else 
+        {
+            anim.SetBool("onGround", false);
+        }
+        anim.SetBool("isJump", move.isJump);
+        anim.SetBool("isDash", move.isAnimDash);
+        anim.SetBool("isWallJump", move.isWallJumpAnim);
+        anim.SetBool("isPushWall", move.isPushWallAnim);
+        anim.SetBool("onGroundDash", coll.OnGroundDash());
+        anim.SetFloat("ySpeed", rb.velocity.y);
+        anim.SetFloat("xSpeed", Mathf.Abs(rb.velocity.x));
+        anim.SetFloat("fallLandSpeed", move.fallLandSpeed);
+        anim.SetInteger("wallSide", coll.wallSide);
     }
 }
