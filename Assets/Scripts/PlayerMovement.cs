@@ -200,11 +200,15 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine("StickWall");
             canStickWall = false;
         }
-        if (isStickWall && !coll.OnWall()) //黏牆滑落到離開牆面
+        if (isStickWall && !coll.OnWall()) //黏牆滑落到離開牆面 or 
         {
             StopCoroutine("StickWall");
             isStickWall = false;
-            if (!isWallJump) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
+            if (!isWallJump) {
+                StopCoroutine("DisableMovement");
+                canMove = true;
+                DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
+            }
         }
 
         //判斷墜地速度
@@ -295,11 +299,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         StopCoroutine("canStickWallEnumerator");
         StartCoroutine("canStickWallEnumerator");
+        DOVirtual.Float(9, 0, .29f, RigidbodyDrag);
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
-        rb.AddForce(Vector3.up * jumpForce * 1f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * .9f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * .9f);
+        rb.AddForce(Vector3.up * jumpForce * 2f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.4f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.4f);
         callWallJump = false;
 
     }
@@ -362,7 +367,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         speed = 0;
-        yield return new WaitForSeconds(.21f);
+        yield return new WaitForSeconds(.23f);
         canMove = true;
         isWallJump = false;
         if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
