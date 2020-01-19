@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isWallJumpAnim = false;
     public bool isJump = false;
     bool callWallJump = false; // 開始跳躍後即關閉
-    bool fall = false; //判斷是否放開跳躍鍵
+    public bool fall = false; //判斷是否放開跳躍鍵
 
     public bool canMove = true;
 
@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         // 短按跳躍落下
         if (isJumpUp)
         {
-            if (Input.GetButtonUp("Jump"))
+            if (!Input.GetButton("Jump"))
             {
                 fall = true;
             }
@@ -294,19 +294,19 @@ public class PlayerMovement : MonoBehaviour
     // 蹬牆跳
     void WallJump()
     {
+        DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         isWallJump = true;
         isWallJumpAnim = true;
         rb.velocity = new Vector2(0, 0);
         StopCoroutine("canStickWallEnumerator");
         StartCoroutine("canStickWallEnumerator");
-        DOVirtual.Float(9, 0, .29f, RigidbodyDrag);
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 2f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.4f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.4f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.3f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.3f);
+        Debug.Log(Time.time);
         callWallJump = false;
-
     }
 
     // 衝刺
@@ -353,6 +353,7 @@ public class PlayerMovement : MonoBehaviour
     void RigidbodyDrag(float x)
     {
         rb.drag = x;
+        Debug.Log(rb.drag);
     }
 
     //返回至原速度

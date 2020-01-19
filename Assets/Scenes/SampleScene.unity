@@ -2514,7 +2514,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh14828
+  m_Name: pb_Mesh14846
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4026,7 +4026,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &876615635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4058,7 +4058,7 @@ MonoBehaviour:
   speedOrigin: 7
   jumpForce: 450
   fallSpeedMax: -15
-  UpSpeedMimi: 7
+  UpSpeedMimi: 6
   dashSpeed: 30
   fallLandSpeed: 0
   fallMultiplier: 2.35
@@ -4067,6 +4067,7 @@ MonoBehaviour:
   isWallJump: 0
   isWallJumpAnim: 0
   isJump: 0
+  fall: 0
   canMove: 1
   isStickWall: 0
   isPushWallAnim: 0
