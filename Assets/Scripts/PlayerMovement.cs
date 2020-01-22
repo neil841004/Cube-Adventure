@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -204,7 +204,8 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
             isStickWall = false;
-            if (!isWallJump) {
+            if (!isWallJump)
+            {
                 StopCoroutine("DisableMovement");
                 canMove = true;
                 DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
@@ -295,6 +296,7 @@ public class PlayerMovement : MonoBehaviour
     void WallJump()
     {
         DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
+        rb.drag = 7.8f;
         isWallJump = true;
         isWallJumpAnim = true;
         rb.velocity = new Vector2(0, 0);
@@ -305,7 +307,6 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector3.up * jumpForce * 2f);
         if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.3f);
         if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.3f);
-        Debug.Log(Time.time);
         callWallJump = false;
     }
 
@@ -353,7 +354,6 @@ public class PlayerMovement : MonoBehaviour
     void RigidbodyDrag(float x)
     {
         rb.drag = x;
-        Debug.Log(rb.drag);
     }
 
     //返回至原速度
