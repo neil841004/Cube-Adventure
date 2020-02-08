@@ -47,10 +47,19 @@ public class PlayerMovement : MonoBehaviour
     public bool isDash = false; //衝刺過程
     public bool isAnimDash = false; //衝刺動畫
 
+    public bool isDeath = false;
+    bool isDeathNotBack =false; //死亡後還沒回歸原位之前
+
     [Space]
     [Header("Object")]
     public GameObject cube;
     public GameObject cubeMesh;
+    Vector3 DeathV3;
+
+    [Space]
+    [Header("Polish")]
+    public ParticleSystem deathParticle;
+    public ParticleSystem rebirthParticle;
 
     void Start()
     {
@@ -73,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall())
+        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath)
         {
             if (xRaw != 0) Dash(xRaw);
         }
@@ -93,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
         // 重置
         if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.position = new Vector3(0, 2.75f, -0.5f);
+            transform.position = new Vector3(1.75f, 2.75f, -0.5f);
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
@@ -131,9 +140,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        Jump();
-        EdgeJump();
+        if (!isDeath)
+        {
+            Move();
+            Jump();
+            EdgeJump();
+        }
+        else if (isDeath && isDeathNotBack)
+        {
+            this.transform.position = DeathV3;
+        }
 
         if ((IsPushWall() && !coll.OnGround() && !isWallJump && callWallJump) || (isStickWall && !coll.OnGround() && !isWallJump && callWallJump)) WallJump();
 
@@ -320,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
         isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
-        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.4f, RotateMode.FastBeyond360);
+        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.3f, RotateMode.FastBeyond360);
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
@@ -328,6 +344,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
+        GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
     }
@@ -392,5 +409,32 @@ public class PlayerMovement : MonoBehaviour
         DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
         isStickWall = false;
         GetComponent<BetterJumping>().fallMultiplier = 2.5f;
+    }
+    private void OnTriggerEnter(Collider coll)
+    {
+        if (coll.CompareTag("Hazard") && !isDeath)
+        {
+            deathParticle.Play();
+            GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
+            cube.gameObject.SetActive(false);
+            isDeath = true;
+            isDeathNotBack = true;
+            StartCoroutine("Rebirth");
+            DeathV3 = this.transform.position;
+        }
+    }
+    IEnumerator Rebirth()
+    {
+        yield return new WaitForSeconds(.3f);
+        GameObject.FindWithTag("GM").SendMessage("Death");
+        yield return new WaitForSeconds(.3f);
+        isDeathNotBack = false;
+        transform.position = new Vector3(1.75f, 2.75f, -0.5f);
+        yield return new WaitForSeconds(.5f);
+        GameObject.FindWithTag("GM").SendMessage("ResetLevel");
+        transform.position = new Vector3(1.75f, 2.75f, -0.5f);
+        rebirthParticle.Play();
+        cube.gameObject.SetActive(true);
+        isDeath = false;
     }
 }
