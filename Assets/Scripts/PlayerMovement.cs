@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -60,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Polish")]
     public ParticleSystem deathParticle;
     public ParticleSystem rebirthParticle;
+    public ParticleSystem dashParticleR;
+    public ParticleSystem dashParticleL;
 
     void Start()
     {
@@ -333,14 +336,17 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("NextDash");
         StopCoroutine("DisableMovement");
         StopCoroutine("StickWall");
+        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
         isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
-        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.3f, RotateMode.FastBeyond360);
+        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.4f, RotateMode.FastBeyond360);
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
         anim.Play("Dash");
+        if(xRaw == 1)dashParticleL.Play();
+        if(xRaw == -1)dashParticleR.Play();
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
@@ -425,14 +431,18 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Rebirth()
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.4f);
         GameObject.FindWithTag("GM").SendMessage("Death");
         yield return new WaitForSeconds(.3f);
         isDeathNotBack = false;
         transform.position = new Vector3(1.75f, 2.75f, -0.5f);
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0;
         yield return new WaitForSeconds(.5f);
         GameObject.FindWithTag("GM").SendMessage("ResetLevel");
         transform.position = new Vector3(1.75f, 2.75f, -0.5f);
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.65f;
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = .8f;
         rebirthParticle.Play();
         cube.gameObject.SetActive(true);
         isDeath = false;

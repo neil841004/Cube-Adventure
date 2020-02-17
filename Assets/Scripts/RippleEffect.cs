@@ -31,8 +31,8 @@ public class RippleEffect : MonoBehaviour
     [Range(0.0f, 2.0f)]
     public float dropInterval = 0.5f;
 
-    [SerializeField, HideInInspector]
-    Shader shader;
+    // [SerializeField, HideInInspector]
+    public Shader shader;
 
     class Droplet
     {
