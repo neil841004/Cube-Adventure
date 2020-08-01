@@ -53,14 +53,14 @@ public class GhostInstance : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        i++;
         if (onGhost)
         {
-            if (i % 3 == 0)
+            i++;
+            if (i % 6 == 1)
             {
                 GameObject Ghost = Instantiate(playerGhost, transform.position, transform.rotation);
             }
-            if (i > 100) {
+            if (i > 25) {
                 i = 0;
                 onGhost = false;
             }

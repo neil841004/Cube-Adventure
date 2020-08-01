@@ -345,8 +345,9 @@ public class PlayerMovement : MonoBehaviour
         isDash = true;
         isAnimDash = true;
         anim.Play("Dash");
-        if(xRaw == 1)dashParticleL.Play();
-        if(xRaw == -1)dashParticleR.Play();
+        cubeMesh.GetComponent<GhostInstance>().onGhost = true;
+        //if (xRaw == 1)dashParticleL.Play();
+        //if(xRaw == -1)dashParticleR.Play();
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
