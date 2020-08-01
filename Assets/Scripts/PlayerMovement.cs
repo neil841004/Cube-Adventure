@@ -340,7 +340,7 @@ public class PlayerMovement : MonoBehaviour
         isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
-        cubeMesh.transform.DOLocalRotate(new Vector3(-360, 0, 0), 0.4f, RotateMode.FastBeyond360);
+        cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.4f, RotateMode.FastBeyond360);
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
