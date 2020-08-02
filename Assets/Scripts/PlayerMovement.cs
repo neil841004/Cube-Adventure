@@ -97,6 +97,7 @@ public class PlayerMovement : MonoBehaviour
         if (isAnimDash && IsPushWall())
         {
             DashToWallParticle.Play();
+            GameObject.FindWithTag("GM").SendMessage("ResetShake");
             GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         }
 
@@ -190,9 +191,9 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
             GetComponent<BetterJumping>().fallMultiplier = 0.15f;
-            if (rb.velocity.y <= fallSpeedMax * 0.4f)
+            if (rb.velocity.y <= fallSpeedMax * 0.25f)
             {
-                rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.4f);
+                rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.25f);
             }
         }
         if (!IsPushWall() && !isWallJump && !isStickWall && !isDash)
@@ -358,6 +359,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+        GameObject.FindWithTag("GM").SendMessage("ResetShake");
         GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
@@ -431,6 +433,7 @@ public class PlayerMovement : MonoBehaviour
         if (coll.CompareTag("Hazard") && !isDeath)
         {
             deathParticle.Play();
+            GameObject.FindWithTag("GM").SendMessage("ResetShake");
             GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
             cube.gameObject.SetActive(false);
             isDeath = true;

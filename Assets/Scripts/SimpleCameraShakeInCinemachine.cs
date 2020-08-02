@@ -58,20 +58,28 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
             }
         }
     }
+    public void ResetShake()
+    {
+        ShakeAmplitude = 0f;
+        ShakeFrequency = 0f;
+        ShakeElapsedTime = 0f;
+    }
     public void ScreenShake_S()
     {
-        VirtualCamera.GetCinemachineComponent<Cinemachine.NoiseSettings>() = none;
         ShakeAmplitude = 4f;
         ShakeFrequency = 0.5f;
         ShakeElapsedTime = .6f;
-        DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .6f).SetEase(Ease.OutSine);
+        shakeTimeL.Kill();
+        shakeTimeS.PlayForward();
+        shakeTimeS = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .6f).SetEase(Ease.OutSine);
     }
     public void ScreenShake_L()
     {
         ShakeAmplitude = 6f;
         ShakeFrequency = 0.09f;
-        ShakeElapsedTime = 1f;
+        ShakeElapsedTime = 1.3f;
+        shakeTimeS.Kill();
         shakeTimeL.PlayForward();
-        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1f).SetEase(Ease.OutSine);
+        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.3f).SetEase(Ease.OutSine);
     }
 }

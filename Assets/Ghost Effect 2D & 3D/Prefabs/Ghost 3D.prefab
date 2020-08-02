@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88536dca57d559045bd70ce1c0084423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0.2
+  timer: 0.25
   colorGhost: {r: 0.83823526, g: 0.83823526, b: 0.83823526, a: 1}
   meshRenderer: 1
   skinnedMeshRenderer: 0
