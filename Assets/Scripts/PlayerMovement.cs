@@ -189,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.4f);
             }
         }
-        if (!IsPushWall() && !isWallJump && !isStickWall)
+        if (!IsPushWall() && !isWallJump && !isStickWall && !isDash)
         {
             GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
         }
@@ -336,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("NextDash");
         StopCoroutine("DisableMovement");
         StopCoroutine("StickWall");
-        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
+        //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
         isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
@@ -351,6 +351,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
+        GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
@@ -366,6 +367,8 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = false;
         GetComponent<BetterJumping>().enabled = true;
         rb.useGravity = true;
+        yield return new WaitForSeconds(.07f);
+        GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
     }
     IEnumerator NextDash()
     {
@@ -415,7 +418,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.35f);
         DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
         isStickWall = false;
-        GetComponent<BetterJumping>().fallMultiplier = 2.5f;
+        GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
     }
     private void OnTriggerEnter(Collider coll)
     {
@@ -432,6 +435,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Rebirth()
     {
+        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
         yield return new WaitForSeconds(.4f);
         GameObject.FindWithTag("GM").SendMessage("Death");
         yield return new WaitForSeconds(.3f);

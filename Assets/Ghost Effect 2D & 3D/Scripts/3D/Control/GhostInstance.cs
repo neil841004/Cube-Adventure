@@ -56,11 +56,11 @@ public class GhostInstance : MonoBehaviour {
         if (onGhost)
         {
             i++;
-            if (i % 6 == 1)
+            if (i % 6 == 2)
             {
                 GameObject Ghost = Instantiate(playerGhost, transform.position, transform.rotation);
             }
-            if (i > 25) {
+            if (i > 21) {
                 i = 0;
                 onGhost = false;
             }
