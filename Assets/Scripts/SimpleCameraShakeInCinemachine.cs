@@ -60,8 +60,9 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     }
     public void ScreenShake_S()
     {
-        ShakeAmplitude = 3f;
-        ShakeFrequency = 0.3f;
+        VirtualCamera.GetCinemachineComponent<Cinemachine.NoiseSettings>() = none;
+        ShakeAmplitude = 4f;
+        ShakeFrequency = 0.5f;
         ShakeElapsedTime = .6f;
         DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .6f).SetEase(Ease.OutSine);
     }

@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem rebirthParticle;
     public ParticleSystem dashParticleR;
     public ParticleSystem dashParticleL;
+    public ParticleSystem DashToWallParticle;
 
     void Start()
     {
@@ -92,6 +93,11 @@ public class PlayerMovement : MonoBehaviour
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
+        }
+        if (isAnimDash && IsPushWall())
+        {
+            DashToWallParticle.Play();
+            GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         }
 
         if (IsPushWall() || coll.OnGround()) isJump = false;

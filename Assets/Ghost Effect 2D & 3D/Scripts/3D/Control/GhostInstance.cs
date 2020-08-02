@@ -56,7 +56,7 @@ public class GhostInstance : MonoBehaviour {
         if (onGhost)
         {
             i++;
-            if (i % 6 == 2)
+            if (i ==1 || i==6 || i==13 || i == 20)
             {
                 GameObject Ghost = Instantiate(playerGhost, transform.position, transform.rotation);
             }
