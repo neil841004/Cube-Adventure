@@ -88,7 +88,10 @@ public class PlayerMovement : MonoBehaviour
         //衝刺
         if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath)
         {
-            if (xRaw != 0) Dash(xRaw);
+            if (xRaw != 0) { 
+                Dash(xRaw);
+                GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
+            }
         }
         if (!isDash && !IsPushWall())
         {
@@ -97,8 +100,6 @@ public class PlayerMovement : MonoBehaviour
         if (isAnimDash && IsPushWall())
         {
             DashToWallParticle.Play();
-            GameObject.FindWithTag("GM").SendMessage("ResetShake");
-            GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         }
 
         if (IsPushWall() || coll.OnGround()) isJump = false;
@@ -359,8 +360,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
-        GameObject.FindWithTag("GM").SendMessage("ResetShake");
-        GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
     }

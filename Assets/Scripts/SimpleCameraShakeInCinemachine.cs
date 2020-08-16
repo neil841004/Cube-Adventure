@@ -31,12 +31,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO: Replace with your trigger
-        if (Input.GetKey(KeyCode.S))
-        {
-            ScreenShake_L();
-        }
-
+        //Debug.Log(ShakeElapsedTime);
         // If the Cinemachine componet is not set, avoid update
         if (VirtualCamera != null && virtualCameraNoise != null)
         {
@@ -58,12 +53,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
             }
         }
     }
-    public void ResetShake()
-    {
-        ShakeAmplitude = 0f;
-        ShakeFrequency = 0f;
-        ShakeElapsedTime = 0f;
-    }
+    
     public void ScreenShake_S()
     {
         ShakeAmplitude = 4f;
@@ -77,9 +67,9 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     {
         ShakeAmplitude = 6f;
         ShakeFrequency = 0.09f;
-        ShakeElapsedTime = 1.3f;
+        ShakeElapsedTime = 1.4f;
         shakeTimeS.Kill();
         shakeTimeL.PlayForward();
-        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.3f).SetEase(Ease.OutSine);
+        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.4f).SetEase(Ease.OutSine);
     }
 }
