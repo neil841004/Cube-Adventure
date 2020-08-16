@@ -61,8 +61,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Polish")]
     public ParticleSystem deathParticle;
     public ParticleSystem rebirthParticle;
-    public ParticleSystem dashParticleR;
-    public ParticleSystem dashParticleL;
     public ParticleSystem DashToWallParticle;
 
     private TrailRenderer trail;
@@ -94,12 +92,10 @@ public class PlayerMovement : MonoBehaviour
             if (xRaw != 0) { 
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
-                dashParticleR.Play();
-
             }
         }
         //衝刺Trail
-        if (!isAnimDash && trail.time > 0) trail.time -= 0.0055f;
+        if (!isAnimDash && trail.time > 0f) trail.time -= 0.0041f;
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
@@ -360,7 +356,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
-        trail.time = 0.47f;
+        trail.time = 0.6f;
         anim.Play("Dash");
         cubeMesh.GetComponent<GhostInstance>().onGhost = true;
         //if (xRaw == 1)dashParticleL.Play();
