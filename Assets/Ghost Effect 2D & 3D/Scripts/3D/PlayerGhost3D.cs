@@ -50,5 +50,6 @@ public class PlayerGhost3D : MonoBehaviour {
 
             Destroy(gameObject);
         }
+
     }
 }

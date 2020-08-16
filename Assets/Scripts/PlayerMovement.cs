@@ -65,12 +65,15 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem dashParticleL;
     public ParticleSystem DashToWallParticle;
 
+    private TrailRenderer trail;
+
     void Start()
     {
         // Time.timeScale = 0.15f;
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
+        trail = this.GetComponentInChildren<TrailRenderer>();
     }
 
     void Update()
@@ -91,12 +94,17 @@ public class PlayerMovement : MonoBehaviour
             if (xRaw != 0) { 
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
+                dashParticleR.Play();
+
             }
         }
+        //衝刺Trail
+        if (!isAnimDash && trail.time > 0) trail.time -= 0.0055f;
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
         }
+        //撞牆噴粒子
         if (isAnimDash && IsPushWall())
         {
             DashToWallParticle.Play();
@@ -352,6 +360,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
+        trail.time = 0.47f;
         anim.Play("Dash");
         cubeMesh.GetComponent<GhostInstance>().onGhost = true;
         //if (xRaw == 1)dashParticleL.Play();
@@ -432,7 +441,6 @@ public class PlayerMovement : MonoBehaviour
         if (coll.CompareTag("Hazard") && !isDeath)
         {
             deathParticle.Play();
-            GameObject.FindWithTag("GM").SendMessage("ResetShake");
             GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
             cube.gameObject.SetActive(false);
             isDeath = true;
