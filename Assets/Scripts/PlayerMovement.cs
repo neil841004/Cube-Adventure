@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((!IsPushWall() && coll.OnGround()) || (IsPushWall() && coll.OnGround()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) startJump = true;
+            if ((coll.OnGroundJump() || (coll.OnEdge() && !coll.OnWall() && canEdgeJump))&& rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //衝刺Trail
-        if (!isAnimDash && trail.time > 0f) trail.time -= 0.0041f;
+        if (!isAnimDash && trail.time > 0f) trail.time -= 0.0047f;
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
@@ -264,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (startJump)
             {
+                StopCoroutine("JumpSetTrue");
                 isJump = true;
                 hasDashed = true;
                 rb.velocity = new Vector3(rb.velocity.x, 0);
@@ -356,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
-        trail.time = 0.6f;
+        trail.time = 0.52f;
         anim.Play("Dash");
         cubeMesh.GetComponent<GhostInstance>().onGhost = true;
         //if (xRaw == 1)dashParticleL.Play();
@@ -367,6 +368,15 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
+    }
+
+    IEnumerator JumpSetTrue()
+    {
+        startJump = true;
+        yield return new WaitForSeconds(0.5f);
+        if ( startJump ) {
+            startJump = false;
+        }
     }
     IEnumerator DashWait()
     {

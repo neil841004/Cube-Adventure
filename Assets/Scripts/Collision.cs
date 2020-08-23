@@ -11,6 +11,7 @@ public class Collision : MonoBehaviour
 
     public Collider[] onGround;
     public Collider[] onGroundDash;
+    public Collider[] onGroundJump;
     public Collider[] onEdge;
     public Collider[] onRightWall;
     public Collider[] onLeftWall;
@@ -24,7 +25,8 @@ public class Collision : MonoBehaviour
     public Vector3 collisoinSideRadius;
     public Vector3 collisoinEdgeRadius;
     public Vector3 collisoinDashRadius;
-    public Vector3 bottomOffset, bottomEdgeOffset, rightOffset, leftOffset, upOffset;
+    public Vector3 collisoinJumpRadius;
+    public Vector3 bottomOffset, bottomEdgeOffset, bottomJumpOffset, rightOffset, leftOffset, upOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class Collision : MonoBehaviour
         OnEdge();
         OnUpWall();
         OnGroundDash();
+        OnGroundJump();
     }
     public bool OnGround()
     {
@@ -54,6 +57,15 @@ public class Collision : MonoBehaviour
     {
         onGroundDash = Physics.OverlapBox(transform.position + bottomOffset, collisoinDashRadius, Quaternion.identity, groundLayer);
         if (onGround.Length > 0)
+        {
+            return true;
+        }
+        else return false;
+    }
+    public bool OnGroundJump()
+    {
+        onGroundJump = Physics.OverlapBox(transform.position + bottomJumpOffset, collisoinJumpRadius, Quaternion.identity, groundLayer);
+        if (onGroundJump.Length > 0)
         {
             return true;
         }
@@ -97,6 +109,7 @@ public class Collision : MonoBehaviour
         Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinRadius * 2);
         Gizmos.DrawWireCube(this.transform.position + upOffset, collisoinRadius * 2);
         Gizmos.DrawWireCube(this.transform.position + bottomOffset, collisoinDashRadius * 2);
+        Gizmos.DrawWireCube(this.transform.position + bottomJumpOffset, collisoinJumpRadius * 2);
         Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius * 2);
     }
 }

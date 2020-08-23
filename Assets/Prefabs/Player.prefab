@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678306668}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.073, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8420494392226126252}
@@ -80,16 +80,16 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.85294116
-        inSlope: -1.3337893
-        outSlope: -1.3337893
+        value: 0.7573525
+        inSlope: -1.1969275
+        outSlope: -1.1969275
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.13782051
+        outWeight: 0.1474359
       - serializedVersion: 3
         time: 1
-        value: 0.25735474
+        value: 0.14705658
         inSlope: -0.20855616
         outSlope: -0.20855616
         tangentMode: 0
@@ -9876,8 +9876,6 @@ MonoBehaviour:
   cubeMesh: {fileID: 8420494392178864084}
   deathParticle: {fileID: 8420494391875880238}
   rebirthParticle: {fileID: 8420494391643885310}
-  dashParticleR: {fileID: 0}
-  dashParticleL: {fileID: 0}
   DashToWallParticle: {fileID: 8420494392596982678}
 --- !u!114 &8420494392226126248
 MonoBehaviour:
