@@ -359,7 +359,6 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = true;
         trail.time = 0.52f;
         anim.Play("Dash");
-        cubeMesh.GetComponent<GhostInstance>().onGhost = true;
         //if (xRaw == 1)dashParticleL.Play();
         //if(xRaw == -1)dashParticleR.Play();
         rb.velocity = Vector2.zero;
