@@ -8,14 +8,13 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Player
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 18b3325d96afffc48a5fd75f54be611a, type: 3}
+  m_ShaderKeywords: ENABLE_SCREEN_DOOR_TRANSPARENCY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -73,21 +72,29 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Alpha: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
+    - _CelValueMax: 0.22
+    - _CelValueMin: 0.01
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DiffuseThreshold: 0.629
     - _DstBlend: 0
+    - _EdgeThickness: 5.39
     - _EnvironmentReflections: 1
+    - _Fog: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Gray: 1
+    - _LambertAddValue: 0.609
     - _LitOutlineThickness: 0.38
     - _Metallic: 0
     - _Mode: 0
+    - _NegativeColor: 0
     - _OcclusionStrength: 1
     - _Outline: 0.0027
     - _OutlineWidth: 0.01
@@ -96,6 +103,7 @@ Material:
     - _ReceiveShadows: 1
     - _RimAmount: 0.716
     - _RimThreshold: 0.1
+    - _ScreenDoorTransparency: 1
     - _Shininess: 10
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -105,6 +113,7 @@ Material:
     - _UVSec: 0
     - _UnlitOutlineThickness: 0.075
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
@@ -112,10 +121,16 @@ Material:
     - _Color: {r: 0.9529412, g: 0.81960785, b: 0.07450981, a: 1}
     - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FinalAddColor: {r: 0, g: 0, b: 0, a: 0}
+    - _OutLineColor: {r: 1, g: 0.985192, b: 0, a: 1}
     - _OutlineColor: {r: 0.8692364, g: 1, b: 0.0047169924, a: 1}
+    - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
+    - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ShadowColor: {r: 0.7311321, g: 0.8050454, b: 1, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    - _TintColor: {r: 0.9019608, g: 0.8877266, b: 0.40000004, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4383087602695100237
 MonoBehaviour:

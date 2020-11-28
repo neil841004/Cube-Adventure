@@ -57,19 +57,19 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     public void ScreenShake_S()
     {
         ShakeAmplitude = 4f;
-        ShakeFrequency = 0.5f;
-        ShakeElapsedTime = .6f;
+        ShakeFrequency = 0.2f;
+        ShakeElapsedTime = 0.55f;
         shakeTimeL.Kill();
         shakeTimeS.PlayForward();
-        shakeTimeS = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .6f).SetEase(Ease.OutSine);
+        shakeTimeS = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .55f).SetEase(Ease.OutSine);
     }
     public void ScreenShake_L()
     {
-        ShakeAmplitude = 6f;
-        ShakeFrequency = 0.09f;
-        ShakeElapsedTime = 1.4f;
+        ShakeAmplitude = 9f;
+        ShakeFrequency = 0.06f;
+        ShakeElapsedTime = 1.5f;
         shakeTimeS.Kill();
         shakeTimeL.PlayForward();
-        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.4f).SetEase(Ease.OutSine);
+        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.5f).SetEase(Ease.OutSine);
     }
 }

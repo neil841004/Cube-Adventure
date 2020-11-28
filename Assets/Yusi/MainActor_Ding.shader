@@ -17,18 +17,17 @@
 		[Header(Shadow)]
 		_ShadowColor ("陰影顏色", Color) = (1, 1, 1, 1)
 		[Header(Shadow_Lambert)]
-		_LambertAddValue ("Lambert Add", Range(0, 1)) = 0.7
+		_CelValueMin ("_CelValueMin", Range(0, 1)) = 0.4
+		_CelValueMax("_CelValueMax", Range(0, 1)) = 0.5
 		
 		[Toggle(ENABLE_FOG)] _Fog("Enable Fog", Float) = 0
 
 		[Toggle(ENABLE_SCREEN_DOOR_TRANSPARENCY)] _ScreenDoorTransparency("Enable Screen Door Transparency", Float) = 0
 		_Alpha("Alpha", Float) = 1
-		_Gray("Gray", Range(0, 1)) = 1
 
 		[Enum(Off, 0, On, 1)] _ZWrite("ZWrite", Float) = 1
 		[Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("Depth test", Float) = 4
 
-		[Toggle(ENABLE_NEGATIVE_COLOR)] _NegativeColor("Negative Color", Float) = 0
 			
     }
     SubShader
@@ -70,7 +69,7 @@
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
             
-			float _LambertAddValue;
+			float _CelValueMin,_CelValueMax;
 			half3 _ShadowColor;
 
 			float _Alpha;
@@ -78,10 +77,7 @@
 			float3 _FinalAddColor;
 			float3 _TintColor;
 
-			float4 _PointLightPos;
-			float4 _PointLightColor;
-
-			float4 _ChDirLight;
+			float4 _WorldSpaceLightPos0;
 
             struct a2v
             {
@@ -163,8 +159,6 @@
 				clip(_Alpha - threshold);
 #endif
 
-				_MainLightPosition.xyz = _ChDirLight.xyz;
-
                 float4 diffuseColor = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv);
                 float3 combinedColor = diffuseColor;
 				
@@ -179,36 +173,17 @@
                 //JOJO蘭伯特
                 Light mainLight = GetMainLight();
 				half Ndot = saturate(dot(input.normalWS, _MainLightPosition.xyz));
-                float lambert = Lambert(_MainLightPosition.xyz, input.normalWS);
+                float lambert = Lambert(_WorldSpaceLightPos0.xyz, input.normalWS);
 				
-				if(lambert > 0.3)
-					attenuation = min(attenuation,lambert + _LambertAddValue);
-				else
-					attenuation = 0;
+				attenuation = smoothstep(_CelValueMin, _CelValueMax, lambert);
 
 				combinedColor = lerp(shadowColor, combinedColor, attenuation);
-
-				float3 pointLightDir = _PointLightPos - input.posWS;
-				float distances = distance(_PointLightPos, input.posWS);
-				lambert = Lambert(pointLightDir, input.normalWS);
-				float strength = lambert * (max(0, _PointLightPos.w - distances) / _PointLightPos.w);
-				if (strength > 0.3)
-					strength = 1;
-				else
-					strength = 0;
-
-				combinedColor += strength * _PointLightColor;
 
 #if ENABLE_FOG
 				combinedColor.rgb = MixFog(combinedColor, input.fogFactor);
 				combinedColor.rgb = lerp(combinedColor, 1, input.fogFactor * 0.3);
 #endif
 
-				float gray = (combinedColor.r + combinedColor.g + combinedColor.b) / 3;
-				combinedColor.rgb = lerp(gray, combinedColor.rgb, _Gray);
-#if ENABLE_NEGATIVE_COLOR
-				combinedColor.rgb = 1 - combinedColor.rgb;
-#endif
 				combinedColor.rgb += _FinalAddColor.rgb;
 				
                 return float4(combinedColor * _TintColor, 1);
@@ -270,7 +245,11 @@
 		Pass
 		{
 			Name "Outline"
-
+			Tags
+			{
+				"RenderType" = "Opaque"
+				"LightMode" = "Outline"
+			}
 			Cull Front
 			ZTest Less
 			//Blend[_SourceBlend][_DestBlend]
@@ -287,6 +266,7 @@
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
+
 
 			float _EdgeThickness = 1.0;
 			float4 _OutLineColor;

@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isAnimDash = false; //衝刺動畫
 
     public bool isDeath = false;
-    bool isDeathNotBack =false; //死亡後還沒回歸原位之前
+    bool isDeathNotBack = false; //死亡後還沒回歸原位之前
 
     [Space]
     [Header("Object")]
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem rebirthParticle;
     public ParticleSystem DashToWallParticle;
 
-    private TrailRenderer trail;
+    public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
 
     void Start()
     {
@@ -71,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
-        trail = this.GetComponentInChildren<TrailRenderer>();
     }
 
     void Update()
@@ -82,20 +81,28 @@ public class PlayerMovement : MonoBehaviour
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((coll.OnGroundJump() || (coll.OnEdge() && !coll.OnWall() && canEdgeJump))&& rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
+            if ((coll.OnGroundJump() || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
         //衝刺
         if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath)
         {
-            if (xRaw != 0) { 
+            if (xRaw != 0)
+            {
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
             }
         }
         //衝刺Trail
-        if (!isAnimDash && trail.time > 0f) trail.time -= 0.0047f;
+        if (!isAnimDash && trail_5.time > 0f)
+        {
+            trail_1.time -= 0.0047f;
+            trail_2.time -= 0.0047f;
+            trail_3.time -= 0.0047f;
+            trail_4.time -= 0.0047f;
+            trail_5.time -= 0.0047f;
+        }
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
@@ -357,7 +364,11 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
-        trail.time = 0.52f;
+        trail_1.time = 0.38f;
+        trail_2.time = 0.27f;
+        trail_3.time = 0.21f;
+        trail_4.time = 0.35f;
+        trail_5.time = 0.48f;
         anim.Play("Dash");
         //if (xRaw == 1)dashParticleL.Play();
         //if(xRaw == -1)dashParticleR.Play();
@@ -373,7 +384,8 @@ public class PlayerMovement : MonoBehaviour
     {
         startJump = true;
         yield return new WaitForSeconds(0.5f);
-        if ( startJump ) {
+        if (startJump)
+        {
             startJump = false;
         }
     }
@@ -462,13 +474,13 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         isDeathNotBack = false;
         transform.position = new Vector3(1.75f, 2.75f, -0.5f);
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0;
+        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
+        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0;
         yield return new WaitForSeconds(.5f);
         GameObject.FindWithTag("GM").SendMessage("ResetLevel");
         transform.position = new Vector3(1.75f, 2.75f, -0.5f);
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.65f;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = .8f;
+        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.65f;
+        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = .8f;
         rebirthParticle.Play();
         cube.gameObject.SetActive(true);
         isDeath = false;
