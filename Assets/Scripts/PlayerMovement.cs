@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPoint;
+    Tween rbTween;
 
     void Start()
     {
@@ -277,10 +278,20 @@ public class PlayerMovement : MonoBehaviour
         {
             if (startJump)
             {
+                if (isDash  && coll.OnGroundDash()) 
+                {
+                    
+                    StopCoroutine("DashWait");
+                    StopCoroutine("NextDash");
+                    GetComponent<BetterJumping>().enabled = true;
+                    rb.useGravity = true;
+                    GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+                    rbTween.Kill();
+                    rbTween = DOVirtual.Float(2, 0, 0.6f, RigidbodyDrag);
+                    StartCoroutine("DashJump");
+                }
                 StopCoroutine("JumpSetTrue");
                 isJump = true;
-
-                //hasDashed = true;
                 rb.velocity = new Vector3(rb.velocity.x, 0);
                 rb.AddForce(Vector3.up * jumpForce);
                 isJumpUp = true;
@@ -396,7 +407,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator DashWait()
     {
-        DOVirtual.Float(7, 0, 1f, RigidbodyDrag);
+        rbTween = DOVirtual.Float(7, 0, 1f, RigidbodyDrag);
         canMove = false;
         GetComponent<BetterJumping>().enabled = false;
         rb.useGravity = false;
@@ -416,6 +427,16 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.6f);
         isDash = false;
         if (coll.OnGroundDash() && !IsPushWall()) hasDashed = true;
+    }
+    IEnumerator DashJump()
+    {
+        
+        yield return new WaitForSeconds(.15f);
+        canMove = true;
+        isAnimDash = false;
+        yield return new WaitForSeconds(.25f);
+        isDash = false;
+        hasDashed = true;
     }
 
     //衝刺時的阻力
