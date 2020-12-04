@@ -127,10 +127,10 @@ Material:
     - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0.7311321, g: 0.8050454, b: 1, a: 1}
+    - _ShadowColor: {r: 1, g: 0.7076946, b: 0.5882353, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-    - _TintColor: {r: 0.9019608, g: 0.8877266, b: 0.40000004, a: 1}
+    - _TintColor: {r: 1, g: 0.96875006, b: 0, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4383087602695100237
 MonoBehaviour:

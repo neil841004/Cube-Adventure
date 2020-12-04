@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem DashToWallParticle;
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
+    public Vector3 EntryPoint, checkPoint;
 
     void Start()
     {
@@ -71,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
+        EntryPoint = this.transform.position;
+        checkPoint = EntryPoint;
     }
 
     void Update()
@@ -81,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if ((coll.OnGroundJump() || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
+            if (((coll.OnGroundJump()&&!IsPushWall()) || (coll.OnGround()&&IsPushWall()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
@@ -124,11 +127,11 @@ public class PlayerMovement : MonoBehaviour
         // 重置
         if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.position = new Vector3(1.75f, 2.75f, -0.5f);
+            transform.position = EntryPoint;
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
-            transform.position = new Vector3(6.038958f, 10.25f, -0.5f);
+            transform.position = checkPoint;
         }
 
         // 蹬牆轉向時速度增加
@@ -145,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //黏牆動畫
-        if (IsPushWall() || isStickWall)
+        if ((IsPushWall() || isStickWall) && !isDeath)
         {
             isPushWallAnim = true;
             cubeMesh.transform.DOKill();
@@ -245,7 +248,10 @@ public class PlayerMovement : MonoBehaviour
             if (!isWallJump)
             {
                 StopCoroutine("DisableMovement");
-                canMove = true;
+                if (!isDeath)
+                {
+                    canMove = true;
+                }    
                 DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
             }
         }
@@ -273,7 +279,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 StopCoroutine("JumpSetTrue");
                 isJump = true;
-                hasDashed = true;
+
+                //hasDashed = true;
                 rb.velocity = new Vector3(rb.velocity.x, 0);
                 rb.AddForce(Vector3.up * jumpForce);
                 isJumpUp = true;
@@ -370,8 +377,6 @@ public class PlayerMovement : MonoBehaviour
         trail_4.time = 0.35f;
         trail_5.time = 0.48f;
         anim.Play("Dash");
-        //if (xRaw == 1)dashParticleL.Play();
-        //if(xRaw == -1)dashParticleR.Play();
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(x, 0);
         rb.velocity += dir.normalized * dashSpeed;
@@ -396,7 +401,10 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<BetterJumping>().enabled = false;
         rb.useGravity = false;
         yield return new WaitForSeconds(.15f);
-        canMove = true;
+        if (!isDeath)
+        {
+            canMove = true;
+        }
         isAnimDash = false;
         GetComponent<BetterJumping>().enabled = true;
         rb.useGravity = true;
@@ -429,7 +437,10 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         speed = 0;
         yield return new WaitForSeconds(.23f);
-        canMove = true;
+        if (!isDeath)
+        {
+            canMove = true;
+        }
         isWallJump = false;
         if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
     }
@@ -459,7 +470,7 @@ public class PlayerMovement : MonoBehaviour
         {
             deathParticle.Play();
             GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
-            cube.gameObject.SetActive(false);
+            //cube.gameObject.SetActive(false);
             isDeath = true;
             isDeathNotBack = true;
             StartCoroutine("Rebirth");
@@ -468,21 +479,35 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator Rebirth()
     {
-        FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
-        yield return new WaitForSeconds(.4f);
+        //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
+        cubeMesh.transform.DOScale(0,0.5f).SetEase(Ease.OutQuart);
+
+        yield return new WaitForSeconds(.2f);
         GameObject.FindWithTag("GM").SendMessage("Death");
-        yield return new WaitForSeconds(.3f);
+        cubeMesh.SetActive(false);
+        canMove = false;
+        yield return new WaitForSeconds(.45f);
+        transform.position = checkPoint;
         isDeathNotBack = false;
-        transform.position = new Vector3(1.75f, 2.75f, -0.5f);
-        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0;
-        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0;
-        yield return new WaitForSeconds(.5f);
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0;
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 0;
+
+        yield return new WaitForSeconds(.4f);
         GameObject.FindWithTag("GM").SendMessage("ResetLevel");
-        transform.position = new Vector3(1.75f, 2.75f, -0.5f);
-        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.65f;
-        //GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = .8f;
+        transform.position = checkPoint;
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0.65f;
+        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 1.5f;
+        
+        yield return new WaitForSeconds(.2f);
+        hasDashed = false;
+        cubeMesh.SetActive(true);
+        rb.velocity = Vector2.zero;
         rebirthParticle.Play();
-        cube.gameObject.SetActive(true);
+        transform.position = checkPoint;
+        cubeMesh.transform.DOScale(0.5f, 1.3f).SetEase(Ease.OutElastic);
         isDeath = false;
+
+        yield return new WaitForSeconds(.4f);
+        canMove = true;
     }
 }

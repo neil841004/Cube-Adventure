@@ -5,9 +5,15 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public UnityEvent start = new UnityEvent();
     public UnityEvent death = new UnityEvent();
     public UnityEvent resetLevel = new UnityEvent();
     // Start is called before the first frame update
+    private void Awake()
+    {
+        start.Invoke();
+    }
+
     void Start()
     {
 

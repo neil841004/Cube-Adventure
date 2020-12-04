@@ -85,8 +85,8 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _CelValueMax: 0.166
-    - _CelValueMin: 0
+    - _CelValueMax: 0.432
+    - _CelValueMin: 0.128
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -129,5 +129,5 @@ Material:
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowColor: {r: 0.16642934, g: 0.6415094, b: 0.58162147, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.9622642, g: 0.30980393, b: 0.56078434, a: 1}
+    - _TintColor: {r: 0.9622641, g: 0.3098039, b: 0.5607843, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
