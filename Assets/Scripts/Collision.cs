@@ -9,6 +9,10 @@ public class Collision : MonoBehaviour
 
     [Space]
 
+    public bool onMovePF = false;
+
+    [Space]
+
     public Collider[] onGround;
     public Collider[] onGroundDash;
     public Collider[] onGroundJump;
@@ -37,11 +41,12 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        OnGroundDash();
         OnGround();
         OnWall();
         OnEdge();
         OnUpWall();
-        OnGroundDash();
+        
         OnGroundJump();
     }
     public bool OnGround()
@@ -51,16 +56,30 @@ public class Collision : MonoBehaviour
         {
             return true;
         }
-        else return false;
+        else 
+        {
+            if (onMovePF == true) return true;
+            return false; 
+        }
     }
     public bool OnGroundDash()
     {
         onGroundDash = Physics.OverlapBox(transform.position + bottomOffset, collisoinDashRadius, Quaternion.identity, groundLayer);
-        if (onGround.Length > 0)
+        if (onGroundDash.Length > 0)
         {
+            if (onGroundDash[0].tag == "MovePF")
+            {
+                this.transform.parent = onGroundDash[0].transform;
+                onMovePF = true;
+            }
             return true;
         }
-        else return false;
+        else
+        {
+            this.transform.parent = null;
+            onMovePF = false;
+            return false;
+        }
     }
     public bool OnGroundJump()
     {
@@ -112,4 +131,6 @@ public class Collision : MonoBehaviour
         Gizmos.DrawWireCube(this.transform.position + bottomJumpOffset, collisoinJumpRadius * 2);
         Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius * 2);
     }
+
+    
 }
