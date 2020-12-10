@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if (((coll.OnGroundJump()&&!IsPushWall()) || (coll.OnGround()&&IsPushWall()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1) StartCoroutine("JumpSetTrue");
+            if (((coll.OnGroundJump()&&!IsPushWall()) || (coll.OnGround()&&IsPushWall()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1.5f) StartCoroutine("JumpSetTrue");
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsPushWall() || coll.OnGround()) isJump = false;
 
         //判斷落下
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < 0 || coll.OnGround())
         {
             isJumpUp = false;
         }
@@ -424,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator NextDash()
     {
-        yield return new WaitForSeconds(.6f);
+        yield return new WaitForSeconds(.5f);
         isDash = false;
         if (coll.OnGroundDash() && !IsPushWall()) hasDashed = true;
     }

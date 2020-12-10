@@ -45,8 +45,7 @@ public class Collision : MonoBehaviour
         OnGround();
         OnWall();
         OnEdge();
-        OnUpWall();
-        
+        OnUpWall();   
         OnGroundJump();
     }
     public bool OnGround()

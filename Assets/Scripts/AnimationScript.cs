@@ -42,5 +42,6 @@ public class AnimationScript : MonoBehaviour
         anim.SetFloat("ySpeed", rb.velocity.y);
         anim.SetFloat("xSpeed", Mathf.Abs(rb.velocity.x));
         anim.SetFloat("fallLandSpeed", move.fallLandSpeed);
+        anim.SetInteger("wallSide", wallSide);
     }
 }
