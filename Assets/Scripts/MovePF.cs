@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MovePF : MonoBehaviour
 {
@@ -14,5 +15,9 @@ public class MovePF : MonoBehaviour
     void Update()
     {
         
+    }
+    private void FixedUpdate()
+    {
+        this.transform.DOMoveY(-3, 2).SetLoops(-1).SetDelay(2).SetEase(Ease.Linear);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Collision : MonoBehaviour
 {
@@ -66,9 +67,10 @@ public class Collision : MonoBehaviour
         onGroundDash = Physics.OverlapBox(transform.position + bottomOffset, collisoinDashRadius, Quaternion.identity, groundLayer);
         if (onGroundDash.Length > 0)
         {
-            if (onGroundDash[0].tag == "MovePF")
+            if (onGroundDash[0].tag == "MovePF") //站到移動平台上
             {
                 this.transform.parent = onGroundDash[0].transform;
+                Physics.autoSyncTransforms = true;
                 onMovePF = true;
             }
             return true;
@@ -76,6 +78,7 @@ public class Collision : MonoBehaviour
         else
         {
             this.transform.parent = null;
+            Physics.autoSyncTransforms = false;
             onMovePF = false;
             return false;
         }

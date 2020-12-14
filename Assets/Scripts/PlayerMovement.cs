@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public float fallMultiplier = 2.35f;
 
     float x;
-    float xRaw;
+    public float xRaw;
 
     [Space]
 
@@ -101,11 +101,11 @@ public class PlayerMovement : MonoBehaviour
         //衝刺Trail
         if (!isAnimDash && trail_5.time > 0f)
         {
-            trail_1.time -= 0.0047f;
-            trail_2.time -= 0.0047f;
-            trail_3.time -= 0.0047f;
-            trail_4.time -= 0.0047f;
-            trail_5.time -= 0.0047f;
+            trail_1.time -= 0.006f;
+            trail_2.time -= 0.006f;
+            trail_3.time -= 0.006f;
+            trail_4.time -= 0.006f;
+            trail_5.time -= 0.006f;
         }
         if (!isDash && !IsPushWall())
         {
