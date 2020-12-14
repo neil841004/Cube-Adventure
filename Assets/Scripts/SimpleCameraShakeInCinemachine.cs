@@ -14,6 +14,8 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
 
     private float ShakeElapsedTime = 0f;
 
+    private int bodyDownCount = 0;
+
     // Cinemachine Shake
     public CinemachineVirtualCamera VirtualCamera;
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
@@ -31,6 +33,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bodyDownCount = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().bodyDownCount;
         //Debug.Log(ShakeElapsedTime);
         // If the Cinemachine componet is not set, avoid update
         if (VirtualCamera != null && virtualCameraNoise != null)
@@ -51,11 +54,22 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
                 virtualCameraNoise.m_AmplitudeGain = 0f;
                 ShakeElapsedTime = 0f;
             }
+            if (bodyDownCount > 10 && ShakeElapsedTime <= 0)
+            {
+                virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
+                virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
+            }
+            else if (bodyDownCount <= 10 && ShakeElapsedTime <= 0)
+            {
+                virtualCameraNoise.m_AmplitudeGain = 0f;
+                virtualCameraNoise.m_FrequencyGain = 0f;
+            }
         }
     }
     
     public void ScreenShake_S()
     {
+        bodyDownCount = 0;
         ShakeAmplitude = 4f;
         ShakeFrequency = 0.2f;
         ShakeElapsedTime = 0.55f;
@@ -65,6 +79,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     }
     public void ScreenShake_L()
     {
+        bodyDownCount = 0;
         ShakeAmplitude = 9f;
         ShakeFrequency = 0.06f;
         ShakeElapsedTime = 1.5f;
@@ -72,4 +87,5 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
         shakeTimeL.PlayForward();
         shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.5f).SetEase(Ease.OutSine);
     }
+
 }

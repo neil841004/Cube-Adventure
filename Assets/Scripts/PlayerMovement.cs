@@ -22,7 +22,13 @@ public class PlayerMovement : MonoBehaviour
     public float fallMultiplier = 2.35f;
 
     float x;
-    public float xRaw;
+    public float xRaw, yRaw;
+
+
+    [Space]
+
+    [Header("Int")]
+    public int bodyDownCount = 0;
 
     [Space]
 
@@ -49,6 +55,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isAnimDash = false; //衝刺動畫
 
     public bool isDeath = false;
+    public bool bodyDown = false;
+    public bool isDownJump = false;
     bool isDeathNotBack = false; //死亡後還沒回歸原位之前
 
     [Space]
@@ -81,6 +89,17 @@ public class PlayerMovement : MonoBehaviour
     {
         x = Input.GetAxis("Horizontal");
         xRaw = Input.GetAxisRaw("Horizontal");
+        yRaw = Input.GetAxisRaw("Vertical");
+
+        //下壓身體
+        if (yRaw == -1 &&!isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround())
+        {
+            bodyDown = true;
+        }
+        else if (yRaw != -1 || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        {
+            bodyDown = false;
+        }
 
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
@@ -106,16 +125,27 @@ public class PlayerMovement : MonoBehaviour
             trail_3.time -= 0.006f;
             trail_4.time -= 0.006f;
             trail_5.time -= 0.006f;
+        } else if (trail_5.time < 0f) {
+            trail_1.enabled = false;
+            trail_2.enabled = false;
+            trail_3.enabled = false;
+            trail_4.enabled = false;
+            trail_5.enabled = false;
         }
+
+
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
         }
+
         //撞牆噴粒子
         if (isAnimDash && IsPushWall())
         {
             DashToWallParticle.Play();
         }
+
+        if (!isJump && !IsPushWall() || rb.velocity.y < 0) isDownJump = false;
 
         if (IsPushWall() || coll.OnGround()) isJump = false;
 
@@ -132,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.T))
         {
-            transform.position = checkPoint;
+            Death();
         }
 
         // 蹬牆轉向時速度增加
@@ -166,6 +196,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        BodyDown();
         if (!isDeath)
         {
             Move();
@@ -216,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
         }
-
+ 
         // 黏牆相關
         if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump) //持續黏牆
         {
@@ -265,6 +296,29 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void BodyDown() {
+        if (bodyDown)
+        {
+            canMove = false;
+            cubeMesh.transform.DOScale(new Vector3(0.7f, 0.22f, 0.7f), 0.3f);
+            cubeMesh.transform.DOLocalMoveY(-0.08f, 0.3f);
+            if(bodyDownCount < 50) bodyDownCount++;
+        }
+        else if (!bodyDown) 
+        {
+            if ((isJump || (yRaw != -1 && coll.OnGround())) && !isAnimDash) 
+            {
+                canMove = true;
+            }
+            if (!isDeath)
+            {
+                cubeMesh.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f);
+                cubeMesh.transform.DOLocalMoveY(0.08f, 0.3f);
+            }
+            bodyDownCount = 0;
+        }
+    }
+
     void Move()
     {
         if (IsPushWall() || !canMove || isStickWall) return;
@@ -293,7 +347,15 @@ public class PlayerMovement : MonoBehaviour
                 StopCoroutine("JumpSetTrue");
                 isJump = true;
                 rb.velocity = new Vector3(rb.velocity.x, 0);
-                rb.AddForce(Vector3.up * jumpForce);
+                if (bodyDownCount >= 50)
+                {
+                    isDownJump = true;
+                    rb.AddForce(Vector3.up * jumpForce * 2.25f);
+                }
+                else
+                {
+                    rb.AddForce(Vector3.up * jumpForce);
+                }
                 isJumpUp = true;
                 startJump = false;
                 canEdgeJump = false;
@@ -382,6 +444,11 @@ public class PlayerMovement : MonoBehaviour
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
+        trail_1.enabled = true;
+        trail_2.enabled = true;
+        trail_3.enabled = true;
+        trail_4.enabled = true;
+        trail_5.enabled = true;
         trail_1.time = 0.38f;
         trail_2.time = 0.27f;
         trail_3.time = 0.21f;
@@ -487,22 +554,22 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("Hazard") && !isDeath)
-        {
-            deathParticle.Play();
-            GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
-            //cube.gameObject.SetActive(false);
-            isDeath = true;
-            isDeathNotBack = true;
-            StartCoroutine("Rebirth");
-            DeathV3 = this.transform.position;
-        }
+        if (coll.CompareTag("Hazard") && !isDeath) Death();
+    }
+    public void Death() 
+    {
+        deathParticle.Play();
+        GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
+        isDeath = true;
+        isDeathNotBack = true;
+        StartCoroutine("Rebirth");
+        DeathV3 = this.transform.position;
+        cubeMesh.transform.DOScale(0,0.2f);
     }
     IEnumerator Rebirth()
     {
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
-        cubeMesh.transform.DOScale(0,0.5f).SetEase(Ease.OutQuart);
-
+        
         yield return new WaitForSeconds(.2f);
         GameObject.FindWithTag("GM").SendMessage("Death");
         cubeMesh.SetActive(false);

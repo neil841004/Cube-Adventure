@@ -58,7 +58,7 @@ public class Collision : MonoBehaviour
         }
         else 
         {
-            if (onMovePF == true) return true;
+            //if (onMovePF == true) return true;
             return false; 
         }
     }
