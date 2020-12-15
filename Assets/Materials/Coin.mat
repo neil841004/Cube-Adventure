@@ -76,14 +76,14 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _CelValueMax: 0.22
-    - _CelValueMin: 0.01
+    - _CelValueMax: 1
+    - _CelValueMin: 0.078
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DiffuseThreshold: 0.629
     - _DstBlend: 0
-    - _EdgeThickness: 5.39
+    - _EdgeThickness: 0
     - _EnvironmentReflections: 1
     - _Fog: 0
     - _GlossMapScale: 1
@@ -122,15 +122,15 @@ Material:
     - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FinalAddColor: {r: 0, g: 0, b: 0, a: 0}
-    - _OutLineColor: {r: 0.33107865, g: 0.754717, b: 0.44938004, a: 1}
+    - _OutLineColor: {r: 1, g: 0.9843137, b: 0, a: 1}
     - _OutlineColor: {r: 0.8692364, g: 1, b: 0.0047169924, a: 1}
     - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0.4575472, g: 0.7277912, b: 1, a: 1}
+    - _ShadowColor: {r: 1, g: 0.7058823, b: 0.5882353, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-    - _TintColor: {r: 0.9716981, g: 0.91728246, b: 0.2520915, a: 1}
+    - _TintColor: {r: 0, g: 1, b: 0.8580704, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4383087602695100237
 MonoBehaviour:

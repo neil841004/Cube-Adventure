@@ -114,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             if (xRaw != 0)
             {
                 Dash(xRaw);
-                GameObject.FindWithTag("GM").SendMessage("ScreenShake_S");
+                GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
             }
         }
         //衝刺Trail
@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = EntryPoint;
         }
-        else if (Input.GetKeyDown(KeyCode.T))
+        else if (Input.GetKeyDown(KeyCode.T) && !isDeath)
         {
             Death();
         }
@@ -315,7 +315,8 @@ public class PlayerMovement : MonoBehaviour
                 cubeMesh.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f);
                 cubeMesh.transform.DOLocalMoveY(0.08f, 0.3f);
             }
-            bodyDownCount = 0;
+            if (bodyDownCount > 0) bodyDownCount -= 5;
+            else bodyDownCount = 0;
         }
     }
 
@@ -323,6 +324,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsPushWall() || !canMove || isStickWall) return;
         float movement = x * speed;
+        //if (isWallJumpAnim && rb.velocity.y > -2f && xRaw == 0) movement = 0;
         rb.velocity = new Vector2(movement, rb.velocity.y);
     }
 
@@ -351,6 +353,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isDownJump = true;
                     rb.AddForce(Vector3.up * jumpForce * 2.25f);
+                    GameObject.FindWithTag("GM").SendMessage("ScreenShake_DownJump");
                 }
                 else
                 {
@@ -559,7 +562,7 @@ public class PlayerMovement : MonoBehaviour
     public void Death() 
     {
         deathParticle.Play();
-        GameObject.FindWithTag("GM").SendMessage("ScreenShake_L");
+        GameObject.FindWithTag("GM").SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;
         StartCoroutine("Rebirth");

@@ -4,6 +4,9 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.Events;
 using DG.Tweening;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 
 public class SimpleCameraShakeInCinemachine : MonoBehaviour
 {
@@ -22,12 +25,16 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
 
     Tweener shakeTimeS,shakeTimeL;
 
+    VolumeProfile profile;
+    ChromaticAberration myChromaticAberration;
+
     // Use this for initialization
     void Start()
     {
         // Get Virtual Camera Noise Profile
         if (VirtualCamera != null)
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
+         profile = GameObject.Find("PostEffect").GetComponent<Volume>().profile;
     }
 
     // Update is called once per frame
@@ -54,32 +61,44 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
                 virtualCameraNoise.m_AmplitudeGain = 0f;
                 ShakeElapsedTime = 0f;
             }
-            if (bodyDownCount > 10 && ShakeElapsedTime <= 0)
+            //if (bodyDownCount > 0 && ShakeElapsedTime <= 0)
+            //{
+            //    virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
+            //    virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;    
+            //}
+            if (bodyDownCount > 0) 
             {
-                virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
-                virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
+                if (ShakeElapsedTime <= 0)
+                {
+                    virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
+                    virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
+                }
+                profile.TryGet(out myChromaticAberration);
+                myChromaticAberration.intensity.Override(bodyDownCount * 0.02f);    
             }
-            else if (bodyDownCount <= 10 && ShakeElapsedTime <= 0)
-            {
-                virtualCameraNoise.m_AmplitudeGain = 0f;
-                virtualCameraNoise.m_FrequencyGain = 0f;
-            }
+            //else if (bodyDownCount <= 10 && ShakeElapsedTime <= 0)
+            //{
+            //    virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
+            //    virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
+            //    profile.TryGet(out myChromaticAberration);
+            //    myChromaticAberration.intensity.Override(bodyDownCount * 0.02f);
+            //}
         }
     }
     
-    public void ScreenShake_S()
+    public void ScreenShake_Dash()
     {
-        bodyDownCount = 0;
+
         ShakeAmplitude = 4f;
         ShakeFrequency = 0.2f;
         ShakeElapsedTime = 0.55f;
         shakeTimeL.Kill();
         shakeTimeS.PlayForward();
-        shakeTimeS = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, .55f).SetEase(Ease.OutSine);
+        shakeTimeS = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 0.55f).SetEase(Ease.OutSine);
     }
-    public void ScreenShake_L()
+    public void ScreenShake_Death()
     {
-        bodyDownCount = 0;
+
         ShakeAmplitude = 9f;
         ShakeFrequency = 0.06f;
         ShakeElapsedTime = 1.5f;
@@ -87,5 +106,14 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
         shakeTimeL.PlayForward();
         shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 1.5f).SetEase(Ease.OutSine);
     }
+    public void ScreenShake_DownJump()
+    {
 
+        ShakeAmplitude = 8f;
+        ShakeFrequency = 0.12f;
+        ShakeElapsedTime = 0.65f;
+        shakeTimeS.Kill();
+        shakeTimeL.PlayForward();
+        shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 0.65f).SetEase(Ease.OutSine);
+    }
 }

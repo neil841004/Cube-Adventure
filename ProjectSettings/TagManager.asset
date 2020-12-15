@@ -8,6 +8,7 @@ TagManager:
   - Camera
   - GM
   - MovePF
+  - PostEffect
   layers:
   - Default
   - TransparentFX
