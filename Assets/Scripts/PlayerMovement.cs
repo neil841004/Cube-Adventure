@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Int")]
     public int bodyDownCount = 0;
+    int wallJumpButtonCount = 0;
 
     [Space]
 
@@ -74,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPoint;
     Tween rbTween;
+    Tween walljumpTween;
 
     void Start()
     {
@@ -90,13 +92,12 @@ public class PlayerMovement : MonoBehaviour
         x = Input.GetAxis("Horizontal");
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
-
         //下壓身體
         if (yRaw == -1 &&!isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround())
         {
             bodyDown = true;
         }
-        else if (yRaw != -1 || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        if (yRaw != -1 || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
             bodyDown = false;
         }
@@ -175,7 +176,11 @@ public class PlayerMovement : MonoBehaviour
         //牆跳動畫
         if (isWallJumpAnim)
         {
-            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump) isWallJumpAnim = false;
+            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump)
+            {
+                isWallJumpAnim = false;
+                wallJumpButtonCount = 0;
+            }
         }
 
         //黏牆動畫
@@ -247,8 +252,12 @@ public class PlayerMovement : MonoBehaviour
         {
             GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
         }
- 
+
         // 黏牆相關
+        if (isWallJump)
+        {
+            StopCoroutine("StickWall");
+        }
         if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump) //持續黏牆
         {
             StopCoroutine("StickWall");
@@ -302,11 +311,15 @@ public class PlayerMovement : MonoBehaviour
             canMove = false;
             cubeMesh.transform.DOScale(new Vector3(0.7f, 0.22f, 0.7f), 0.3f);
             cubeMesh.transform.DOLocalMoveY(-0.08f, 0.3f);
-            if(bodyDownCount < 50) bodyDownCount++;
+            if (rb.velocity.x != 0 && !isDash && bodyDownCount <= 25)
+            {
+                rb.velocity = new Vector2(x * (5 - (bodyDownCount * 0.2f)), rb.velocity.y);
+            }
+            if (bodyDownCount < 50) bodyDownCount++;
         }
         else if (!bodyDown) 
         {
-            if ((isJump || (yRaw != -1 && coll.OnGround())) && !isAnimDash) 
+            if (((yRaw != -1 && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash) 
             {
                 canMove = true;
             }
@@ -322,9 +335,29 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        if (IsPushWall() || !canMove || isStickWall) return;
         float movement = x * speed;
-        //if (isWallJumpAnim && rb.velocity.y > -2f && xRaw == 0) movement = 0;
+
+        //WallJump位移修正
+        if (wallJumpButtonCount > 18)
+        {
+            isWallJumpAnim = false;
+            if (xRaw == 0) {
+                
+            }
+            wallJumpButtonCount = 0;
+        }
+        if (IsPushWall() || !canMove || isStickWall) return;
+        if (isWallJumpAnim && xRaw == 0) return;
+        if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
+        {
+            isWallJumpAnim = false;
+        }
+        if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
+        {
+            movement = xRaw * speed;
+            walljumpTween = DOTween.To(() => wallJumpButtonCount, x => wallJumpButtonCount = x, 11, 0.25f);
+        }
+
         rb.velocity = new Vector2(movement, rb.velocity.y);
     }
 
@@ -417,6 +450,7 @@ public class PlayerMovement : MonoBehaviour
     // 蹬牆跳
     void WallJump()
     {
+        walljumpTween.Kill();
         DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         rb.drag = 7.8f;
         isWallJump = true;
@@ -427,9 +461,10 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 2f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.3f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.3f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.35f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.35f);
         callWallJump = false;
+        wallJumpButtonCount = 0;
     }
 
     // 衝刺
@@ -552,8 +587,11 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
         yield return new WaitForSeconds(.35f);
         DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
-        isStickWall = false;
-        GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+        if (coll.wallSide != xRaw)
+        {
+            isStickWall = false;
+            GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+        }
     }
     private void OnTriggerEnter(Collider coll)
     {

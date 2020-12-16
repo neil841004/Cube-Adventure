@@ -112,7 +112,7 @@ public class Collision : MonoBehaviour
     }
     public bool OnWall()
     {
-        if(OnUpWall())return false;
+        //if(OnUpWall())return false;
         onRightWall = Physics.OverlapBox(transform.position + rightOffset, collisoinSideRadius, Quaternion.Euler(0, 0, 90), groundLayer);
         onLeftWall = Physics.OverlapBox(transform.position + leftOffset, collisoinSideRadius, Quaternion.Euler(0, 0, -90), groundLayer);
         if (onRightWall.Length > 0) wallSide = 1;
