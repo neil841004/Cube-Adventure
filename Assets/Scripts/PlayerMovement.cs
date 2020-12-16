@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPoint;
     Tween rbTween;
-    Tween walljumpTween;
 
     void Start()
     {
@@ -101,6 +100,13 @@ public class PlayerMovement : MonoBehaviour
         {
             bodyDown = false;
         }
+
+        if (wallJumpButtonCount == 11)
+        {
+            isWallJumpAnim = false;
+            wallJumpButtonCount = 0;
+        }
+        Debug.Log(wallJumpButtonCount);
 
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
@@ -338,14 +344,7 @@ public class PlayerMovement : MonoBehaviour
         float movement = x * speed;
 
         //WallJump位移修正
-        if (wallJumpButtonCount > 18)
-        {
-            isWallJumpAnim = false;
-            if (xRaw == 0) {
-                
-            }
-            wallJumpButtonCount = 0;
-        }
+        
         if (IsPushWall() || !canMove || isStickWall) return;
         if (isWallJumpAnim && xRaw == 0) return;
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
@@ -355,7 +354,7 @@ public class PlayerMovement : MonoBehaviour
         if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
         {
             movement = xRaw * speed;
-            walljumpTween = DOTween.To(() => wallJumpButtonCount, x => wallJumpButtonCount = x, 11, 0.25f);
+            DOTween.To(() => wallJumpButtonCount, x => wallJumpButtonCount = x, 11, 0.25f).SetId("walljumpTween");
         }
 
         rb.velocity = new Vector2(movement, rb.velocity.y);
@@ -450,7 +449,7 @@ public class PlayerMovement : MonoBehaviour
     // 蹬牆跳
     void WallJump()
     {
-        walljumpTween.Kill();
+        DOTween.Kill("walljumpTween", false); 
         DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         rb.drag = 7.8f;
         isWallJump = true;

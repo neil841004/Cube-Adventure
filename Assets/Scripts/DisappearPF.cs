@@ -29,9 +29,9 @@ public class DisappearPF : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) {
             Sequence seq = DOTween.Sequence();
-            seq.Append(this.transform.DOLocalMoveY(-4f, 1.5f).SetEase(Ease.InQuad));
-            seq.Insert(0.9f,DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
-            seq.InsertCallback(0.95f,CloseCollider);
+            seq.Append(this.transform.DOLocalMoveY(-4f, 1.2f).SetEase(Ease.InQuad));
+            seq.Insert(0.85f,DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
+            seq.InsertCallback(0.9f,CloseCollider);
         }
     }
     void CloseCollider() {

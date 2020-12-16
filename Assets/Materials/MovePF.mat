@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DisappearPF
+  m_Name: MovePF
   m_Shader: {fileID: 4800000, guid: 18b3325d96afffc48a5fd75f54be611a, type: 3}
   m_ShaderKeywords: ENABLE_SCREEN_DOOR_TRANSPARENCY
   m_LightmapFlags: 4
@@ -114,9 +114,9 @@ Material:
     - _OutlineColor: {r: 0.17399432, g: 0.33605692, b: 0.4339623, a: 1}
     - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor: {r: 0.26032394, g: 0.36491463, b: 0.4716981, a: 1}
+    - _ShadowColor: {r: 0.30170882, g: 0.37525675, b: 0.5660378, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.85882354, g: 0.64499223, b: 0.5882353, a: 1}
+    - _TintColor: {r: 0.58717513, g: 0.8584906, b: 0.74010813, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4272917991868435047
 MonoBehaviour:
