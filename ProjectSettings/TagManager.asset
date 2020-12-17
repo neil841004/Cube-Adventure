@@ -9,6 +9,7 @@ TagManager:
   - GM
   - MovePF
   - PostEffect
+  - Coin
   layers:
   - Default
   - TransparentFX

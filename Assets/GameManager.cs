@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent start = new UnityEvent();
     public UnityEvent death = new UnityEvent();
     public UnityEvent resetLevel = new UnityEvent();
+
+    public GameObject coinParent;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -31,5 +33,16 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         resetLevel.Invoke();
+        DeactivateChildren(coinParent, true);
+    }
+
+    void DeactivateChildren(GameObject g, bool state)
+    {
+        g.SetActive(state);
+
+        foreach (Transform child in g.transform)
+        {
+            DeactivateChildren(child.gameObject, state);
+        }
     }
 }

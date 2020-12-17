@@ -106,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
             isWallJumpAnim = false;
             wallJumpButtonCount = 0;
         }
-        Debug.Log(wallJumpButtonCount);
 
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
@@ -125,22 +124,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //衝刺Trail
-        if (!isAnimDash && trail_5.time > 0f)
-        {
-            trail_1.time -= 0.006f;
-            trail_2.time -= 0.006f;
-            trail_3.time -= 0.006f;
-            trail_4.time -= 0.006f;
-            trail_5.time -= 0.006f;
-        } else if (trail_5.time < 0f) {
-            trail_1.enabled = false;
-            trail_2.enabled = false;
-            trail_3.enabled = false;
-            trail_4.enabled = false;
-            trail_5.enabled = false;
-        }
-
-
+       
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
@@ -307,6 +291,24 @@ public class PlayerMovement : MonoBehaviour
         if (!coll.OnGround())
         {
             fallLandSpeed = rb.velocity.y;
+        }
+
+        //衝刺Trail
+        if (!isAnimDash && trail_5.time > 0f)
+        {
+            trail_1.time -= 0.011f;
+            trail_2.time -= 0.011f;
+            trail_3.time -= 0.011f;
+            trail_4.time -= 0.011f;
+            trail_5.time -= 0.011f;
+        }
+        else if (trail_5.time < 0f)
+        {
+            trail_1.enabled = false;
+            trail_2.enabled = false;
+            trail_3.enabled = false;
+            trail_4.enabled = false;
+            trail_5.enabled = false;
         }
 
     }
