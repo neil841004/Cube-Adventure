@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent start = new UnityEvent();
     public UnityEvent death = new UnityEvent();
     public UnityEvent resetLevel = new UnityEvent();
+    public UnityEvent win = new UnityEvent();
+    public UnityEvent nextLevel = new UnityEvent();
 
     public GameObject coinParent;
     // Start is called before the first frame update
@@ -44,5 +46,12 @@ public class GameManager : MonoBehaviour
         {
             DeactivateChildren(child.gameObject, state);
         }
+    }
+    public void Win() 
+    {
+        win.Invoke();
+    }
+    public void NextLevel() {
+        nextLevel.Invoke();
     }
 }

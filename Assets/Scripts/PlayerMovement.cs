@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isDeath = false;
     public bool bodyDown = false;
     public bool isDownJump = false;
+
+    public bool isWin = false;
     bool isDeathNotBack = false; //死亡後還沒回歸原位之前
 
     [Space]
@@ -88,11 +90,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        x = Input.GetAxis("Horizontal");
+        if (!isWin) x = Input.GetAxis("Horizontal");
+        else if (isWin && x < 0) x += 0.02f;
+        else if (isWin && x > 0) x -= 0.02f;
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
         //下壓身體
-        if (yRaw == -1 &&!isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround())
+        if (yRaw == -1 && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
         }
@@ -110,12 +114,12 @@ public class PlayerMovement : MonoBehaviour
         // 跳躍狀態判斷
         if (Input.GetButtonDown("Jump"))
         {
-            if (((coll.OnGroundJump()&&!IsPushWall()) || (coll.OnGround()&&IsPushWall()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1.5f) StartCoroutine("JumpSetTrue");
+            if (((coll.OnGroundJump() && !IsPushWall()) || (coll.OnGround() && IsPushWall()) || (coll.OnEdge() && !coll.OnWall() && canEdgeJump)) && rb.velocity.y < 1.5f) StartCoroutine("JumpSetTrue");
             else if ((IsPushWall() && !coll.OnGround()) || isStickWall && !coll.OnGround()) callWallJump = true;
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath)
+        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath && !isWin)
         {
             if (xRaw != 0)
             {
@@ -124,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //衝刺Trail
-       
+
         if (!isDash && !IsPushWall())
         {
             if (coll.OnGroundDash()) hasDashed = true;
@@ -192,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         BodyDown();
-        if (!isDeath)
+        if (!isDeath && !isWin)
         {
             Move();
             Jump();
@@ -282,7 +286,7 @@ public class PlayerMovement : MonoBehaviour
                 if (!isDeath)
                 {
                     canMove = true;
-                }    
+                }
                 DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
             }
         }
@@ -325,9 +329,9 @@ public class PlayerMovement : MonoBehaviour
             }
             if (bodyDownCount < 50) bodyDownCount++;
         }
-        else if (!bodyDown) 
+        else if (!bodyDown)
         {
-            if (((yRaw != -1 && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash) 
+            if (((yRaw != -1 && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
             {
                 canMove = true;
             }
@@ -346,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
         float movement = x * speed;
 
         //WallJump位移修正
-        
+
         if (IsPushWall() || !canMove || isStickWall) return;
         if (isWallJumpAnim && xRaw == 0) return;
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
@@ -368,9 +372,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (startJump)
             {
-                if (isDash  && coll.OnGroundDash()) 
+                if (isDash && coll.OnGroundDash())
                 {
-                    
+
                     StopCoroutine("DashWait");
                     StopCoroutine("NextDash");
                     GetComponent<BetterJumping>().enabled = true;
@@ -451,7 +455,7 @@ public class PlayerMovement : MonoBehaviour
     // 蹬牆跳
     void WallJump()
     {
-        DOTween.Kill("walljumpTween", false); 
+        DOTween.Kill("walljumpTween", false);
         DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         rb.drag = 7.8f;
         isWallJump = true;
@@ -536,7 +540,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator DashJump()
     {
-        
+
         yield return new WaitForSeconds(.15f);
         canMove = true;
         isAnimDash = false;
@@ -598,6 +602,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (coll.CompareTag("Hazard") && !isDeath) Death();
     }
+    public void Ending()
+    {
+        if (!isWin)
+        {
+            StopAllCoroutines();
+            canMove = false;
+            speed = 0;
+            StartCoroutine("Win");
+        }
+    }
+
+    public void NextLevel() 
+    {
+        GameObject.FindWithTag("GM").SendMessage("NextLevel");
+    }
+    IEnumerator Win() 
+    {
+        isWin = true;
+        yield return new WaitForSeconds(0.5f);
+        GameObject.FindWithTag("GM").SendMessage("Win");
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isWin", isWin);
+    }
+
     public void Death() 
     {
         deathParticle.Play();

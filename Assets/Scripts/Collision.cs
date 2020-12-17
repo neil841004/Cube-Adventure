@@ -67,6 +67,11 @@ public class Collision : MonoBehaviour
         onGroundDash = Physics.OverlapBox(transform.position + bottomOffset, collisoinDashRadius, Quaternion.identity, groundLayer);
         if (onGroundDash.Length > 0)
         {
+            if (onGroundDash[0].tag == "End") //站到移動平台上
+            {
+                GetComponent<PlayerMovement>().SendMessage("Ending");
+                DeactivateChildren(GameObject.FindWithTag("End").gameObject, true);
+            }
             if (onGroundDash[0].tag == "MovePF") //站到移動平台上
             {
                 this.transform.parent = onGroundDash[0].transform;
@@ -134,5 +139,13 @@ public class Collision : MonoBehaviour
         Gizmos.DrawWireCube(this.transform.position + bottomEdgeOffset, collisoinEdgeRadius * 2);
     }
 
-    
+    void DeactivateChildren(GameObject g, bool state)
+    {
+        g.SetActive(state);
+
+        foreach (Transform child in g.transform)
+        {
+            DeactivateChildren(child.gameObject, state);
+        }
+    }
 }
