@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
     public bool isWin = false;
     bool isDeathNotBack = false; //死亡後還沒回歸原位之前
 
+    public bool isTutorial = false;
+
     [Space]
     [Header("Object")]
     public GameObject cube;
@@ -647,15 +649,19 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.45f);
         transform.position = checkPoint;
         isDeathNotBack = false;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 0;
-
+        if (!isTutorial)
+        {
+            GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0;
+            GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 0;
+        }
         yield return new WaitForSeconds(.4f);
         GameObject.FindWithTag("GM").SendMessage("ResetLevel");
         transform.position = checkPoint;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0.65f;
-        GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 1.5f;
-        
+        if (!isTutorial)
+        {
+            GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0.65f;
+            GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 1.5f;
+        }
         yield return new WaitForSeconds(.2f);
         hasDashed = false;
         cubeMesh.SetActive(true);

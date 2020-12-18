@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,5 +54,18 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel() {
         nextLevel.Invoke();
+        
     }
+
+    public void LevelID(int levelNumber) 
+    {
+        StartCoroutine("NextLevelIEnumerator", levelNumber);
+    }
+
+    IEnumerator NextLevelIEnumerator(int levelNumber)
+    {
+        yield return new WaitForSeconds(1.2f);
+        SceneManager.LoadScene(levelNumber);
+    }
+
 }
