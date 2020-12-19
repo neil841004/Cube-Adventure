@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MoonTexture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 16d300134c867234588aeecccb9392b9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -117,7 +117,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SunTexture:
-        m_Texture: {fileID: 2800000, guid: e80870b385adcae48871133b9b5759dd, type: 3}
+        m_Texture: {fileID: 2800000, guid: dd566660fc358aa4098080e42ca0db56, type: 3}
         m_Scale: {x: 0, y: 0}
         m_Offset: {x: 1, y: 1}
     - _Tex:

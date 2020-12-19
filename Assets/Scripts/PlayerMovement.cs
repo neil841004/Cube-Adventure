@@ -153,11 +153,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 重置
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             transform.position = EntryPoint;
         }
-        else if (Input.GetKeyDown(KeyCode.T) && !isDeath)
+        else if (Input.GetKeyDown(KeyCode.R) && !isDeath)
         {
             Death();
         }
