@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public float fallMultiplier = 2.35f;
 
     float x;
-    public float xRaw, yRaw;
+    public float xRaw;
 
 
     [Space]
@@ -92,17 +92,48 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!isWin) x = Input.GetAxis("Horizontal");
+        xRaw = Input.GetAxisRaw("Horizontal");
+
+        if (!isWin)
+        {
+            if (xRaw != 0 && Mathf.Abs(x) <= 1)
+            {
+                if(coll.OnGround()) x += xRaw * 0.012f;
+                else if(!coll.OnGround()) x += xRaw * 0.02f;
+                if (xRaw > 0 && x > 0.9f) x = 1;
+                if (xRaw < 0 && x < -0.9f) x = -1;
+                //Debug.Log("A");
+            }
+            if (xRaw == 0 && coll.OnGround())
+            {
+                if (x > -0.12f && x < 0.12f) x = 0;
+                if (x > 0) x -= 0.01f;
+                if (x < 0) x += 0.01f;
+                //Debug.Log("B");
+            }
+            if (xRaw == 0 && !coll.OnGround())
+            {
+                if (x > -0.12f && x < 0.12f) x = 0;
+                if (x > 0) x -= 0.006f;
+                if (x < 0) x += 0.006f;
+                //Debug.Log("C");
+            }
+            if (((xRaw == -1 && x > 0) || (xRaw == 1 && x < 0)) && coll.OnGround())
+            {
+                x = 0;
+                //Debug.Log("D");
+            }
+        }
         else if (isWin && x < 0) x += 0.02f;
         else if (isWin && x > 0) x -= 0.02f;
-        xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
+        Debug.Log(x);
+
         //下壓身體
-        if (yRaw == -1 && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
+        if (Input.GetButton("Accumulate") && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
         }
-        if (yRaw != -1 || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        if (!Input.GetButton("Accumulate") || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
             bodyDown = false;
         }
@@ -175,6 +206,8 @@ public class PlayerMovement : MonoBehaviour
             if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump)
             {
                 isWallJumpAnim = false;
+                DOTween.Kill("speedBackTween", false);
+                speed = speedOrigin;
                 wallJumpButtonCount = 0;
             }
         }
@@ -319,7 +352,8 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void BodyDown() {
+    void BodyDown()
+    {
         if (bodyDown)
         {
             canMove = false;
@@ -333,7 +367,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!bodyDown)
         {
-            if (((yRaw != -1 && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
+            if (((!Input.GetButton("Accumulate") && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
             {
                 canMove = true;
             }
@@ -349,6 +383,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
+        if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall()){
+            x = xRaw;
+        }
         float movement = x * speed;
 
         //WallJump位移修正
@@ -357,12 +394,13 @@ public class PlayerMovement : MonoBehaviour
         if (isWallJumpAnim && xRaw == 0) return;
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
         {
+            DOTween.Kill("speedBackTween", false);
+            if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin).SetId("speedBackTween");
             isWallJumpAnim = false;
         }
         if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
         {
-            movement = xRaw * speed;
-            DOTween.To(() => wallJumpButtonCount, x => wallJumpButtonCount = x, 11, 0.25f).SetId("walljumpTween");
+            isWallJumpAnim = false;
         }
 
         rb.velocity = new Vector2(movement, rb.velocity.y);
@@ -552,17 +590,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //衝刺時的阻力
-    void RigidbodyDrag(float x)
+    void RigidbodyDrag(float value)
     {
-        rb.drag = x;
+        rb.drag = value;
     }
 
     //返回至原速度
-    void speedBackOrigin(float x)
+    void speedBackOrigin(float value)
     {
         if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1 && !coll.OnGround()) { speed = speedOrigin; return; }
         if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1 && !coll.OnGround()) { speed = speedOrigin; return; }
-        speed = x;
+        speed = value;
     }
 
     IEnumerator DisableMovement()
@@ -575,7 +613,7 @@ public class PlayerMovement : MonoBehaviour
             canMove = true;
         }
         isWallJump = false;
-        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
+        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin).SetId("seepdBackTween");
     }
 
     //跳牆時極短瞬間無法黏牆
@@ -615,11 +653,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void NextLevel() 
+    public void NextLevel()
     {
         GameObject.FindWithTag("GM").SendMessage("NextLevel");
     }
-    IEnumerator Win() 
+    IEnumerator Win()
     {
         isWin = true;
         yield return new WaitForSeconds(0.5f);
@@ -628,7 +666,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isWin", isWin);
     }
 
-    public void Death() 
+    public void Death()
     {
         deathParticle.Play();
         GameObject.FindWithTag("GM").SendMessage("ScreenShake_Death");
@@ -636,12 +674,12 @@ public class PlayerMovement : MonoBehaviour
         isDeathNotBack = true;
         StartCoroutine("Rebirth");
         DeathV3 = this.transform.position;
-        cubeMesh.transform.DOScale(0,0.2f);
+        cubeMesh.transform.DOScale(0, 0.2f);
     }
     IEnumerator Rebirth()
     {
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
-        
+
         yield return new WaitForSeconds(.2f);
         GameObject.FindWithTag("GM").SendMessage("Death");
         cubeMesh.SetActive(false);
