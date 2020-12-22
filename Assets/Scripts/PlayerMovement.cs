@@ -126,14 +126,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (isWin && x < 0) x += 0.02f;
         else if (isWin && x > 0) x -= 0.02f;
-        Debug.Log(x);
 
         //下壓身體
-        if (Input.GetButton("Accumulate") && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
+        if ((Input.GetButton("Accumulate") || Input.GetAxis ("AccumulateTrigger") == 1) && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
         }
-        if (!Input.GetButton("Accumulate") || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        if ((!Input.GetButton("Accumulate") && Input.GetAxis ("AccumulateTrigger") == 0) || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
             bodyDown = false;
         }
@@ -367,7 +366,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!bodyDown)
         {
-            if (((!Input.GetButton("Accumulate") && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
+            if ((((!Input.GetButton("Accumulate") && Input.GetAxis ("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
             {
                 canMove = true;
             }
@@ -395,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
         {
             DOTween.Kill("speedBackTween", false);
-            if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin).SetId("speedBackTween");
+            if (!isStickWall) DOVirtual.Float(0, speedOrigin, .3f, speedBackOrigin).SetId("speedBackTween");
             isWallJumpAnim = false;
         }
         if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
@@ -613,7 +612,7 @@ public class PlayerMovement : MonoBehaviour
             canMove = true;
         }
         isWallJump = false;
-        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin).SetId("seepdBackTween");
+        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .55f, speedBackOrigin).SetId("speedBackTween");
     }
 
     //跳牆時極短瞬間無法黏牆
