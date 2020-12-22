@@ -15102,6 +15102,7 @@ GameObject:
   - component: {fileID: 8420494392226126250}
   - component: {fileID: 8420494392226126245}
   - component: {fileID: 5048047402244317565}
+  - component: {fileID: 9073764806461286916}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -15146,8 +15147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  speed: 8
-  speedOrigin: 8
+  speed: 8.4
+  speedOrigin: 8.4
   jumpForce: 450
   fallSpeedMax: -15
   UpSpeedMimi: 6
@@ -15155,7 +15156,6 @@ MonoBehaviour:
   fallLandSpeed: 0
   fallMultiplier: 2.35
   xRaw: 0
-  yRaw: 0
   bodyDownCount: 0
   isJumpUp: 0
   startJump: 0
@@ -15180,11 +15180,11 @@ MonoBehaviour:
   deathParticle: {fileID: 8420494391875880238}
   rebirthParticle: {fileID: 8420494391643885310}
   DashToWallParticle: {fileID: 8420494392596982678}
-  trail_1: {fileID: 1678306670}
-  trail_2: {fileID: 149157819}
-  trail_3: {fileID: 1168040999}
-  trail_4: {fileID: 321313209}
-  trail_5: {fileID: 108753391}
+  trail_1: {fileID: 1168040999}
+  trail_2: {fileID: 321313209}
+  trail_3: {fileID: 149157819}
+  trail_4: {fileID: 108753391}
+  trail_5: {fileID: 1678306670}
   EntryPoint: {x: 0, y: 0, z: 0}
   checkPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &8420494392226126248
@@ -15297,6 +15297,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &5048047402244317565
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420494392226126257}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &9073764806461286916
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

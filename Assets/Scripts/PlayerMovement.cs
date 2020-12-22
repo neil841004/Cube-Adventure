@@ -98,8 +98,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (xRaw != 0 && Mathf.Abs(x) <= 1)
             {
-                if(coll.OnGround()) x += xRaw * 0.012f;
-                else if(!coll.OnGround()) x += xRaw * 0.02f;
+                if (coll.OnGround()) x += xRaw * 0.013f;
+                else if (!coll.OnGround()) x += xRaw * 0.027f;
                 if (xRaw > 0 && x > 0.9f) x = 1;
                 if (xRaw < 0 && x < -0.9f) x = -1;
                 //Debug.Log("A");
@@ -107,32 +107,36 @@ public class PlayerMovement : MonoBehaviour
             if (xRaw == 0 && coll.OnGround())
             {
                 if (x > -0.12f && x < 0.12f) x = 0;
-                if (x > 0) x -= 0.01f;
-                if (x < 0) x += 0.01f;
+                if (x > 0) x -= 0.0105f;
+                if (x < 0) x += 0.0105f;
                 //Debug.Log("B");
             }
-            if (xRaw == 0 && !coll.OnGround())
+            if (xRaw == 0 && !coll.OnGround() && !isWallJumpAnim)
             {
                 if (x > -0.12f && x < 0.12f) x = 0;
                 if (x > 0) x -= 0.006f;
                 if (x < 0) x += 0.006f;
                 //Debug.Log("C");
             }
+            if (isWallJumpAnim) x = 0;
             if (((xRaw == -1 && x > 0) || (xRaw == 1 && x < 0)) && coll.OnGround())
             {
                 x = 0;
                 //Debug.Log("D");
             }
+            if (isAnimDash && x > 0) x = 1;
+            else if (isAnimDash && x < 0) x = -1;
+
         }
         else if (isWin && x < 0) x += 0.02f;
         else if (isWin && x > 0) x -= 0.02f;
 
         //下壓身體
-        if ((Input.GetButton("Accumulate") || Input.GetAxis ("AccumulateTrigger") == 1) && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
+        if ((Input.GetButton("Accumulate") || Input.GetAxis("AccumulateTrigger") == 1) && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
         }
-        if ((!Input.GetButton("Accumulate") && Input.GetAxis ("AccumulateTrigger") == 0) || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        if ((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
             bodyDown = false;
         }
@@ -153,7 +157,13 @@ public class PlayerMovement : MonoBehaviour
         //衝刺
         if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath && !isWin)
         {
-            if (xRaw != 0)
+            if (xRaw == 0 && x != 0)
+            {
+                if (x > 0) Dash(1);
+                if (x < 0) Dash(-1);
+                GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
+            }
+            else if (xRaw != 0)
             {
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
@@ -189,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.R) && !isDeath)
         {
-            Death();
+            Death(false);
         }
 
         // 蹬牆轉向時速度增加
@@ -223,7 +233,6 @@ public class PlayerMovement : MonoBehaviour
         //方塊轉向
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
         else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
-
 
     }
 
@@ -269,6 +278,11 @@ public class PlayerMovement : MonoBehaviour
         // 滑牆
         if (IsPushWall() && !isWallJump)
         {
+            if (!coll.OnGround())
+            {
+                DOTween.Kill("speedBackTween", false);
+                speed = 0;
+            }
             rb.velocity = new Vector2(0, rb.velocity.y);
             GetComponent<BetterJumping>().fallMultiplier = 0.15f;
             if (rb.velocity.y <= fallSpeedMax * 0.25f)
@@ -366,7 +380,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (!bodyDown)
         {
-            if ((((!Input.GetButton("Accumulate") && Input.GetAxis ("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
+            if ((((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
             {
                 canMove = true;
             }
@@ -382,25 +396,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall()){
-            x = xRaw;
-        }
-        float movement = x * speed;
-
-        //WallJump位移修正
-
         if (IsPushWall() || !canMove || isStickWall) return;
         if (isWallJumpAnim && xRaw == 0) return;
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
         {
             DOTween.Kill("speedBackTween", false);
-            if (!isStickWall) DOVirtual.Float(0, speedOrigin, .3f, speedBackOrigin).SetId("speedBackTween");
+            if (!isStickWall) DOVirtual.Float(0, speedOrigin, 0.4f, speedBackOrigin).SetId("speedBackTween");
             isWallJumpAnim = false;
         }
         if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
         {
+            x = xRaw;
             isWallJumpAnim = false;
         }
+
+        float movement = x * speed;
+
 
         rb.velocity = new Vector2(movement, rb.velocity.y);
     }
@@ -505,14 +516,14 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 2f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.35f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.35f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.4f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.4f);
         callWallJump = false;
         wallJumpButtonCount = 0;
     }
 
     // 衝刺
-    void Dash(float x)
+    void Dash(float value)
     {
         StopCoroutine("DashWait");
         StopCoroutine("NextDash");
@@ -538,7 +549,7 @@ public class PlayerMovement : MonoBehaviour
         trail_5.time = 0.48f;
         anim.Play("Dash");
         rb.velocity = Vector2.zero;
-        Vector3 dir = new Vector2(x, 0);
+        Vector3 dir = new Vector2(value, 0);
         rb.velocity += dir.normalized * dashSpeed;
         GetComponent<BetterJumping>().fallMultiplier = 0.15f;
         StartCoroutine("DashWait");
@@ -639,7 +650,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("Hazard") && !isDeath) Death();
+        if (coll.CompareTag("Hazard") && !isDeath) Death(true);
     }
     public void Ending()
     {
@@ -665,9 +676,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isWin", isWin);
     }
 
-    public void Death()
+    public void Death(bool active)
     {
-        deathParticle.Play();
+        if (active) deathParticle.Play();
         GameObject.FindWithTag("GM").SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;
@@ -710,5 +721,6 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(.4f);
         canMove = true;
+        speed = speedOrigin;
     }
 }
