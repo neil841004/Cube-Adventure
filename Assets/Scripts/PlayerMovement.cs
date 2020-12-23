@@ -93,7 +93,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         xRaw = Input.GetAxisRaw("Horizontal");
-
+        if (xRaw!=0) xRaw = xRaw > 0 ? 1 : -1;
+        Debug.Log(xRaw);
         if (!isWin)
         {
             //輸入
@@ -228,13 +229,19 @@ public class PlayerMovement : MonoBehaviour
         if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
         else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
 
+        if (isJumpUp)
+        {
+            if (Input.GetButtonUp("Jump") || !Input.GetButton("Jump"))
+            {
+                fall = true;
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         if (coll.OnGroundEdge() && (xRaw == coll.wallSide))
         {
-            Debug.Log(coll.OnGroundEdge());
             rb.AddForce(Vector3.up * 30f);
         }
 
@@ -253,14 +260,7 @@ public class PlayerMovement : MonoBehaviour
         if ((IsPushWall() && !coll.OnGround() && !isWallJump && callWallJump) || (isStickWall && !coll.OnGround() && !isWallJump && callWallJump)) WallJump();
 
         // 短按跳躍落下
-        if (isJumpUp)
-        {
-            if (!Input.GetButton("Jump"))
-            {
-                fall = true;
-            }
-        }
-        if (fall && rb.velocity.y <= UpSpeedMimi)
+        if (fall && rb.velocity.y <= UpSpeedMimi && !isDownJump)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
             fall = false;
