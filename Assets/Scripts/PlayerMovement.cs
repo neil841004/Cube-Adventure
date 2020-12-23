@@ -96,36 +96,33 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isWin)
         {
+            //輸入
             if (xRaw != 0 && Mathf.Abs(x) <= 1)
             {
-                if (coll.OnGround()) x += xRaw * 0.013f;
-                else if (!coll.OnGround()) x += xRaw * 0.027f;
+                if (coll.OnGround()) x += xRaw * 2.95f * Time.deltaTime;
+                else if (!coll.OnGround()) x += xRaw * 6.4f * Time.deltaTime;
                 if (xRaw > 0 && x > 0.9f) x = 1;
                 if (xRaw < 0 && x < -0.9f) x = -1;
-                //Debug.Log("A");
             }
             if (xRaw == 0 && coll.OnGround())
             {
                 if (x > -0.12f && x < 0.12f) x = 0;
-                if (x > 0) x -= 0.0105f;
-                if (x < 0) x += 0.0105f;
-                //Debug.Log("B");
+                if (x > 0) x -= 2.05f * Time.deltaTime;
+                if (x < 0) x += 2.05f * Time.deltaTime;
             }
             if (xRaw == 0 && !coll.OnGround() && !isWallJumpAnim)
             {
                 if (x > -0.12f && x < 0.12f) x = 0;
-                if (x > 0) x -= 0.006f;
-                if (x < 0) x += 0.006f;
-                //Debug.Log("C");
+                if (x > 0) x -= 0.91f * Time.deltaTime;
+                if (x < 0) x += 0.91f * Time.deltaTime;
             }
             if (isWallJumpAnim) x = 0;
             if (((xRaw == -1 && x > 0) || (xRaw == 1 && x < 0)) && coll.OnGround())
             {
                 x = 0;
-                //Debug.Log("D");
             }
-            if (isAnimDash && x > 0) x = 1;
-            else if (isAnimDash && x < 0) x = -1;
+            if (isAnimDash && rb.velocity.x > 0) x = 1;
+            else if (isAnimDash && rb.velocity.x < 0) x = -1;
 
         }
         else if (isWin && x < 0) x += 0.02f;
@@ -155,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath && !isWin)
+        if ((Input.GetButtonDown("Dash") || Input.GetAxis("DashTrigger") == 1) && hasDashed && !IsPushWall() && !isDeath && !isWin)
         {
             if (xRaw == 0 && x != 0)
             {
@@ -169,12 +166,9 @@ public class PlayerMovement : MonoBehaviour
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
             }
         }
-        //衝刺Trail
 
-        if (!isDash && !IsPushWall())
-        {
-            if (coll.OnGroundDash()) hasDashed = true;
-        }
+        //碰地可再次衝刺
+        if (coll.OnGroundDash() && !isDash) hasDashed = true;
 
         //撞牆噴粒子
         if (isAnimDash && IsPushWall())
@@ -182,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
             DashToWallParticle.Play();
         }
 
-        if (!isJump && !IsPushWall() || rb.velocity.y < 0) isDownJump = false;
+        if (coll.OnGround() || rb.velocity.y < 0) isDownJump = false;
 
         if (IsPushWall() || coll.OnGround()) isJump = false;
 
@@ -197,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = EntryPoint;
         }
-        else if (Input.GetKeyDown(KeyCode.R) && !isDeath)
+        else if (Input.GetButtonDown("Rebirth") && !isDeath)
         {
             Death(false);
         }
@@ -238,6 +232,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (coll.OnGroundEdge() && (xRaw == coll.wallSide))
+        {
+            Debug.Log(coll.OnGroundEdge());
+            rb.AddForce(Vector3.up * 30f);
+        }
+
         BodyDown();
         if (!isDeath && !isWin)
         {
@@ -276,15 +276,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 滑牆
-        if (IsPushWall() && !isWallJump)
+        if (IsPushWall() && !isWallJump && !coll.OnGroundEdge())
         {
             if (!coll.OnGround())
             {
                 DOTween.Kill("speedBackTween", false);
                 speed = 0;
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                GetComponent<BetterJumping>().fallMultiplier = 0.15f;
             }
             rb.velocity = new Vector2(0, rb.velocity.y);
-            GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+            
             if (rb.velocity.y <= fallSpeedMax * 0.25f)
             {
                 rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.25f);
@@ -300,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
         }
-        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump) //持續黏牆
+        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump && !coll.OnGroundEdge()) //持續黏牆
         {
             StopCoroutine("StickWall");
             isStickWall = true;
@@ -317,6 +319,12 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine("StickWall");
             if (isStickWall) speed = speedOrigin;
             isStickWall = false;
+
+        }
+        if (coll.OnGround() && !isAnimDash && isDash)
+        {
+            rbTween.Kill();
+            rb.drag = 0;
         }
         if (isWallJump && coll.OnWall() && canStickWall) //牆跳到另一牆壁時觸發黏牆
         {
@@ -396,8 +404,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        if (IsPushWall() || !canMove || isStickWall) return;
+        if ((IsPushWall() && !coll.OnGroundEdge()) || !canMove || isStickWall) return;
         if (isWallJumpAnim && xRaw == 0) return;
+        if (isWallJumpAnim && canMove && coll.OnWall())
+        {
+            isWallJumpAnim = false;
+        }
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
         {
             DOTween.Kill("speedBackTween", false);
@@ -427,6 +439,7 @@ public class PlayerMovement : MonoBehaviour
 
                     StopCoroutine("DashWait");
                     StopCoroutine("NextDash");
+                    StopCoroutine("DashJump");
                     GetComponent<BetterJumping>().enabled = true;
                     rb.useGravity = true;
                     GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
@@ -506,7 +519,7 @@ public class PlayerMovement : MonoBehaviour
     void WallJump()
     {
         DOTween.Kill("walljumpTween", false);
-        DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
+        rbTween = DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         rb.drag = 7.8f;
         isWallJump = true;
         isWallJumpAnim = true;
@@ -529,6 +542,7 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("NextDash");
         StopCoroutine("DisableMovement");
         StopCoroutine("StickWall");
+        StopCoroutine("DashJump");
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
         isStickWall = false;
         isWallJump = false;
@@ -584,9 +598,8 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator NextDash()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.65f);
         isDash = false;
-        if (coll.OnGroundDash() && !IsPushWall()) hasDashed = true;
     }
     IEnumerator DashJump()
     {
@@ -596,7 +609,8 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = false;
         yield return new WaitForSeconds(.25f);
         isDash = false;
-        hasDashed = true;
+        yield return new WaitForSeconds(.25f);
+        if (!isDash) hasDashed = true;
     }
 
     //衝刺時的阻力
