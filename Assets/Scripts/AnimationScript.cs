@@ -37,6 +37,7 @@ public class AnimationScript : MonoBehaviour
         anim.SetBool("isJump", move.isJump);
         anim.SetBool("isDash", move.isAnimDash);
         anim.SetBool("isWallJump", move.isWallJumpAnim);
+        anim.SetBool("isDownJump", move.isDownJump);
         anim.SetBool("isPushWall", move.isPushWallAnim);
         anim.SetBool("onGroundDash", coll.OnGroundDash());
         anim.SetBool("onMovePF", coll.onMovePF);
