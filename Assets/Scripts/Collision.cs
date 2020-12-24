@@ -61,28 +61,28 @@ public class Collision : MonoBehaviour
         r2 = false;
         r3 = false;
         r4 = false;
-        if (Physics.Raycast(ray_1, out rayHit, 0.3f))
+        if (Physics.Raycast(ray_1, out rayHit, 0.27f))
         {
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
             {
                 r1 = true;
             }
         }
-        if (Physics.Raycast(ray_2, out rayHit, 0.3f))
+        if (Physics.Raycast(ray_2, out rayHit, 0.27f))
         {
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
             {
                 r2 = true;
             }
         }
-        if (Physics.Raycast(ray_3, out rayHit, 0.3f))
+        if (Physics.Raycast(ray_3, out rayHit, 0.27f))
         {
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
             {
                 r3 = true;
             }
         }
-        if (Physics.Raycast(ray_4, out rayHit, 0.3f))
+        if (Physics.Raycast(ray_4, out rayHit, 0.27f))
         {
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
             {

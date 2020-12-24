@@ -20,9 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed = 20;
     public float fallLandSpeed;
     public float fallMultiplier = 2.35f;
-
-    float x;
     public float xRaw;
+    float x;
+    float faceAngle;
 
 
     [Space]
@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isWin = false;
     bool isDeathNotBack = false; //死亡後還沒回歸原位之前
+    bool m_isAxisInUse = false; //搖桿Trigger按下
 
     public bool isTutorial = false;
 
@@ -78,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPoint;
-    Tween rbTween;
+    Tween rbTween, faceRotateTween;
 
     void Start()
     {
@@ -93,8 +94,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         xRaw = Input.GetAxisRaw("Horizontal");
-        if (xRaw!=0) xRaw = xRaw > 0 ? 1 : -1;
-        Debug.Log(xRaw);
+        if (xRaw != 0) xRaw = xRaw > 0 ? 1 : -1;
         if (!isWin)
         {
             //輸入
@@ -104,18 +104,30 @@ public class PlayerMovement : MonoBehaviour
                 else if (!coll.OnGround()) x += xRaw * 6.4f * Time.deltaTime;
                 if (xRaw > 0 && x > 0.9f) x = 1;
                 if (xRaw < 0 && x < -0.9f) x = -1;
+                if (!isStickWall && !isAnimDash && !IsPushWall() && !bodyDown)
+                {
+                    faceRotateTween.Kill();
+                    faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.52f);
+                }
             }
             if (xRaw == 0 && coll.OnGround())
             {
-                if (x > -0.12f && x < 0.12f) x = 0;
-                if (x > 0) x -= 2.05f * Time.deltaTime;
-                if (x < 0) x += 2.05f * Time.deltaTime;
+                x += x > 0 ? -2.15f * Time.deltaTime : 2.15f * Time.deltaTime;
+                if (x > -0.1f && x < 0.1f) x = 0;
+                if (!isStickWall && !isAnimDash && !bodyDown)
+                {
+                    faceRotateTween.Kill();
+                    faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.22f);
+                }
             }
             if (xRaw == 0 && !coll.OnGround() && !isWallJumpAnim)
             {
                 if (x > -0.12f && x < 0.12f) x = 0;
                 if (x > 0) x -= 0.91f * Time.deltaTime;
                 if (x < 0) x += 0.91f * Time.deltaTime;
+                faceRotateTween.Kill();
+                if (coll.OnWall()) faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -90, 0), 0.1f);
+                else faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.1f);
             }
             if (isWallJumpAnim) x = 0;
             if (((xRaw == -1 && x > 0) || (xRaw == 1 && x < 0)) && coll.OnGround())
@@ -126,13 +138,47 @@ public class PlayerMovement : MonoBehaviour
             else if (isAnimDash && rb.velocity.x < 0) x = -1;
 
         }
-        else if (isWin && x < 0) x += 0.02f;
-        else if (isWin && x > 0) x -= 0.02f;
+        else if (isWin)
+        {
+            if (x < 0) x += 0.02f;
+            else if (x > 0) x -= 0.02f;
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.3f);
+        }
+
+
+        //方塊轉向
+        if (isStickWall || IsPushWall())
+        {
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
+        }
+        if (isAnimDash)
+        {
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.07f);
+        }
+        if (isWallJumpAnim)
+        {
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, coll.wallSide * -60, 0), 0.1f);
+        }
+
+
+        if (isJumpUp)
+        {
+            if (Input.GetButtonUp("Jump") || !Input.GetButton("Jump"))
+            {
+                fall = true;
+            }
+        }
 
         //下壓身體
         if ((Input.GetButton("Accumulate") || Input.GetAxis("AccumulateTrigger") == 1) && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.3f);
         }
         if ((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
@@ -153,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if ((Input.GetButtonDown("Dash") || Input.GetAxis("DashTrigger") == 1) && hasDashed && !IsPushWall() && !isDeath && !isWin)
+        if ((Input.GetButtonDown("Dash") || Input.GetAxis("DashTrigger") == 1) && hasDashed && !IsPushWall() && !isDeath && !isWin && !m_isAxisInUse)
         {
             if (xRaw == 0 && x != 0)
             {
@@ -166,7 +212,10 @@ public class PlayerMovement : MonoBehaviour
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
             }
+            StartCoroutine("DashTriggerSetTrue");
         }
+
+        if ((!Input.GetButton("Dash") && Input.GetAxis("DashTrigger") == 0)) m_isAxisInUse = false;
 
         //碰地可再次衝刺
         if (coll.OnGroundDash() && !isDash) hasDashed = true;
@@ -207,7 +256,7 @@ public class PlayerMovement : MonoBehaviour
         //牆跳動畫
         if (isWallJumpAnim)
         {
-            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump)
+            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall || coll.OnWall()) && !isWallJump)
             {
                 isWallJumpAnim = false;
                 DOTween.Kill("speedBackTween", false);
@@ -224,26 +273,21 @@ public class PlayerMovement : MonoBehaviour
             cubeMesh.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); ;
         }
         if (!isStickWall || isWallJump) isPushWallAnim = false;
-
-        //方塊轉向
-        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
-        else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
-
-        if (isJumpUp)
-        {
-            if (Input.GetButtonUp("Jump") || !Input.GetButton("Jump"))
-            {
-                fall = true;
-            }
-        }
     }
 
     private void FixedUpdate()
     {
-        if (coll.OnGroundEdge() && (xRaw == coll.wallSide))
-        {
-            rb.AddForce(Vector3.up * 30f);
-        }
+        // if (coll.OnGroundEdge() && xRaw == coll.wallSide)
+        // {
+        //     rb.AddForce(Vector3.up * 38f);
+        //     if (xRaw == 1) rb.AddForce(Vector3.left * 18);
+        //     if (xRaw == -1) rb.AddForce(Vector3.right * 18);
+        // }
+        // if (coll.OnGroundEdge() && xRaw == 0)
+        // {
+        //     if (coll.wallSide == 1) rb.AddForce(Vector3.left * 6);
+        //     if (coll.wallSide == -1) rb.AddForce(Vector3.right * 6);
+        // }
 
         BodyDown();
         if (!isDeath && !isWin)
@@ -286,7 +330,7 @@ public class PlayerMovement : MonoBehaviour
                 GetComponent<BetterJumping>().fallMultiplier = 0.15f;
             }
             rb.velocity = new Vector2(0, rb.velocity.y);
-            
+
             if (rb.velocity.y <= fallSpeedMax * 0.25f)
             {
                 rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.25f);
@@ -369,6 +413,18 @@ public class PlayerMovement : MonoBehaviour
             trail_3.enabled = false;
             trail_4.enabled = false;
             trail_5.enabled = false;
+        }
+
+        if (coll.OnGroundEdge() && xRaw == coll.wallSide)
+        {
+            rb.AddForce(Vector3.up * 38f);
+            if (xRaw == 1) rb.AddForce(Vector3.left * 18);
+            if (xRaw == -1) rb.AddForce(Vector3.right * 18);
+        }
+        if (coll.OnGroundEdge() && xRaw == 0)
+        {
+            if (coll.wallSide == 1) rb.AddForce(Vector3.left * 5);
+            if (coll.wallSide == -1) rb.AddForce(Vector3.right * 5);
         }
 
     }
@@ -454,6 +510,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isDownJump = true;
                     rb.AddForce(Vector3.up * jumpForce * 2.25f);
+                    cubeMesh.transform.DORotate(new Vector3(540, 0, 0), 0.5f, RotateMode.FastBeyond360);
                     GameObject.FindWithTag("GM").SendMessage("ScreenShake_DownJump");
                 }
                 else
@@ -579,6 +636,15 @@ public class PlayerMovement : MonoBehaviour
             startJump = false;
         }
     }
+    IEnumerator DashTriggerSetTrue()
+    {
+        m_isAxisInUse = false;
+        yield return new WaitForSeconds(0.15f);
+        if (!m_isAxisInUse)
+        {
+            m_isAxisInUse = true;
+        }
+    }
     IEnumerator DashWait()
     {
         rbTween = DOVirtual.Float(7, 0, 1f, RigidbodyDrag);
@@ -598,7 +664,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator NextDash()
     {
-        yield return new WaitForSeconds(.65f);
+        yield return new WaitForSeconds(.55f);
         isDash = false;
     }
     IEnumerator DashJump()
@@ -609,7 +675,7 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = false;
         yield return new WaitForSeconds(.25f);
         isDash = false;
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.15f);
         if (!isDash) hasDashed = true;
     }
 
