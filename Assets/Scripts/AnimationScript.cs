@@ -26,16 +26,18 @@ public class AnimationScript : MonoBehaviour
         else if(rb.velocity.x<0)wallSide = -1;
         if(coll.onRightWall.Length >0)wallSide = 1;
         if(coll.onLeftWall.Length >0)wallSide = -1;
-        if (coll.OnGround() && !move.IsPushWall())
-        {
-            anim.SetBool("onGround", true);
-        }else 
-        {
-            anim.SetBool("onGround", false);
-        }
+        // if (coll.OnGround() && !move.IsPushWall())
+        // {
+        //     anim.SetBool("onGround", true);
+        // }else 
+        // {
+        //     anim.SetBool("onGround", false);
+        // }
+        anim.SetBool("onGround", coll.OnGround());
         anim.SetBool("isJump", move.isJump);
         anim.SetBool("isDash", move.isAnimDash);
         anim.SetBool("isWallJump", move.isWallJumpAnim);
+        anim.SetBool("isDownJump", move.isDownJump);
         anim.SetBool("isPushWall", move.isPushWallAnim);
         anim.SetBool("onGroundDash", coll.OnGroundDash());
         anim.SetBool("onMovePF", coll.onMovePF);

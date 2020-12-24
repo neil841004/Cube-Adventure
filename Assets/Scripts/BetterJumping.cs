@@ -24,7 +24,7 @@ public class BetterJumping : MonoBehaviour
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-        else if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDownJump) {
+        else if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDownJump && rb.velocity.y >= 0) {
             rb.velocity += Vector3.up * Physics.gravity.y * 2.05f * Time.deltaTime;
         }
     }

@@ -20,9 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public float dashSpeed = 20;
     public float fallLandSpeed;
     public float fallMultiplier = 2.35f;
-
+    public float xRaw;
     float x;
-    public float xRaw, yRaw;
+    float faceAngle;
 
 
     [Space]
@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isWin = false;
     bool isDeathNotBack = false; //死亡後還沒回歸原位之前
+    bool m_isAxisInUse = false; //搖桿Trigger按下
 
     public bool isTutorial = false;
 
@@ -68,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Object")]
     public GameObject cube;
     public GameObject cubeMesh;
+    public GameObject aimCircle;
+    public GameObject aimTriangle;
     Vector3 DeathV3;
 
     [Space]
@@ -78,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPoint;
-    Tween rbTween;
+    Tween rbTween, faceRotateTween, meshRotateTween;
 
     void Start()
     {
@@ -92,17 +95,123 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!isWin) x = Input.GetAxis("Horizontal");
-        else if (isWin && x < 0) x += 0.02f;
-        else if (isWin && x > 0) x -= 0.02f;
         xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
+        if (xRaw != 0) xRaw = xRaw > 0 ? 1 : -1;
+        if (!isWin)
+        {
+            //輸入
+            if (xRaw != 0 && Mathf.Abs(x) <= 1 && !bodyDown)
+            {
+                if (coll.OnGround()) x += xRaw * 2.95f * Time.deltaTime;
+                else if (!coll.OnGround()) x += xRaw * 6.4f * Time.deltaTime;
+                if (xRaw > 0 && x > 0.9f) x = 1;
+                if (xRaw < 0 && x < -0.9f) x = -1;
+                if (!isStickWall && !isAnimDash && !IsPushWall())
+                {
+                    faceRotateTween.Kill();
+                    if (isDownJump && !IsPushWall()) faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.1f);
+                    if (!isDownJump || (isDownJump && faceAngle == 0)) faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.52f);
+                }
+            }
+            if (xRaw == 0 && coll.OnGround() && !bodyDown)
+            {
+                x += x > 0 ? -2.15f * Time.deltaTime : 2.15f * Time.deltaTime;
+                if (x > -0.1f && x < 0.1f) x = 0;
+                if (!isStickWall && !isAnimDash)
+                {
+                    faceRotateTween.Kill();
+                    faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.22f);
+                }
+            }
+            if (xRaw == 0 && !coll.OnGround() && !isWallJumpAnim)
+            {
+                if (x > -0.12f && x < 0.12f) x = 0;
+                if (x > 0) x -= 0.91f * Time.deltaTime;
+                if (x < 0) x += 0.91f * Time.deltaTime;
+                faceRotateTween.Kill();
+                if (coll.OnWall()) faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -90, 0), 0.1f);
+                else if (!coll.OnWall() && !isDownJump) faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.1f);
+            }
+            if (isWallJumpAnim) x = 0;
+            if (((xRaw == -1 && x > 0) || (xRaw == 1 && x < 0)) && coll.OnGround() && !bodyDown)
+            {
+                x = 0;
+            }
+            if (isAnimDash && rb.velocity.x > 0) x = 1;
+            else if (isAnimDash && rb.velocity.x < 0) x = -1;
+            if (bodyDown)
+            {
+                if (bodyDownCount <= 48)
+                {
+                    if (xRaw == 0) x = 0;
+                    else x = xRaw > 0 ? 1 : -1;
+                }
+                if (x >= -1 && x <= 1 && xRaw != 0)
+                {
+                    x += xRaw > 0 ? 0.02f : -0.02f;
+                    if (x >= 1 && xRaw == 1) x = 1;
+                    else if (x <= -1 && xRaw == -1) x = -1;
+                }
+            }
+
+        }
+        else if (isWin)
+        {
+            if (x < 0) x += 0.02f;
+            else if (x > 0) x -= 0.02f;
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.3f);
+        }
+        //瞄準方向
+        aimCircle.transform.DORotate(new Vector3(0, 0, x * -18.5f), 0.1f);
+
+        //方塊轉向
+        if (isStickWall || IsPushWall())
+        {
+            faceRotateTween.Kill();
+            meshRotateTween.Kill();
+            cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
+        }
+        if (isAnimDash)
+        {
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, x * -60, 0), 0.07f);
+        }
+        if (isWallJumpAnim)
+        {
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, coll.wallSide * -60, 0), 0.1f);
+        }
+        if (!isDownJump)
+        {
+            meshRotateTween.Kill();
+            if (!isDash)
+                cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        if (coll.OnWall())
+        {
+            meshRotateTween.Kill();
+            cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+
+
+        if (isJumpUp)
+        {
+            if ((Input.GetButtonUp("Jump") || !Input.GetButton("Jump")) && !isDownJump && rb.velocity.y > 0)
+            {
+                fall = true;
+            }
+        }
+
         //下壓身體
-        if (yRaw == -1 && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
+        if ((Input.GetButton("Accumulate") || Input.GetAxis("AccumulateTrigger") == 1) && !isJump && !isAnimDash && !isDeath && !isStickWall && coll.OnGround() && !isWin)
         {
             bodyDown = true;
+            faceRotateTween.Kill();
+            faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.3f);
         }
-        if (yRaw != -1 || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
+        if ((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) || isJump || isAnimDash || isDeath || isStickWall || !coll.OnGround())
         {
             bodyDown = false;
         }
@@ -121,20 +230,26 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //衝刺
-        if (Input.GetButtonDown("Dash") && hasDashed && !IsPushWall() && !isDeath && !isWin)
+        if ((Input.GetButtonDown("Dash") || Input.GetAxis("DashTrigger") == 1) && hasDashed && !IsPushWall() && !isDeath && !isWin && !m_isAxisInUse)
         {
-            if (xRaw != 0)
+            if (xRaw == 0 && x != 0)
+            {
+                if (x > 0) Dash(1);
+                if (x < 0) Dash(-1);
+                GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
+            }
+            else if (xRaw != 0)
             {
                 Dash(xRaw);
                 GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
             }
+            StartCoroutine("DashTriggerSetTrue");
         }
-        //衝刺Trail
 
-        if (!isDash && !IsPushWall())
-        {
-            if (coll.OnGroundDash()) hasDashed = true;
-        }
+        if ((!Input.GetButton("Dash") && Input.GetAxis("DashTrigger") == 0)) m_isAxisInUse = false;
+
+        //碰地可再次衝刺
+        if (coll.OnGroundDash() && !isDash) hasDashed = true;
 
         //撞牆噴粒子
         if (isAnimDash && IsPushWall())
@@ -142,7 +257,8 @@ public class PlayerMovement : MonoBehaviour
             DashToWallParticle.Play();
         }
 
-        if (!isJump && !IsPushWall() || rb.velocity.y < 0) isDownJump = false;
+        if (coll.OnGround() || isDash || isDeath || rb.velocity.y < -14) isDownJump = false;
+        if (IsPushWall() && rb.velocity.y < 0) isDownJump = false;
 
         if (IsPushWall() || coll.OnGround()) isJump = false;
 
@@ -157,9 +273,9 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = EntryPoint;
         }
-        else if (Input.GetKeyDown(KeyCode.R) && !isDeath)
+        else if (Input.GetButtonDown("Rebirth") && !isDeath)
         {
-            Death();
+            Death(false);
         }
 
         // 蹬牆轉向時速度增加
@@ -172,9 +288,11 @@ public class PlayerMovement : MonoBehaviour
         //牆跳動畫
         if (isWallJumpAnim)
         {
-            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall) && !isWallJump)
+            if ((IsPushWall() || coll.OnGround() || isDash || isStickWall || coll.OnWall()) && !isWallJump)
             {
                 isWallJumpAnim = false;
+                DOTween.Kill("speedBackTween", false);
+                speed = speedOrigin;
                 wallJumpButtonCount = 0;
             }
         }
@@ -187,16 +305,22 @@ public class PlayerMovement : MonoBehaviour
             cubeMesh.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f); ;
         }
         if (!isStickWall || isWallJump) isPushWallAnim = false;
-
-        //方塊轉向
-        if (isStickWall || IsPushWall()) cube.transform.DORotate(new Vector3(0, coll.wallSide * -90, 0), 0.07f);
-        else if (!isStickWall && !isAnimDash) cube.transform.DORotate(new Vector3(0, x * -60, 0), .18f);
-
-
     }
 
     private void FixedUpdate()
     {
+        // if (coll.OnGroundEdge() && xRaw == coll.wallSide)
+        // {
+        //     rb.AddForce(Vector3.up * 38f);
+        //     if (xRaw == 1) rb.AddForce(Vector3.left * 18);
+        //     if (xRaw == -1) rb.AddForce(Vector3.right * 18);
+        // }
+        // if (coll.OnGroundEdge() && xRaw == 0)
+        // {
+        //     if (coll.wallSide == 1) rb.AddForce(Vector3.left * 6);
+        //     if (coll.wallSide == -1) rb.AddForce(Vector3.right * 6);
+        // }
+
         BodyDown();
         if (!isDeath && !isWin)
         {
@@ -212,13 +336,6 @@ public class PlayerMovement : MonoBehaviour
         if ((IsPushWall() && !coll.OnGround() && !isWallJump && callWallJump) || (isStickWall && !coll.OnGround() && !isWallJump && callWallJump)) WallJump();
 
         // 短按跳躍落下
-        if (isJumpUp)
-        {
-            if (!Input.GetButton("Jump"))
-            {
-                fall = true;
-            }
-        }
         if (fall && rb.velocity.y <= UpSpeedMimi)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
@@ -235,10 +352,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 滑牆
-        if (IsPushWall() && !isWallJump)
+        if (IsPushWall() && !isWallJump && !coll.OnGroundEdge())
         {
+            if (!coll.OnGround())
+            {
+                DOTween.Kill("speedBackTween", false);
+                speed = 0;
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+            }
             rb.velocity = new Vector2(0, rb.velocity.y);
-            GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+
             if (rb.velocity.y <= fallSpeedMax * 0.25f)
             {
                 rb.velocity = new Vector3(rb.velocity.x, fallSpeedMax * 0.25f);
@@ -254,7 +378,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StopCoroutine("StickWall");
         }
-        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump) //持續黏牆
+        if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump && !coll.OnGroundEdge()) //持續黏牆
         {
             StopCoroutine("StickWall");
             isStickWall = true;
@@ -271,6 +395,12 @@ public class PlayerMovement : MonoBehaviour
             StopCoroutine("StickWall");
             if (isStickWall) speed = speedOrigin;
             isStickWall = false;
+
+        }
+        if (coll.OnGround() && !isAnimDash && isDash)
+        {
+            rbTween.Kill();
+            rb.drag = 0;
         }
         if (isWallJump && coll.OnWall() && canStickWall) //牆跳到另一牆壁時觸發黏牆
         {
@@ -302,11 +432,11 @@ public class PlayerMovement : MonoBehaviour
         //衝刺Trail
         if (!isAnimDash && trail_5.time > 0f)
         {
-            trail_1.time -= 0.011f;
-            trail_2.time -= 0.011f;
-            trail_3.time -= 0.011f;
-            trail_4.time -= 0.011f;
-            trail_5.time -= 0.011f;
+            trail_1.time -= 0.01f;
+            trail_2.time -= 0.01f;
+            trail_3.time -= 0.01f;
+            trail_4.time -= 0.01f;
+            trail_5.time -= 0.01f;
         }
         else if (trail_5.time < 0f)
         {
@@ -317,9 +447,22 @@ public class PlayerMovement : MonoBehaviour
             trail_5.enabled = false;
         }
 
+        if (coll.OnGroundEdge() && xRaw == coll.wallSide)
+        {
+            rb.AddForce(Vector3.up * 38f);
+            if (xRaw == 1) rb.AddForce(Vector3.left * 18);
+            if (xRaw == -1) rb.AddForce(Vector3.right * 18);
+        }
+        if (coll.OnGroundEdge() && xRaw == 0)
+        {
+            if (coll.wallSide == 1) rb.AddForce(Vector3.left * 5);
+            if (coll.wallSide == -1) rb.AddForce(Vector3.right * 5);
+        }
+
     }
 
-    void BodyDown() {
+    void BodyDown()
+    {
         if (bodyDown)
         {
             canMove = false;
@@ -330,40 +473,50 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(x * (5 - (bodyDownCount * 0.2f)), rb.velocity.y);
             }
             if (bodyDownCount < 50) bodyDownCount++;
+            if (bodyDownCount >= 50)
+            {
+                aimTriangle.SetActive(true);
+            }
         }
         else if (!bodyDown)
         {
-            if (((yRaw != -1 && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
+            if ((((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
             {
                 canMove = true;
             }
             if (!isDeath)
             {
-                cubeMesh.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.3f);
-                cubeMesh.transform.DOLocalMoveY(0.08f, 0.3f);
+                cubeMesh.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.2f);
+                cubeMesh.transform.DOLocalMoveY(0.08f, 0.2f);
             }
             if (bodyDownCount > 0) bodyDownCount -= 5;
             else bodyDownCount = 0;
         }
+        if (bodyDownCount < 50) aimTriangle.SetActive(false);
     }
 
     void Move()
     {
-        float movement = x * speed;
-
-        //WallJump位移修正
-
-        if (IsPushWall() || !canMove || isStickWall) return;
+        if ((IsPushWall() && !coll.OnGroundEdge()) || !canMove || isStickWall) return;
         if (isWallJumpAnim && xRaw == 0) return;
+        if (isWallJumpAnim && canMove && coll.OnWall())
+        {
+            isWallJumpAnim = false;
+        }
         if (isWallJumpAnim && canMove && (coll.wallSide == xRaw))
         {
+            DOTween.Kill("speedBackTween", false);
+            if (!isStickWall) DOVirtual.Float(0, speedOrigin, 0.4f, speedBackOrigin).SetId("speedBackTween");
             isWallJumpAnim = false;
         }
         if (isWallJumpAnim && canMove && (coll.wallSide == -xRaw) && !coll.OnWall())
         {
-            movement = xRaw * speed;
-            DOTween.To(() => wallJumpButtonCount, x => wallJumpButtonCount = x, 11, 0.25f).SetId("walljumpTween");
+            x = xRaw;
+            isWallJumpAnim = false;
         }
+
+        float movement = x * speed;
+
 
         rb.velocity = new Vector2(movement, rb.velocity.y);
     }
@@ -379,6 +532,7 @@ public class PlayerMovement : MonoBehaviour
 
                     StopCoroutine("DashWait");
                     StopCoroutine("NextDash");
+                    StopCoroutine("DashJump");
                     GetComponent<BetterJumping>().enabled = true;
                     rb.useGravity = true;
                     GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
@@ -393,6 +547,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     isDownJump = true;
                     rb.AddForce(Vector3.up * jumpForce * 2.25f);
+                    faceAngle = x >= 0 ? -900 : 900;
+                    meshRotateTween.Kill();
+
+                    meshRotateTween = cubeMesh.transform.DOLocalRotate(new Vector3(0, 0, faceAngle), 1f, RotateMode.FastBeyond360);
                     GameObject.FindWithTag("GM").SendMessage("ScreenShake_DownJump");
                 }
                 else
@@ -458,7 +616,7 @@ public class PlayerMovement : MonoBehaviour
     void WallJump()
     {
         DOTween.Kill("walljumpTween", false);
-        DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
+        rbTween = DOVirtual.Float(9, 0, .26f, RigidbodyDrag);
         rb.drag = 7.8f;
         isWallJump = true;
         isWallJumpAnim = true;
@@ -468,27 +626,41 @@ public class PlayerMovement : MonoBehaviour
         StopCoroutine("DisableMovement");
         StartCoroutine("DisableMovement");
         rb.AddForce(Vector3.up * jumpForce * 2f);
-        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.35f);
-        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.35f);
+        if (coll.wallSide == 1) rb.AddForce(-Vector3.right * jumpForce * 1.4f);
+        if (coll.wallSide == -1) rb.AddForce(Vector3.right * jumpForce * 1.4f);
         callWallJump = false;
         wallJumpButtonCount = 0;
     }
 
     // 衝刺
-    void Dash(float x)
+    void Dash(float value)
     {
         StopCoroutine("DashWait");
         StopCoroutine("NextDash");
         StopCoroutine("DisableMovement");
         StopCoroutine("StickWall");
+        StopCoroutine("DashJump");
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
         isStickWall = false;
         isWallJump = false;
         speed = speedOrigin;
+        meshRotateTween.Kill();
+        cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
         cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.4f, RotateMode.FastBeyond360);
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
+        StartTrail();
+        anim.Play("Dash");
+        rb.velocity = Vector2.zero;
+        Vector3 dir = new Vector2(value, 0);
+        rb.velocity += dir.normalized * dashSpeed;
+        GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+        StartCoroutine("DashWait");
+        StartCoroutine("NextDash");
+    }
+    void StartTrail()
+    {
         trail_1.enabled = true;
         trail_2.enabled = true;
         trail_3.enabled = true;
@@ -499,13 +671,6 @@ public class PlayerMovement : MonoBehaviour
         trail_3.time = 0.21f;
         trail_4.time = 0.35f;
         trail_5.time = 0.48f;
-        anim.Play("Dash");
-        rb.velocity = Vector2.zero;
-        Vector3 dir = new Vector2(x, 0);
-        rb.velocity += dir.normalized * dashSpeed;
-        GetComponent<BetterJumping>().fallMultiplier = 0.15f;
-        StartCoroutine("DashWait");
-        StartCoroutine("NextDash");
     }
 
     IEnumerator JumpSetTrue()
@@ -515,6 +680,15 @@ public class PlayerMovement : MonoBehaviour
         if (startJump)
         {
             startJump = false;
+        }
+    }
+    IEnumerator DashTriggerSetTrue()
+    {
+        m_isAxisInUse = false;
+        yield return new WaitForSeconds(0.15f);
+        if (!m_isAxisInUse)
+        {
+            m_isAxisInUse = true;
         }
     }
     IEnumerator DashWait()
@@ -536,9 +710,8 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator NextDash()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.55f);
         isDash = false;
-        if (coll.OnGroundDash() && !IsPushWall()) hasDashed = true;
     }
     IEnumerator DashJump()
     {
@@ -548,21 +721,22 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = false;
         yield return new WaitForSeconds(.25f);
         isDash = false;
-        hasDashed = true;
+        yield return new WaitForSeconds(.15f);
+        if (!isDash) hasDashed = true;
     }
 
     //衝刺時的阻力
-    void RigidbodyDrag(float x)
+    void RigidbodyDrag(float value)
     {
-        rb.drag = x;
+        rb.drag = value;
     }
 
     //返回至原速度
-    void speedBackOrigin(float x)
+    void speedBackOrigin(float value)
     {
         if (coll.wallSide == 1 && Input.GetAxisRaw("Horizontal") == -1 && !coll.OnGround()) { speed = speedOrigin; return; }
         if (coll.wallSide == -1 && Input.GetAxisRaw("Horizontal") == 1 && !coll.OnGround()) { speed = speedOrigin; return; }
-        speed = x;
+        speed = value;
     }
 
     IEnumerator DisableMovement()
@@ -575,7 +749,7 @@ public class PlayerMovement : MonoBehaviour
             canMove = true;
         }
         isWallJump = false;
-        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
+        if (!isStickWall) DOVirtual.Float(0, speedOrigin, .55f, speedBackOrigin).SetId("speedBackTween");
     }
 
     //跳牆時極短瞬間無法黏牆
@@ -602,7 +776,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("Hazard") && !isDeath) Death();
+        if (coll.CompareTag("Hazard") && !isDeath) Death(true);
     }
     public void Ending()
     {
@@ -615,11 +789,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void NextLevel() 
+    public void NextLevel()
     {
         GameObject.FindWithTag("GM").SendMessage("NextLevel");
     }
-    IEnumerator Win() 
+    IEnumerator Win()
     {
         isWin = true;
         yield return new WaitForSeconds(0.5f);
@@ -628,20 +802,20 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isWin", isWin);
     }
 
-    public void Death() 
+    public void Death(bool active)
     {
-        deathParticle.Play();
+        if (active) deathParticle.Play();
         GameObject.FindWithTag("GM").SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;
         StartCoroutine("Rebirth");
         DeathV3 = this.transform.position;
-        cubeMesh.transform.DOScale(0,0.2f);
+        cubeMesh.transform.DOScale(0, 0.2f);
     }
     IEnumerator Rebirth()
     {
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
-        
+
         yield return new WaitForSeconds(.2f);
         GameObject.FindWithTag("GM").SendMessage("Death");
         cubeMesh.SetActive(false);
@@ -673,5 +847,6 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(.4f);
         canMove = true;
+        speed = speedOrigin;
     }
 }

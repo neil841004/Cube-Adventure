@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -605,8 +605,8 @@ ParticleSystem:
     rotation3D: 1
     gravityModifier:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 0.7
+      minMaxState: 0
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -984,7 +984,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1042,7 +1042,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1100,7 +1100,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1158,7 +1158,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1216,7 +1216,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1274,7 +1274,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 40
+        scalar: 25
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -5159,7 +5159,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -5716,8 +5716,8 @@ ParticleSystem:
     rotation3D: 1
     gravityModifier:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 0.7
+      minMaxState: 0
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -6095,7 +6095,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50.4
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6153,7 +6153,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6211,7 +6211,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6269,7 +6269,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6327,7 +6327,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6385,7 +6385,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 50
+        scalar: 35
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -10270,7 +10270,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -10827,8 +10827,8 @@ ParticleSystem:
     rotation3D: 1
     gravityModifier:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 0.7
+      minMaxState: 0
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11206,7 +11206,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11264,7 +11264,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11322,7 +11322,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11380,7 +11380,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11438,7 +11438,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11496,7 +11496,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 80
+        scalar: 50
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -15384,7 +15384,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1

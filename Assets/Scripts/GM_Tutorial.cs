@@ -18,18 +18,19 @@ public class GM_Tutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(t == -1)
-        StartCoroutine("OpenUI", 0);
+        if (t == -1)
+            StartCoroutine("OpenUI", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (text[0].activeSelf && t == -1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().xRaw != 0 ) {
+        if (text[0].activeSelf && t == -1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().xRaw != 0)
+        {
             StartCoroutine("CloseUI", 0);
             t = 0;
         }
-        if (text[1].activeSelf && t == 0) 
+        if (text[1].activeSelf && t == 0)
         {
             t = 1;
             for (int i = 0; i < 8; i++)
@@ -37,27 +38,30 @@ public class GM_Tutorial : MonoBehaviour
                 t1_sawTween[i].DOPlay();
             }
         }
-        if (t == 1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == true) 
+        if (t == 1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == true)
         {
             for (int i = 0; i < 8; i++)
             {
                 t1_sawTween[i].DORestart();
             }
         }
-        if (text[2].activeSelf && t == 1) 
+        if (text[2].activeSelf && t == 1)
         {
             t = 2;
             t2_platform.SetActive(true);
         }
-        if (text[2].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "t2_Platform")
+        if (text[2].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().OnGround())
         {
-            if (!onPF)
+            if (GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "t2_Platform")
             {
-                StartCoroutine("OnPF");
+                if (!onPF)
+                {
+                    StartCoroutine("OnPF");
+                }
+                onPF = true;
             }
-            onPF = true;
         }
-        if (text[3].activeSelf && t == 2) 
+        if (text[3].activeSelf && t == 2)
         {
             for (int i = 0; i < 17; i++)
             {
@@ -72,7 +76,7 @@ public class GM_Tutorial : MonoBehaviour
                 t3_sawTween[i].DORestart();
             }
         }
-        if (text[4].activeSelf && t == 3) 
+        if (text[4].activeSelf && t == 3)
         {
             onPF = false;
             topColl.enabled = false;
@@ -80,43 +84,48 @@ public class GM_Tutorial : MonoBehaviour
             t4_PF[1].DOPlay();
             t = 4;
         }
-        if (text[4].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "TutorialEnd")
+        if (text[4].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().OnGround())
         {
-            if (!onPF)
+            if (GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "TutorialEnd")
             {
-                text[4].SetActive(false);
-                GetComponent<GameManager>().SendMessage("NextLevel");
+                if (!onPF)
+                {
+                    text[4].SetActive(false);
+                    GetComponent<GameManager>().SendMessage("NextLevel");
+                }
+                onPF = true;
             }
-            onPF = true;
         }
 
     }
 
-    IEnumerator OpenUI(int i) 
+    IEnumerator OpenUI(int i)
     {
         yield return new WaitForSeconds(1f);
         text[i].SetActive(true);
-        if (text[2].activeSelf) 
+        if (text[2].activeSelf)
         {
             yield return new WaitForSeconds(0.8f);
             t2_platform.SetActive(true);
         }
     }
 
-    IEnumerator CloseUI(int i) {
+    IEnumerator CloseUI(int i)
+    {
         yield return new WaitForSeconds(2f);
         text[i].SetActive(false);
-        if(i <4) StartCoroutine("OpenUI", i+1);
+        if (i < 4) StartCoroutine("OpenUI", i + 1);
     }
 
-    public void t1_Over() {
-        if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == false) 
+    public void t1_Over()
+    {
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == false)
         {
             StartCoroutine("CloseUI", 1);
         }
     }
 
-    IEnumerator OnPF() 
+    IEnumerator OnPF()
     {
         yield return new WaitForSeconds(2f);
         t2_platform.SetActive(false);

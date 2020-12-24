@@ -33,9 +33,66 @@ public class Collision : MonoBehaviour
     public Vector3 collisoinJumpRadius;
     public Vector3 bottomOffset, bottomEdgeOffset, bottomJumpOffset, rightOffset, leftOffset, upOffset;
 
+    RaycastHit rayHit;
+    Ray ray_1, ray_2, ray_3, ray_4;
+    public Vector3 vector1, vector2, vector3, vector4;
+    bool r1, r2, r3, r4;
+
     // Start is called before the first frame update
     void Start()
     {
+        vector1 = new Vector3(-0.22f, 0, 0);
+        vector2 = new Vector3(-0.1f, 0, 0);
+        vector3 = new Vector3(0.1f, 0, 0);
+        vector4 = new Vector3(0.22f, 0, 0);
+        r1 = false;
+        r2 = false;
+        r3 = false;
+        r4 = false;
+    }
+
+    private void Update()
+    {
+        ray_1 = new Ray(transform.position + vector1, Vector3.down);
+        ray_2 = new Ray(transform.position + vector2, Vector3.down);
+        ray_3 = new Ray(transform.position + vector3, Vector3.down);
+        ray_4 = new Ray(transform.position + vector4, Vector3.down);
+        r1 = false;
+        r2 = false;
+        r3 = false;
+        r4 = false;
+        if (Physics.Raycast(ray_1, out rayHit, 0.27f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                r1 = true;
+            }
+        }
+        if (Physics.Raycast(ray_2, out rayHit, 0.27f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                r2 = true;
+            }
+        }
+        if (Physics.Raycast(ray_3, out rayHit, 0.27f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                r3 = true;
+            }
+        }
+        if (Physics.Raycast(ray_4, out rayHit, 0.27f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                r4 = true;
+            }
+        }
+        // Debug.DrawLine(ray_1.origin, rayHit.point, Color.red);
+        // Debug.DrawLine(ray_2.origin, rayHit.point, Color.red);
+        // Debug.DrawLine(ray_3.origin, rayHit.point, Color.red);
+        // Debug.DrawLine(ray_4.origin, rayHit.point, Color.red);
 
     }
 
@@ -46,8 +103,13 @@ public class Collision : MonoBehaviour
         OnGround();
         OnWall();
         OnEdge();
-        OnUpWall();   
+        OnUpWall();
         OnGroundJump();
+    }
+    public bool OnGroundEdge()
+    {
+        if ((r1 || r4) && !r2 && !r3) return true;
+        else return false;
     }
     public bool OnGround()
     {
@@ -56,10 +118,10 @@ public class Collision : MonoBehaviour
         {
             return true;
         }
-        else 
+        else
         {
             //if (onMovePF == true) return true;
-            return false; 
+            return false;
         }
     }
     public bool OnGroundDash()
