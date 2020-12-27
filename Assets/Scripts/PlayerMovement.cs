@@ -120,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
                 if (!isStickWall && !isAnimDash)
                 {
                     faceRotateTween.Kill();
-                    faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.22f);
+                    faceRotateTween = cube.transform.DORotate(new Vector3(0, 0, 0), 0.42f);
                 }
             }
             if (xRaw == 0 && !coll.OnGround() && !isWallJumpAnim)
@@ -432,11 +432,11 @@ public class PlayerMovement : MonoBehaviour
         //衝刺Trail
         if (!isAnimDash && trail_5.time > 0f)
         {
-            trail_1.time -= 0.01f;
-            trail_2.time -= 0.01f;
-            trail_3.time -= 0.01f;
-            trail_4.time -= 0.01f;
-            trail_5.time -= 0.01f;
+            trail_1.time -= 0.011f;
+            trail_2.time -= 0.011f;
+            trail_3.time -= 0.011f;
+            trail_4.time -= 0.011f;
+            trail_5.time -= 0.011f;
         }
         else if (trail_5.time < 0f)
         {
@@ -453,7 +453,7 @@ public class PlayerMovement : MonoBehaviour
             if (xRaw == 1) rb.AddForce(Vector3.left * 18);
             if (xRaw == -1) rb.AddForce(Vector3.right * 18);
         }
-        if (coll.OnGroundEdge() && xRaw == 0)
+        if (coll.OnGroundEdge() && xRaw == 0 && !bodyDown)
         {
             if (coll.wallSide == 1) rb.AddForce(Vector3.left * 5);
             if (coll.wallSide == -1) rb.AddForce(Vector3.right * 5);
@@ -545,6 +545,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x, 0);
                 if (bodyDownCount >= 50)
                 {
+                    StartTrail();
                     isDownJump = true;
                     rb.AddForce(Vector3.up * jumpForce * 2.25f);
                     faceAngle = x >= 0 ? -900 : 900;
@@ -666,11 +667,11 @@ public class PlayerMovement : MonoBehaviour
         trail_3.enabled = true;
         trail_4.enabled = true;
         trail_5.enabled = true;
-        trail_1.time = 0.38f;
-        trail_2.time = 0.27f;
-        trail_3.time = 0.21f;
-        trail_4.time = 0.35f;
-        trail_5.time = 0.48f;
+        trail_1.time = 0.36f;
+        trail_2.time = 0.25f;
+        trail_3.time = 0.20f;
+        trail_4.time = 0.33f;
+        trail_5.time = 0.45f;
     }
 
     IEnumerator JumpSetTrue()

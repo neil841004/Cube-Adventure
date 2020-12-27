@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
+private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,13 +15,14 @@ public class CheckPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) {
             GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().checkPoint = this.transform.position;
+            anim.SetBool("enter",true);
             this.GetComponent<BoxCollider>().enabled = false;
         }
     }
