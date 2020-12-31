@@ -29,7 +29,7 @@ public class DisappearPF : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) {
             Sequence seq = DOTween.Sequence();
-            seq.Append(this.transform.DOBlendableMoveBy(new Vector3(0,-4.5f,0), 0.9f).SetEase(Ease.InQuad));
+            seq.Append(this.transform.DOBlendableMoveBy(new Vector3(0,-4.5f,0), 0.9f).SetEase(Ease.InCubic));
             seq.Insert(0.6f,DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
             seq.InsertCallback(0.75f,CloseCollider);
         }

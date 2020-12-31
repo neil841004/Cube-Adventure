@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class AnimationScript : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class AnimationScript : MonoBehaviour
     private PlayerMovement move;
     private Collision coll;
     private Rigidbody rb;
+    public GameObject shine;
+    bool isShine = false;
+    public DOTweenAnimation shineAnim;
+
 
     int wallSide = -1;
     // Start is called before the first frame update
@@ -19,13 +24,27 @@ public class AnimationScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void Update()
+    {
+        if (move.bodyDownCount == 50 && !isShine)
+        {
+            shine.GetComponent<SpriteRenderer>().enabled = true;
+            shineAnim.DORestart();
+            isShine = true;
+        }
+        else if (move.bodyDownCount < 50)
+        {
+            isShine = false;
+            
+        }
+    }
     // Update is called once per frame
     void LateUpdate()
     {
-        if(rb.velocity.x>0)wallSide = 1;
-        else if(rb.velocity.x<0)wallSide = -1;
-        if(coll.onRightWall.Length >0)wallSide = 1;
-        if(coll.onLeftWall.Length >0)wallSide = -1;
+        if (rb.velocity.x > 0) wallSide = 1;
+        else if (rb.velocity.x < 0) wallSide = -1;
+        if (coll.onRightWall.Length > 0) wallSide = 1;
+        if (coll.onLeftWall.Length > 0) wallSide = -1;
         // if (coll.OnGround() && !move.IsPushWall())
         // {
         //     anim.SetBool("onGround", true);

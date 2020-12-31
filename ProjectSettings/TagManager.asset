@@ -12,6 +12,8 @@ TagManager:
   - Coin
   - End
   - Ground
+  - CheckPoint
+  - Portal
   layers:
   - Default
   - TransparentFX

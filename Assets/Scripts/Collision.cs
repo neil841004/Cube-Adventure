@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -89,11 +89,6 @@ public class Collision : MonoBehaviour
                 r4 = true;
             }
         }
-        // Debug.DrawLine(ray_1.origin, rayHit.point, Color.red);
-        // Debug.DrawLine(ray_2.origin, rayHit.point, Color.red);
-        // Debug.DrawLine(ray_3.origin, rayHit.point, Color.red);
-        // Debug.DrawLine(ray_4.origin, rayHit.point, Color.red);
-
     }
 
     // Update is called once per frame
@@ -129,11 +124,6 @@ public class Collision : MonoBehaviour
         onGroundDash = Physics.OverlapBox(transform.position + bottomOffset, collisoinDashRadius, Quaternion.identity, groundLayer);
         if (onGroundDash.Length > 0)
         {
-            if (onGroundDash[0].tag == "End") //站到移動平台上
-            {
-                GetComponent<PlayerMovement>().SendMessage("Ending");
-                DeactivateChildren(GameObject.FindWithTag("End").gameObject, true);
-            }
             if (onGroundDash[0].tag == "MovePF") //站到移動平台上
             {
                 this.transform.parent = onGroundDash[0].transform;
