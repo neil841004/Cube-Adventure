@@ -26,13 +26,13 @@ public class AnimationScript : MonoBehaviour
 
     void Update()
     {
-        if (move.bodyDownCount == 50 && !isShine)
+        if (move.bodyDownCount == 42 && !isShine)
         {
             shine.GetComponent<SpriteRenderer>().enabled = true;
             shineAnim.DORestart();
             isShine = true;
         }
-        else if (move.bodyDownCount < 50)
+        else if (move.bodyDownCount < 42)
         {
             isShine = false;
             

@@ -17,14 +17,14 @@ public class SpeedLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (move.bodyDownCount >= 40 && move.bodyDown && !isFadeIn)
+        if (move.bodyDownCount >= 33 && move.bodyDown && !isFadeIn)
         {
-            this.GetComponent<Image>().DOFade(0.3f, 0.5f).SetEase(Ease.InCubic);
+            this.GetComponent<Image>().DOFade(0.3f, 0.4f).SetEase(Ease.InCubic);
             isFadeIn = true;
         }
         if (!move.bodyDown)
         {
-            this.GetComponent<Image>().DOFade(0, 0.5f);
+            this.GetComponent<Image>().DOFade(0, 0.4f);
             isFadeIn = false;
         }
     }

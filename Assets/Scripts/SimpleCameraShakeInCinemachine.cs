@@ -16,6 +16,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     public float ShakeFrequency = 0.08f;         // Cinemachine Noise Profile Parameter
 
     private float ShakeElapsedTime = 0f;
+    private float originalLen;
 
     private int bodyDownCount = 0;
 
@@ -35,6 +36,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
         if (VirtualCamera != null)
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
         profile = GameObject.Find("PostEffect").GetComponent<Volume>().profile;
+        originalLen = VirtualCamera.m_Lens.FieldOfView;
     }
 
     // Update is called once per frame
@@ -66,26 +68,20 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
             {
                 if (ShakeElapsedTime <= 0)
                 {
-                    if (bodyDownCount < 50)
+                    if (bodyDownCount < 42)
                     {
-                        virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
-                        virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
-                    }else if (bodyDownCount == 50)
+                        virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.05f;
+                        virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.0025f;
+                    }else if (bodyDownCount == 42)
                     {
-                        virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.047f;
-                        virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.0023f;
+                        virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.05f;
+                        virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.0025f;
                     }
                 }
                 profile.TryGet(out myChromaticAberration);
-                myChromaticAberration.intensity.Override(bodyDownCount * 0.02f);
+                myChromaticAberration.intensity.Override(bodyDownCount * 0.0238f);
+                VirtualCamera.m_Lens.FieldOfView = originalLen +  (bodyDownCount * 0.1f);
             }
-            //else if (bodyDownCount <= 10 && ShakeElapsedTime <= 0)
-            //{
-            //    virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.044f;
-            //    virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.00225f;
-            //    profile.TryGet(out myChromaticAberration);
-            //    myChromaticAberration.intensity.Override(bodyDownCount * 0.02f);
-            //}
         }
     }
 

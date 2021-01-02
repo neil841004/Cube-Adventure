@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
             else if (isAnimDash && rb.velocity.x < 0) x = -1;
             if (bodyDown)
             {
-                if (bodyDownCount <= 48)
+                if (bodyDownCount <= 40)
                 {
                     if (xRaw == 0) x = 0;
                     else x = xRaw > 0 ? 1 : -1;
@@ -443,7 +443,7 @@ public class PlayerMovement : MonoBehaviour
             trail_4.time -= 0.011f;
             trail_5.time -= 0.011f;
         }
-        else if (trail_5.time < 0f)
+        else if (trail_5.time <= 0f)
         {
             trail_1.enabled = false;
             trail_2.enabled = false;
@@ -477,8 +477,8 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(x * (4.5f - (bodyDownCount * 0.3f)), rb.velocity.y);
             }
             if (bodyDownCount > 5) AccumulateParticle.Play();
-            if (bodyDownCount < 50) bodyDownCount++;
-            if (bodyDownCount >= 50)
+            if (bodyDownCount < 42) bodyDownCount++;
+            if (bodyDownCount >= 42)
             {
                 aimTriangle.SetActive(true);
             }
@@ -498,7 +498,7 @@ public class PlayerMovement : MonoBehaviour
             if (bodyDownCount > 0) bodyDownCount -= 5;
             else bodyDownCount = 0;
         }
-        if (bodyDownCount < 50) aimTriangle.SetActive(false);
+        if (bodyDownCount < 42) aimTriangle.SetActive(false);
     }
 
     void Move()
@@ -549,7 +549,7 @@ public class PlayerMovement : MonoBehaviour
                 StopCoroutine("JumpSetTrue");
                 isJump = true;
                 rb.velocity = new Vector3(rb.velocity.x, 0);
-                if (bodyDownCount >= 50)
+                if (bodyDownCount >= 42)
                 {
                     StartTrail();
                     DownJumpParticle.Play();
