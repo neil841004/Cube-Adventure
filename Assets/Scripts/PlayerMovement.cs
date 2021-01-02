@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 if (x >= -1 && x <= 1 && xRaw != 0)
                 {
-                    x += xRaw > 0 ? 0.02f : -0.02f;
+                    x += xRaw > 0 ? 3.8f * Time.deltaTime : -3.8f * Time.deltaTime;
                     if (x >= 1 && xRaw == 1) x = 1;
                     else if (x <= -1 && xRaw == -1) x = -1;
                 }
@@ -317,11 +317,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Send"))
         {
             canSend = true;
-            // x = 0;
             StopCoroutine("sendIenumerator");
             StartCoroutine("sendIenumerator");
         }
     }
+
 
     private void FixedUpdate()
     {
@@ -655,7 +655,7 @@ public class PlayerMovement : MonoBehaviour
         speed = speedOrigin;
         meshRotateTween.Kill();
         cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.4f, RotateMode.FastBeyond360);
+        cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.47f, RotateMode.FastBeyond360);
         if (xRaw > 0) DashParticleR.Play();
         else if (xRaw < 0) DashParticleL.Play();
         if (xRaw == 0)
@@ -805,12 +805,16 @@ public class PlayerMovement : MonoBehaviour
         if (co.CompareTag("Portal") && canSend)
         {
             this.transform.position = co.GetComponent<Portal>().destination.transform.position;
+            co.GetComponent<Portal>().SendMessage("PortalStart");
+            GetComponentInChildren<PlayerMesh>().SendMessage("SendAnim");
             StopCoroutine("sendIenumerator");
             canSend = false;
         }
     }
+
     IEnumerator sendIenumerator()
     {
+
         yield return new WaitForSeconds(0.1f);
         canSend = false;
     }
@@ -819,7 +823,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isWin)
         {
-            Debug.Log(isWin);
             StopAllCoroutines();
             canMove = false;
             speed = 0;

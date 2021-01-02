@@ -20796,7 +20796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorOringal: {r: 1, g: 0.9843137, b: 0, a: 0}
-  colorDash: {r: 0.38327694, g: 0.76702935, b: 0.8207547, a: 0}
+  colorDash: {r: 0.38431376, g: 0.81960785, b: 0.71516526, a: 0}
   color: {r: 1, g: 0.9843137, b: 0, a: 0}
   move: {fileID: 8420494392226126249}
 --- !u!1 &8831273688585748959

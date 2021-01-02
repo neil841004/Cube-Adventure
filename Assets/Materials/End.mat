@@ -110,13 +110,13 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FinalAddColor: {r: 0, g: 0, b: 0, a: 0}
-    - _OutLineColor: {r: 0.082235664, g: 0.15913136, b: 0.2264151, a: 1}
+    - _OutLineColor: {r: 0.16273585, g: 0.34504086, b: 0.5, a: 1}
     - _OutlineColor: {r: 0.17399432, g: 0.33605692, b: 0.4339623, a: 1}
     - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowColor: {r: 0.68235296, g: 0.40602142, b: 0.3490196, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.3726415, g: 0.9067076, b: 1, a: 1}
+    - _TintColor: {r: 0.5896226, g: 1, b: 0.6512741, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4272917991868435047
 MonoBehaviour:

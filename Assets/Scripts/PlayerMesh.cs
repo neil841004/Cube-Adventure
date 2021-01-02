@@ -9,7 +9,7 @@ public class PlayerMesh : MonoBehaviour
     public PlayerMovement move;
     float thick = 5.4f;
     float fadeTime = 1f;
-    Tween colorTween;
+    Tween colorTween,scaleTween;
     // Start is called before the first frame update
 
 
@@ -28,5 +28,10 @@ public class PlayerMesh : MonoBehaviour
         }
         this.GetComponent<MeshRenderer>().material.SetColor("_OutLineColor", color);
         this.GetComponent<MeshRenderer>().material.SetFloat("_EdgeThickness", thick);
+    }
+    void SendAnim(){
+        scaleTween.Kill();
+        this.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
+        scaleTween = this.transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
     }
 }
