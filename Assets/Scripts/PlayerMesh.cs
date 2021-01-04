@@ -40,7 +40,7 @@ public class PlayerMesh : MonoBehaviour
     void GetCoin()
     {
         scaleTween.Kill();
-        this.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+        this.transform.localScale = new Vector3(0.72f, 0.72f, 0.72f);
         scaleTween = this.transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
     }
 }
