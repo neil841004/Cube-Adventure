@@ -6,11 +6,13 @@ using UnityEngine;
 public class CheckPoint : MonoBehaviour
 {
     private Animator anim;
+    PlayerMovement move;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -29,8 +31,8 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().checkPoint = this.gameObject;
-            GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().checkPointV3 = this.transform.position;
+            move.checkPoint = this.gameObject;
+            move.checkPointV3 = this.transform.position;
             anim.SetBool("enter", true);
 
             this.GetComponent<BoxCollider>().enabled = false;

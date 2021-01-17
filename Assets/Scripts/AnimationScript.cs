@@ -12,6 +12,7 @@ public class AnimationScript : MonoBehaviour
     public GameObject shine;
     bool isShine = false;
     public DOTweenAnimation shineAnim;
+    SpriteRenderer shineSprite;
 
 
     int wallSide = -1;
@@ -22,13 +23,14 @@ public class AnimationScript : MonoBehaviour
         coll = GetComponent<Collision>();
         move = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
+        shineSprite = shine.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         if (move.bodyDownCount == 42 && !isShine)
         {
-            shine.GetComponent<SpriteRenderer>().enabled = true;
+            shineSprite.enabled = true;
             shineAnim.DORestart();
             isShine = true;
         }
@@ -38,20 +40,13 @@ public class AnimationScript : MonoBehaviour
             
         }
     }
-    // Update is called once per frame
+
     void LateUpdate()
     {
         if (rb.velocity.x > 0) wallSide = 1;
         else if (rb.velocity.x < 0) wallSide = -1;
         if (coll.onRightWall.Length > 0) wallSide = 1;
         if (coll.onLeftWall.Length > 0) wallSide = -1;
-        // if (coll.OnGround() && !move.IsPushWall())
-        // {
-        //     anim.SetBool("onGround", true);
-        // }else 
-        // {
-        //     anim.SetBool("onGround", false);
-        // }
         anim.SetBool("onGround", coll.OnGround());
         anim.SetBool("isJump", move.isJump);
         anim.SetBool("isDash", move.isAnimDash);
@@ -63,7 +58,6 @@ public class AnimationScript : MonoBehaviour
         anim.SetFloat("ySpeed", rb.velocity.y);
         anim.SetFloat("xSpeed", Mathf.Abs(rb.velocity.x));
         anim.SetFloat("fallLandSpeed", move.fallLandSpeed);
-        //anim.SetFloat("xRaw", move.xRaw);
         anim.SetInteger("wallSide", wallSide);
     }
 }

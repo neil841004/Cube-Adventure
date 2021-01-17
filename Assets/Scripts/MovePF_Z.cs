@@ -13,12 +13,6 @@ public class MovePF_Z : MonoBehaviour
         StartCoroutine("StartTrap");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator StartTrap() {
         yield return new WaitForSeconds(delayStartTime);
         Sequence seq = DOTween.Sequence();

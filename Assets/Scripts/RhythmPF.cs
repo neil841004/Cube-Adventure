@@ -15,11 +15,6 @@ public class RhythmPF : MonoBehaviour
         StartCoroutine("StartTrap");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator StartTrap() {
         yield return new WaitForSeconds(delayStartTime);

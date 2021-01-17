@@ -21,9 +21,6 @@ public class DisappearPF : MonoBehaviour
 
     }
 
-    void FadePF() { 
-        
-    }
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
