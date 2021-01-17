@@ -28,6 +28,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
 
     VolumeProfile profile;
     ChromaticAberration myChromaticAberration;
+    PlayerMovement move;
 
     // Use this for initialization
     void Start()
@@ -37,13 +38,13 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
         profile = GameObject.Find("PostEffect").GetComponent<Volume>().profile;
         originalLen = VirtualCamera.m_Lens.FieldOfView;
+        move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        bodyDownCount = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().bodyDownCount;
-        //Debug.Log(ShakeElapsedTime);
+        bodyDownCount = move.bodyDownCount;
         // If the Cinemachine componet is not set, avoid update
         if (VirtualCamera != null && virtualCameraNoise != null)
         {

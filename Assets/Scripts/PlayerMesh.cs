@@ -11,10 +11,12 @@ public class PlayerMesh : MonoBehaviour
     float thick = 5.4f;
     float fadeTime = 1f;
     Tween colorTween, scaleTween;
-    // Start is called before the first frame update
+    Material _material;
 
+    private void Start() {
+        _material = this.GetComponent<MeshRenderer>().material;
+    }
 
-    // Update is called once per frame
     void Update()
     {
         if (move.hasDashed && !move.isWin)
@@ -27,20 +29,20 @@ public class PlayerMesh : MonoBehaviour
             colorTween = DOTween.To(() => color, x => color = x, colorDash, fadeTime);
             colorTween = DOTween.To(() => thick, x => thick = x, 11f, fadeTime);
         }
-        this.GetComponent<MeshRenderer>().material.SetColor("_OutLineColor", color);
-        this.GetComponent<MeshRenderer>().material.SetFloat("_EdgeThickness", thick);
+        _material.SetColor("_OutLineColor", color);
+        _material.SetFloat("_EdgeThickness", thick);
     }
     void SendAnim()
     {
         scaleTween.Kill();
-        this.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        scaleTween = this.transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
+        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        scaleTween = transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
     }
 
     void GetCoin()
     {
         scaleTween.Kill();
-        this.transform.localScale = new Vector3(0.72f, 0.72f, 0.72f);
-        scaleTween = this.transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
+        transform.localScale = new Vector3(0.72f, 0.72f, 0.72f);
+        scaleTween = transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
     }
 }

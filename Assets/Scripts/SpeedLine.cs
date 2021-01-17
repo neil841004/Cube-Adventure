@@ -8,17 +8,22 @@ public class SpeedLine : MonoBehaviour
 {
     public PlayerMovement move;
     bool isFadeIn = false;
+    Image _image;
     
+    private void Start() {
+        _image = this.GetComponent<Image>();    
+    }
+
     void Update()
     {
         if (move.bodyDownCount >= 33 && move.bodyDown && !isFadeIn)
         {
-            this.GetComponent<Image>().DOFade(0.3f, 0.4f).SetEase(Ease.InCubic);
+            _image.DOFade(0.3f, 0.4f).SetEase(Ease.InCubic);
             isFadeIn = true;
         }
         if (!move.bodyDown)
         {
-            this.GetComponent<Image>().DOFade(0, 0.4f);
+            _image.DOFade(0, 0.4f);
             isFadeIn = false;
         }
     }

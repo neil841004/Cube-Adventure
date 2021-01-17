@@ -13,19 +13,22 @@ public class GM_Tutorial : MonoBehaviour
     public int t = -1;
     public GameObject t2_platform;
     bool onPF = false;
+    PlayerMovement move;
+    Collision collision;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (t == -1)
-            StartCoroutine("OpenUI", 0);
+        if (t == -1) StartCoroutine("OpenUI", 0);
+        move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        collision = GameObject.FindWithTag("Player").GetComponent<Collision>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (text[0].activeSelf && t == -1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().xRaw != 0)
+        if (text[0].activeSelf && t == -1 && move.xRaw != 0)
         {
             StartCoroutine("CloseUI", 0);
             t = 0;
@@ -38,7 +41,7 @@ public class GM_Tutorial : MonoBehaviour
                 t1_sawTween[i].DOPlay();
             }
         }
-        if (t == 1 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == true)
+        if (t == 1 && move.isDeath == true)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -50,9 +53,9 @@ public class GM_Tutorial : MonoBehaviour
             t = 2;
             t2_platform.SetActive(true);
         }
-        if (text[2].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().OnGround())
+        if (text[2].activeSelf && !onPF && collision.OnGround())
         {
-            if (GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "t2_Platform")
+            if (collision.onGroundDash[0].name == "t2_Platform")
             {
                 if (!onPF)
                 {
@@ -69,7 +72,7 @@ public class GM_Tutorial : MonoBehaviour
             }
             t = 3;
         }
-        if (t == 3 && GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == true)
+        if (t == 3 && move.isDeath == true)
         {
             for (int i = 0; i < 17; i++)
             {
@@ -84,9 +87,9 @@ public class GM_Tutorial : MonoBehaviour
             t4_PF[1].DOPlay();
             t = 4;
         }
-        if (text[4].activeSelf && !onPF && GameObject.FindWithTag("Player").GetComponent<Collision>().OnGround())
+        if (text[4].activeSelf && !onPF && collision.OnGround())
         {
-            if (GameObject.FindWithTag("Player").GetComponent<Collision>().onGroundDash[0].name == "TutorialEnd")
+            if (collision.onGroundDash[0].name == "TutorialEnd")
             {
                 if (!onPF)
                 {
@@ -119,7 +122,7 @@ public class GM_Tutorial : MonoBehaviour
 
     public void t1_Over()
     {
-        if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == false)
+        if (move.isDeath == false)
         {
             StartCoroutine("CloseUI", 1);
         }
@@ -135,7 +138,7 @@ public class GM_Tutorial : MonoBehaviour
 
     public void t3_Over()
     {
-        if (GameObject.FindWithTag("Player").GetComponent<PlayerMovement>().isDeath == false)
+        if (move.isDeath == false)
         {
             StartCoroutine("CloseUI", 3);
         }

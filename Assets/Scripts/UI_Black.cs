@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class UI_Black : MonoBehaviour
 {
+    Image _image;
+    private void Start() {
+        _image = this.GetComponent<Image>();    
+    }
+
     public void FadeIn(){
-        this.GetComponent<Image>().DOFade(1, .3f).SetEase(Ease.OutSine);
+        _image.DOFade(1, .3f).SetEase(Ease.OutSine);
     }
     public void FadeOut(){
-        this.GetComponent<Image>().DOFade(0, .3f).SetEase(Ease.OutSine);
+        _image.DOFade(0, .3f).SetEase(Ease.OutSine);
     }
 }

@@ -88,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPointV3;
     Tween rbTween, faceRotateTween, meshRotateTween;
+    GameObject gm;
+    BetterJumping _betterJumping;
 
     void Start()
     {
@@ -97,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         EntryPoint = this.transform.position;
         checkPointV3 = EntryPoint;
+        gm = GameObject.FindWithTag("GM");
+        _betterJumping = GetComponent<BetterJumping>();
     }
 
     void Update()
@@ -243,12 +247,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (x > 0) Dash(1);
                 if (x < 0) Dash(-1);
-                GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
+                gm.SendMessage("ScreenShake_Dash");
             }
             else if (xRaw != 0)
             {
                 Dash(xRaw);
-                GameObject.FindWithTag("GM").SendMessage("ScreenShake_Dash");
+                gm.SendMessage("ScreenShake_Dash");
             }
             StartCoroutine("DashTriggerSetTrue");
         }
@@ -364,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
                 DOTween.Kill("speedBackTween", false);
                 speed = 0;
                 rb.velocity = new Vector2(0, rb.velocity.y);
-                GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+                _betterJumping.fallMultiplier = 0.15f;
             }
             rb.velocity = new Vector2(0, rb.velocity.y);
 
@@ -375,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!IsPushWall() && !isWallJump && !isStickWall && !isDash)
         {
-            GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+            _betterJumping.fallMultiplier = fallMultiplier;
         }
 
         // 黏牆相關
@@ -539,9 +543,9 @@ public class PlayerMovement : MonoBehaviour
                     StopCoroutine("DashWait");
                     StopCoroutine("NextDash");
                     StopCoroutine("DashJump");
-                    GetComponent<BetterJumping>().enabled = true;
+                    _betterJumping.enabled = true;
                     rb.useGravity = true;
-                    GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+                    _betterJumping.fallMultiplier = fallMultiplier;
                     rbTween.Kill();
                     rbTween = DOVirtual.Float(3, 0, 0.6f, RigidbodyDrag);
                     StartCoroutine("DashJump");
@@ -560,7 +564,7 @@ public class PlayerMovement : MonoBehaviour
                     meshRotateTween.Kill();
 
                     meshRotateTween = cubeMesh.transform.DOLocalRotate(new Vector3(0, 0, faceAngle), 1f, RotateMode.FastBeyond360);
-                    GameObject.FindWithTag("GM").SendMessage("ScreenShake_DownJump");
+                    gm.SendMessage("ScreenShake_DownJump");
                 }
                 else
                 {
@@ -671,7 +675,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(value, 0);
         rb.velocity += dir.normalized * dashSpeed;
-        GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+        _betterJumping.fallMultiplier = 0.15f;
         StartCoroutine("DashWait");
         StartCoroutine("NextDash");
     }
@@ -711,7 +715,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rbTween = DOVirtual.Float(10, 0, 1f, RigidbodyDrag);
         canMove = false;
-        GetComponent<BetterJumping>().enabled = false;
+        _betterJumping.enabled = false;
         rb.useGravity = false;
         yield return new WaitForSeconds(.15f);
         if (!isDeath)
@@ -719,10 +723,10 @@ public class PlayerMovement : MonoBehaviour
             canMove = true;
         }
         isAnimDash = false;
-        GetComponent<BetterJumping>().enabled = true;
+        _betterJumping.enabled = true;
         rb.useGravity = true;
         yield return new WaitForSeconds(.07f);
-        GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+        _betterJumping.fallMultiplier = fallMultiplier;
     }
     IEnumerator NextDash()
     {
@@ -780,14 +784,14 @@ public class PlayerMovement : MonoBehaviour
     {
         isStickWall = true;
         speed = 0;
-        GetComponent<BetterJumping>().fallMultiplier = 0.15f;
+        _betterJumping.fallMultiplier = 0.15f;
         rb.velocity = new Vector2(0, rb.velocity.y);
         yield return new WaitForSeconds(.35f);
         DOVirtual.Float(0, speedOrigin, .5f, speedBackOrigin);
         if (coll.wallSide != xRaw)
         {
             isStickWall = false;
-            GetComponent<BetterJumping>().fallMultiplier = fallMultiplier;
+            _betterJumping.fallMultiplier = fallMultiplier;
         }
     }
     private void OnTriggerEnter(Collider co)
@@ -833,21 +837,21 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Win()
     {
-        GameObject.FindWithTag("GM").SendMessage("Win");
+        gm.SendMessage("Win");
         yield return new WaitForSeconds(0.5f);
-        GameObject.FindWithTag("GM").SendMessage("Win");
+        gm.SendMessage("Win");
         yield return new WaitForSeconds(0.5f);
         anim.SetBool("isWin", isWin);
     }
     public void NextLevel()
     {
-        GameObject.FindWithTag("GM").SendMessage("NextLevel");
+        gm.SendMessage("NextLevel");
     }
 
     public void Death(bool active)
     {
         if (active) deathParticle.Play();
-        GameObject.FindWithTag("GM").SendMessage("ScreenShake_Death");
+        gm.SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;
         StartCoroutine("Rebirth");
@@ -859,7 +863,7 @@ public class PlayerMovement : MonoBehaviour
         //FindObjectOfType<RippleEffect>().Emit(Camera.main.WorldToViewportPoint(transform.position));
 
         yield return new WaitForSeconds(.2f);
-        GameObject.FindWithTag("GM").SendMessage("Death");
+        gm.SendMessage("Death");
         cubeMesh.SetActive(false);
         canMove = false;
         yield return new WaitForSeconds(.45f);
@@ -871,7 +875,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 0;
         }
         yield return new WaitForSeconds(.4f);
-        GameObject.FindWithTag("GM").SendMessage("ResetLevel");
+        gm.SendMessage("ResetLevel");
         transform.position = checkPointV3;
         if (!isTutorial)
         {

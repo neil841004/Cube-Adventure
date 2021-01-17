@@ -6,8 +6,15 @@ using DG.Tweening;
 public class Portal : MonoBehaviour
 {
     public GameObject destination;
-    Tween portalScaleTween,portalScaleBackTween;
+    Tween portalScaleTween, portalScaleBackTween;
     bool isClose = false;
+    BoxCollider _boxCollider, _otherBoxCollider;
+
+    private void Start()
+    {
+        _boxCollider = this.GetComponent<BoxCollider>();
+        _otherBoxCollider = destination.GetComponent<BoxCollider>();
+    }
 
     public void PortalStart()
     {
@@ -15,8 +22,8 @@ public class Portal : MonoBehaviour
         {
             Debug.Log("A");
 
-            this.GetComponent<BoxCollider>().enabled = false;
-            destination.GetComponent<BoxCollider>().enabled = false;
+            _boxCollider.enabled = false;
+            _otherBoxCollider.enabled = false;
             portalScaleBackTween.Kill();
             StopCoroutine("PortalEenumerator");
             portalScaleTween = this.transform.GetChild(0).DOScale(0.4f, 0.2f);
@@ -28,14 +35,14 @@ public class Portal : MonoBehaviour
     IEnumerator PortalEenumerator()
     {
         yield return new WaitForSeconds(1f);
-        
+
         Debug.Log("B");
 
         portalScaleBackTween = this.transform.GetChild(0).DOScale(1f, 0.3f);
         portalScaleBackTween = destination.transform.GetChild(0).DOScale(1f, 0.3f);
         yield return new WaitForSeconds(0.1f);
-        this.GetComponent<BoxCollider>().enabled = true;
-        destination.GetComponent<BoxCollider>().enabled = true;
+        _boxCollider.enabled = true;
+        _otherBoxCollider.enabled = true;
         isClose = false;
     }
 }
