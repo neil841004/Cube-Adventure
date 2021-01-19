@@ -81,8 +81,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem rebirthParticle;
     public ParticleSystem DashToWallParticle;
     public ParticleSystem AccumulateParticle;
-    public ParticleSystem DashParticleR;
-    public ParticleSystem DashParticleL;
+    public ParticleSystem DashParticle;
     public ParticleSystem DownJumpParticle;
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
@@ -660,13 +659,14 @@ public class PlayerMovement : MonoBehaviour
         meshRotateTween.Kill();
         cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
         cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.47f, RotateMode.FastBeyond360);
-        if (xRaw > 0) DashParticleR.Play();
-        else if (xRaw < 0) DashParticleL.Play();
-        if (xRaw == 0)
-        {
-            if (x > 0) DashParticleR.Play();
-            else if (x < 0) DashParticleL.Play();
-        }
+        DashParticle.Play();
+        // if (xRaw > 0) DashParticleR.Play();
+        // else if (xRaw < 0) DashParticleL.Play();
+        // if (xRaw == 0)
+        // {
+        //     if (x > 0) DashParticleR.Play();
+        //     else if (x < 0) DashParticleL.Play();
+        // }
         hasDashed = false;
         isDash = true;
         isAnimDash = true;
@@ -686,11 +686,11 @@ public class PlayerMovement : MonoBehaviour
         trail_3.enabled = true;
         trail_4.enabled = true;
         trail_5.enabled = true;
-        trail_1.time = 0.36f;
-        trail_2.time = 0.25f;
-        trail_3.time = 0.20f;
-        trail_4.time = 0.33f;
-        trail_5.time = 0.45f;
+        trail_1.time = 0.33f;
+        trail_2.time = 0.22f;
+        trail_3.time = 0.17f;
+        trail_4.time = 0.30f;
+        trail_5.time = 0.41f;
     }
 
     IEnumerator JumpSetTrue()

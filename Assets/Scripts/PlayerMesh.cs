@@ -12,6 +12,7 @@ public class PlayerMesh : MonoBehaviour
     float fadeTime = 1f;
     Tween colorTween, scaleTween;
     Material _material;
+    public Material _trail;
 
     private void Start() {
         _material = this.GetComponent<MeshRenderer>().material;
@@ -31,6 +32,7 @@ public class PlayerMesh : MonoBehaviour
         }
         _material.SetColor("_OutLineColor", color);
         _material.SetFloat("_EdgeThickness", thick);
+        _trail.SetColor("_TintColor", color);
     }
     void SendAnim()
     {

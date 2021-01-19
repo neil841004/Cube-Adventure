@@ -9,10 +9,11 @@ public class AnimationScript : MonoBehaviour
     private PlayerMovement move;
     private Collision coll;
     private Rigidbody rb;
-    public GameObject shine;
+    public ParticleSystem shineParticle;
+    // public GameObject shine;
     bool isShine = false;
-    public DOTweenAnimation shineAnim;
-    SpriteRenderer shineSprite;
+    // public DOTweenAnimation shineAnim;
+    // SpriteRenderer shineSprite;
 
 
     int wallSide = -1;
@@ -23,21 +24,19 @@ public class AnimationScript : MonoBehaviour
         coll = GetComponent<Collision>();
         move = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody>();
-        shineSprite = shine.GetComponent<SpriteRenderer>();
+        // shineSprite = shine.GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         if (move.bodyDownCount == 42 && !isShine)
         {
-            shineSprite.enabled = true;
-            shineAnim.DORestart();
+            shineParticle.Play();
             isShine = true;
         }
         else if (move.bodyDownCount < 42)
         {
             isShine = false;
-            
         }
     }
 
