@@ -99,8 +99,8 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     public void ScreenShake_Death()
     {
 
-        ShakeAmplitude = 9f;
-        ShakeFrequency = 0.06f;
+        ShakeAmplitude = 11f;
+        ShakeFrequency = 0.048f;
         ShakeElapsedTime = 1.5f;
         shakeTimeS.Kill();
         shakeTimeL.PlayForward();
