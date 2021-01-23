@@ -3477,6 +3477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3811383048979127909}
   - component: {fileID: 7215529627194258762}
+  - component: {fileID: 980310208}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -3631,6 +3632,18 @@ MonoBehaviour:
   lastSrcRotation: {x: -0, y: -0, z: -0, w: 1}
   wpsDropdown: 1
   dropToFloorOffset: 0
+--- !u!114 &980310208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811383048979127910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd9d56c0a7d02e439e4978dfd8bee25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3811383049149623206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,7 +3654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3811383049149623204}
   m_Layer: 0
-  m_Name: PathSaw
+  m_Name: PathSaw_X
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

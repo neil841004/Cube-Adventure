@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3862035842588201773}
   - component: {fileID: 3862035842588201775}
   - component: {fileID: 3862035842588201769}
+  - component: {fileID: 3826404185569651470}
   m_Layer: 0
   m_Name: saw
   m_TagString: Hazard
@@ -3573,3 +3574,15 @@ MonoBehaviour:
   optionalRotationMode: 0
   optionalScrambleMode: 0
   optionalString: 
+--- !u!114 &3826404185569651470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862035842588201772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a3c8abc3341ff438156625d3435aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

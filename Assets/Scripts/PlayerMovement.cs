@@ -285,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetButtonDown("Rebirth") && !isDeath)
         {
-            Death(false);
+            Death(true);
         }
 
         // 蹬牆轉向時速度增加
@@ -474,7 +474,7 @@ public class PlayerMovement : MonoBehaviour
         {
             canMove = false;
             cubeMesh.transform.DOScale(new Vector3(0.7f, 0.22f, 0.7f), 0.3f);
-            cubeMesh.transform.DOLocalMoveY(-0.08f, 0.3f);
+            cubeMesh.transform.DOLocalMoveY(-0.16f, 0.3f);
             if (rb.velocity.x != 0 && !isDash && bodyDownCount <= 15)
             {
                 rb.velocity = new Vector2(x * (4.5f - (bodyDownCount * 0.3f)), rb.velocity.y);
@@ -496,7 +496,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isDeath)
             {
                 cubeMesh.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.2f);
-                cubeMesh.transform.DOLocalMoveY(0.08f, 0.2f);
+                cubeMesh.transform.DOLocalMoveY(0.04f, 0.2f);
             }
             if (bodyDownCount > 0) bodyDownCount -= 5;
             else bodyDownCount = 0;

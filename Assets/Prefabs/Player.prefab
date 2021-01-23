@@ -6670,7 +6670,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.8705883
+          value: 0.6000001
           inSlope: -0.20527488
           outSlope: -0.20527488
           tangentMode: 0
@@ -6678,8 +6678,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.11553882
         - serializedVersion: 3
-          time: 0.99011016
-          value: 0.48054433
+          time: 0.98220503
+          value: 0.20995611
           inSlope: -0.6980766
           outSlope: -0.6980766
           tangentMode: 0
@@ -6991,8 +6991,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0.3054675}
+        key0: {r: 1, g: 1, b: 1, a: 0.6392157}
+        key1: {r: 1, g: 1, b: 1, a: 0.26925278}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -7008,7 +7008,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 5590
-        atime1: 37972
+        atime1: 32768
         atime2: 65535
         atime3: 65535
         atime4: 0
@@ -25206,7 +25206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15dc3ca1797d48d2967b299cc0f0b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shineParticle: {fileID: 0}
+  shineParticle: {fileID: 1222339799}
 --- !u!136 &5048047402244317565
 CapsuleCollider:
   m_ObjectHideFlags: 0

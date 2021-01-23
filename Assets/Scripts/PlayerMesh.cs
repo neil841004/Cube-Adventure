@@ -14,18 +14,19 @@ public class PlayerMesh : MonoBehaviour
     Material _material;
     public Material _trail;
 
-    private void Start() {
+    private void Start()
+    {
         _material = this.GetComponent<MeshRenderer>().material;
     }
 
     void Update()
     {
-        if (move.hasDashed && !move.isWin)
+        if (move.hasDashed || move.isWin)
         {
             colorTween = DOTween.To(() => color, x => color = x, colorOringal, fadeTime);
             colorTween = DOTween.To(() => thick, x => thick = x, 5.4f, fadeTime * 0.8f);
         }
-        if (!move.hasDashed || move.isWin)
+        if (!move.hasDashed)
         {
             colorTween = DOTween.To(() => color, x => color = x, colorDash, fadeTime);
             colorTween = DOTween.To(() => thick, x => thick = x, 11f, fadeTime);

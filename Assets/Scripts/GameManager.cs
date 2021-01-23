@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent resetLevel = new UnityEvent();
     public UnityEvent win = new UnityEvent();
     public UnityEvent nextLevel = new UnityEvent();
+    public bool reTrap = false;
 
     public GameObject coinParent;
     // Start is called before the first frame update
@@ -34,7 +35,15 @@ public class GameManager : MonoBehaviour
     {
         resetLevel.Invoke();
         DeactivateChildren(coinParent, true);
+        reTrap = true;
+        StartCoroutine("RestartTrap");
     }
+    IEnumerator RestartTrap(){
+        yield return new WaitForSeconds(0.15f);
+        reTrap = false;
+    }
+    
+
 
     void DeactivateChildren(GameObject g, bool state)
     {
@@ -51,7 +60,6 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel() {
         nextLevel.Invoke();
-        
     }
 
     public void LevelID(int levelNumber) 
