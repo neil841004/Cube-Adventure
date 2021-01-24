@@ -1525,8 +1525,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6311056947710406763, guid: e0f0977979dbb2041a92e5344b487463, type: 3}
-  _speed: 10
+  _speed: 14
   cooldown: 0.7
+  delay: 0
 --- !u!65 &5941480726890996506
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -129,5 +129,5 @@ Material:
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _ShadowColor: {r: 0.6483624, g: 0.8867924, b: 0.8555229, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 1, g: 0.4764151, b: 0.6777939, a: 1}
+    - _TintColor: {r: 0.9528302, g: 0.39101997, b: 0.60903585, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

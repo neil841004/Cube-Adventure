@@ -32,6 +32,12 @@ public class RhythmPF : MonoBehaviour
     }
 
     public void Update() {
-        if(gm.reTrap) seq.Restart();
+        if (gm.reTrap){
+            StartCoroutine("DelayStartTrap");
+        }
+    }
+    IEnumerator DelayStartTrap() {
+        yield return new WaitForSeconds(delayStartTime);
+        seq.Restart();
     }
 }

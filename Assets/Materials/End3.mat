@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: End
+  m_Name: End3
   m_Shader: {fileID: 4800000, guid: 18b3325d96afffc48a5fd75f54be611a, type: 3}
   m_ShaderKeywords: ENABLE_SCREEN_DOOR_TRANSPARENCY
   m_LightmapFlags: 4
@@ -72,8 +72,8 @@ Material:
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
-    - _CelValueMax: 0.215
-    - _CelValueMin: 0.03
+    - _CelValueMax: 0.3
+    - _CelValueMin: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -110,13 +110,13 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FinalAddColor: {r: 0, g: 0, b: 0, a: 0}
-    - _OutLineColor: {r: 0.08235294, g: 0.16078432, b: 0.22745098, a: 1}
+    - _OutLineColor: {r: 0.082235664, g: 0.15913136, b: 0.2264151, a: 1}
     - _OutlineColor: {r: 0.17399432, g: 0.33605692, b: 0.4339623, a: 1}
     - _PointLightColor: {r: 0, g: 0, b: 0, a: 0}
     - _PointLightPos: {r: 0, g: 0, b: 0, a: 0}
-    - _ShadowColor: {r: 0.4772606, g: 0.6343973, b: 0.7075472, a: 1}
+    - _ShadowColor: {r: 0.30170882, g: 0.37525675, b: 0.5660378, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.3972944, g: 0.9056604, b: 0.7849692, a: 1}
+    - _TintColor: {r: 1, g: 0.9808207, b: 0.5529412, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4272917991868435047
 MonoBehaviour:

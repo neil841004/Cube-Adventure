@@ -79,7 +79,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DiffuseThreshold: 0.1
     - _DstBlend: 0
-    - _EdgeThickness: 0
+    - _EdgeThickness: 3
     - _EnvironmentReflections: 1
     - _Fog: 0
     - _GlossMapScale: 1

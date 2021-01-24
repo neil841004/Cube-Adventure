@@ -14,6 +14,7 @@ public class BulletMove : MonoBehaviour
     
    public ParticleSystem exParticle;
    public GameObject mesh;
+   GameManager gm; 
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,7 @@ public class BulletMove : MonoBehaviour
         Physics.IgnoreCollision(_collider, _cannonCollider,true);  
         nowTime = Time.time;
         newPos = direction.rotation * new Vector3(0f, -speed, 0f);
+        gm = GameObject.FindWithTag("GM").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class BulletMove : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+         if(gm.reTrap) Destroy(this.gameObject);
         transform.Translate(newPos * Time.deltaTime);
     }
     // private void OnCollisionStay(Collision other) {
