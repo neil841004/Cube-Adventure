@@ -3594,6 +3594,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3826404185569651470, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3862035842588201768, guid: def1093366c370a4c8b036a693547ccb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5193,6 +5198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 921092749}
   - component: {fileID: 921092751}
+  - component: {fileID: 921092748}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GM
@@ -5200,6 +5206,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &921092748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921092747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1f26c1740ec6432da7ea076de534c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start:
+    m_PersistentCalls:
+      m_Calls: []
+  death:
+    m_PersistentCalls:
+      m_Calls: []
+  resetLevel:
+    m_PersistentCalls:
+      m_Calls: []
+  win:
+    m_PersistentCalls:
+      m_Calls: []
+  nextLevel:
+    m_PersistentCalls:
+      m_Calls: []
+  reTrap: 0
+  coinParent: {fileID: 0}
 --- !u!4 &921092749
 Transform:
   m_ObjectHideFlags: 0
@@ -9659,7 +9694,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-76194
+  m_Name: pb_Mesh-992422
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

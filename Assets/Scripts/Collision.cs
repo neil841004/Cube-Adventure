@@ -22,6 +22,9 @@ public class Collision : MonoBehaviour
     public Collider[] onLeftWall;
     public Collider[] onUpWall;
     public int wallSide = -1;
+    public GameObject shadow;
+    public GameObject cube;
+    FloorShadow floorShadow;
 
     [Space]
 
@@ -36,7 +39,8 @@ public class Collision : MonoBehaviour
     RaycastHit rayHit;
     Ray ray_1, ray_2, ray_3, ray_4;
     public Vector3 vector1, vector2, vector3, vector4;
-    bool r1, r2, r3, r4;
+    bool r1, r2, r3, r4, edgeShadow, edge_1, edge_2;
+    float edge_d1,edge_d2;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +53,7 @@ public class Collision : MonoBehaviour
         r2 = false;
         r3 = false;
         r4 = false;
+        floorShadow = shadow.GetComponent<FloorShadow>();
     }
 
     private void Update()
@@ -61,6 +66,9 @@ public class Collision : MonoBehaviour
         r2 = false;
         r3 = false;
         r4 = false;
+        edge_1 = false;
+        edge_2 = false;
+        edgeShadow = false;
         if (Physics.Raycast(ray_1, out rayHit, 0.27f))
         {
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
@@ -87,6 +95,39 @@ public class Collision : MonoBehaviour
             if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
             {
                 r4 = true;
+            }
+        }
+
+        //fake shadow
+        if (Physics.Raycast(ray_1, out rayHit, 5f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                edge_1 = true;
+                edge_d1 = rayHit.distance;
+            }
+        }
+        if (Physics.Raycast(ray_4, out rayHit, 5f))
+        {
+            if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+            {
+                edge_2 = true;
+                edge_d2 = rayHit.distance;
+            }
+        }
+
+        floorShadow.onFloor = false;
+        if (edge_1 && edge_2 && Mathf.Abs(edge_d1 - edge_d2) < 0.5f)
+        {
+            if (Physics.Raycast(ray_2, out rayHit, 5f))
+            {
+                if (rayHit.collider.tag == "Ground" || rayHit.collider.tag == "MovePF")
+                {
+                    floorShadow.onFloor = true;
+                    floorShadow.distance = rayHit.distance;
+                    shadow.transform.rotation = Quaternion.Euler(90, 0, -cube.transform.eulerAngles.y);
+                    shadow.transform.position = new Vector3(transform.position.x, rayHit.point.y + 0.02f, transform.position.z);
+                }
             }
         }
     }
