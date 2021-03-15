@@ -15,6 +15,7 @@ TagManager:
   - CheckPoint
   - Portal
   - PlayerMesh
+  - UI_cpTip
   layers:
   - Default
   - TransparentFX

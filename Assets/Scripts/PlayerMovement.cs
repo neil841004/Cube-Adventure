@@ -659,7 +659,7 @@ public class PlayerMovement : MonoBehaviour
         meshRotateTween.Kill();
         cubeMesh.transform.localRotation = Quaternion.Euler(0, 0, 0);
         cubeMesh.transform.DOLocalRotate(new Vector3(-540, 0, 0), 0.47f, RotateMode.FastBeyond360);
-        DashParticle.Play();
+        // DashParticle.Play();
         // if (xRaw > 0) DashParticleR.Play();
         // else if (xRaw < 0) DashParticleL.Play();
         // if (xRaw == 0)
@@ -832,6 +832,7 @@ public class PlayerMovement : MonoBehaviour
             speed = 0;
             StartCoroutine("Win");
             isWin = true;
+            GameObject.FindWithTag("UI_cpTip").GetComponent<ProgressTip>().SendMessage("PassEnd");
         }
     }
 
@@ -839,8 +840,8 @@ public class PlayerMovement : MonoBehaviour
     {
         gm.SendMessage("Win");
         yield return new WaitForSeconds(0.5f);
-        gm.SendMessage("Win");
-        yield return new WaitForSeconds(0.5f);
+        // gm.SendMessage("Win");
+        // yield return new WaitForSeconds(0.5f);
         anim.SetBool("isWin", isWin);
     }
     public void NextLevel()
@@ -866,7 +867,7 @@ public class PlayerMovement : MonoBehaviour
         gm.SendMessage("Death");
         cubeMesh.SetActive(false);
         canMove = false;
-        yield return new WaitForSeconds(.45f);
+        yield return new WaitForSeconds(.6f);
         transform.position = checkPointV3;
         isDeathNotBack = false;
         if (!isTutorial)
@@ -874,7 +875,7 @@ public class PlayerMovement : MonoBehaviour
             GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_XDamping = 0;
             GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>().m_YDamping = 0;
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.25f);
         gm.SendMessage("ResetLevel");
         transform.position = checkPointV3;
         if (!isTutorial)

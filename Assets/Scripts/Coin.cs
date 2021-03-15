@@ -6,6 +6,7 @@ public class Coin : MonoBehaviour
 {
     public ObjectPool pool;
     PlayerMesh playerMesh;
+    
 
     void Start()
     {

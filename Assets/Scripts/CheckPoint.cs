@@ -7,12 +7,14 @@ public class CheckPoint : MonoBehaviour
 {
     private Animator anim;
     PlayerMovement move;
+    GameObject gm;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        gm = GameObject.FindWithTag("GM");
     }
 
     // Update is called once per frame
@@ -34,8 +36,9 @@ public class CheckPoint : MonoBehaviour
             move.checkPoint = this.gameObject;
             move.checkPointV3 = this.transform.position;
             anim.SetBool("enter", true);
-
+            gm.SendMessage("CheckCoin");
             this.GetComponent<BoxCollider>().enabled = false;
+            GameObject.FindWithTag("UI_cpTip").GetComponent<ProgressTip>().SendMessage("PassCP");
         }
     }
 }

@@ -21,7 +21,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     private int bodyDownCount = 0;
 
     // Cinemachine Shake
-    public CinemachineVirtualCamera VirtualCamera;
+    CinemachineVirtualCamera VirtualCamera;
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
 
     Tweener shakeTimeS, shakeTimeL;
@@ -34,6 +34,7 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
     void Start()
     {
         // Get Virtual Camera Noise Profile
+        VirtualCamera = GameObject.FindWithTag("Camera").GetComponent<CinemachineVirtualCamera>();
         if (VirtualCamera != null)
             virtualCameraNoise = VirtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
         profile = GameObject.Find("PostEffect").GetComponent<Volume>().profile;
