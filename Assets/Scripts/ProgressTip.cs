@@ -21,8 +21,7 @@ public class ProgressTip : MonoBehaviour
             }
             endTip.SetActive(true);
             endTip.transform.position = transform.GetChild(cpCount).position;
-        }
-        
+        }        
     }
 
 

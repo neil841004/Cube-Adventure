@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1749,6 +1749,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1318403622}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &265420586 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8822005675649730852, guid: 6f560dd6db9cbf6408648f41cd93c774,
+    type: 3}
+  m_PrefabInstance: {fileID: 4453064692648349315}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &304526229
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,7 +1909,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-179814
+  m_Name: pb_Mesh-35648
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3904,7 +3916,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-179792
+  m_Name: pb_Mesh-35626
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7992,6 +8004,7 @@ MonoBehaviour:
   reTrap: 0
   coinParent: {fileID: 215654710}
   coinCheck: []
+  passLevelTip: {fileID: 265420586}
 --- !u!4 &921092749
 Transform:
   m_ObjectHideFlags: 0
@@ -13072,7 +13085,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-179812
+  m_Name: pb_Mesh-35646
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13985,7 +13998,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-177398
+  m_Name: pb_Mesh-33232
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14628,7 +14641,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-179584
+  m_Name: pb_Mesh-35418
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19519,14 +19532,24 @@ PrefabInstance:
       propertyPath: move
       value: 
       objectReference: {fileID: 1173733855}
-    - target: {fileID: 1349147792134039956, guid: 6f560dd6db9cbf6408648f41cd93c774,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1546800432211322385, guid: 6f560dd6db9cbf6408648f41cd93c774,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553833293994075978, guid: 6f560dd6db9cbf6408648f41cd93c774,
+        type: 3}
+      propertyPath: autoKill
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553833293994075978, guid: 6f560dd6db9cbf6408648f41cd93c774,
+        type: 3}
+      propertyPath: id
+      value: fadeOut
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553833293994075978, guid: 6f560dd6db9cbf6408648f41cd93c774,
+        type: 3}
+      propertyPath: autoPlay
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4168281078778154982, guid: 6f560dd6db9cbf6408648f41cd93c774,
@@ -19714,7 +19737,13 @@ PrefabInstance:
       propertyPath: checkPoints
       value: 
       objectReference: {fileID: 910983996}
-    m_RemovedComponents: []
+    - target: {fileID: 8822005675649730852, guid: 6f560dd6db9cbf6408648f41cd93c774,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2553833293994075978, guid: 6f560dd6db9cbf6408648f41cd93c774, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6f560dd6db9cbf6408648f41cd93c774, type: 3}
 --- !u!1001 &8420494391483731581
 PrefabInstance:

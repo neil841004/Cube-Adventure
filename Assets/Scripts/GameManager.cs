@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +23,10 @@ public class GameManager : MonoBehaviour
     int timeCount = 0;
     int timeCheck = 0;
     int deathCount = 0;
+    int passlevelCount = 0;
+    int deathCountByCP = 0;
+    public Text passLevelTip;
+    Sequence passSeq;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -36,11 +42,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            NextLevel();
-        }
-        // Debug.Log(timeCount);
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                passlevelCount++;
+                if (passlevelCount >= 40)
+                {
+                    NextLevel();
+                }
+            }
+            else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
     }
     void TimeCount()
     {
@@ -53,7 +63,17 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         deathCount++;
+        deathCountByCP++;
         resetLevel.Invoke();
+        if (deathCountByCP > 4)
+        {
+            passSeq.Kill();
+            passSeq = DOTween.Sequence();
+            passSeq.AppendInterval(0.4f);
+            passSeq.Append(passLevelTip.DOFade(0.85f, 0.8f));
+            passSeq.AppendInterval(3f);
+            passSeq.Append(passLevelTip.DOFade(0, 0.8f));
+        }
         DeactivateChildren(coinParent, true);
         for (int i = 0; i < coinCheck.Length; i++)
         {
@@ -66,6 +86,8 @@ public class GameManager : MonoBehaviour
     }
     public void CheckCoin()
     {
+
+        deathCountByCP = 0;
         timeCheck = timeCount;
         foreach (Transform child in coinParent.transform)
         {
@@ -74,7 +96,6 @@ public class GameManager : MonoBehaviour
                 coinCheck[coinCheckCount] = child.gameObject;
                 coinCheckCount++;
             }
-            Debug.Log(coinCheckCount);
         }
     }
     IEnumerator RestartTrap()
