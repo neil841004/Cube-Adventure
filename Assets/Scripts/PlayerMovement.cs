@@ -807,8 +807,10 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DeathZoneIenumerator()
     {
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.2f);
         Death(false);
+        yield return new WaitForSeconds(0.8f);
+        GameObject.FindWithTag("Camera").SendMessage("CameraStart");
     }
 
     private void OnTriggerStay(Collider co)
@@ -881,7 +883,6 @@ public class PlayerMovement : MonoBehaviour
         cubeMesh.SetActive(false);
         canMove = false;
         yield return new WaitForSeconds(.6f);
-        GameObject.FindWithTag("Camera").SendMessage("CameraStart");
         transform.position = checkPointV3;
         isDeathNotBack = false;
         if (!isTutorial)

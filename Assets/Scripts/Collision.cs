@@ -40,7 +40,7 @@ public class Collision : MonoBehaviour
     Ray ray_1, ray_2, ray_3, ray_4;
     public Vector3 vector1, vector2, vector3, vector4;
     bool r1, r2, r3, r4, edgeShadow, edge_1, edge_2;
-    float edge_d1,edge_d2;
+    float edge_d1, edge_d2;
 
     // Start is called before the first frame update
     void Start()
@@ -150,7 +150,7 @@ public class Collision : MonoBehaviour
     public bool OnGround()
     {
         onGround = Physics.OverlapBox(transform.position + bottomOffset, collisoinRadius, Quaternion.identity, groundLayer);
-        if (onGround.Length > 0)
+        if (onGround.Length > 0 && onGround[0].tag != "DeathZone")
         {
             return true;
         }
@@ -210,11 +210,18 @@ public class Collision : MonoBehaviour
     }
     public bool OnWall()
     {
-        //if(OnUpWall())return false;
         onRightWall = Physics.OverlapBox(transform.position + rightOffset, collisoinSideRadius, Quaternion.Euler(0, 0, 90), groundLayer);
         onLeftWall = Physics.OverlapBox(transform.position + leftOffset, collisoinSideRadius, Quaternion.Euler(0, 0, -90), groundLayer);
-        if (onRightWall.Length > 0) wallSide = 1;
-        if (onLeftWall.Length > 0) wallSide = -1;
+        if (onRightWall.Length > 0)
+        {
+            wallSide = 1;
+            if (onRightWall[0].tag == "DeathZone") return false;
+        }
+        if (onLeftWall.Length > 0)
+        {
+            wallSide = -1;
+            if (onLeftWall[0].tag == "DeathZone") return false;
+        }
         if (onRightWall.Length > 0 || onLeftWall.Length > 0)
         {
             return true;
