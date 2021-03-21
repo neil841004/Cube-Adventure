@@ -6,11 +6,13 @@ using DG.Tweening;
 public class GM_Tutorial : MonoBehaviour
 {
     public GameObject[] text = new GameObject[5];
+    public GameObject coin_1, coin_2;
     public DOTweenAnimation[] t1_sawTween = new DOTweenAnimation[8];
     public DOTweenAnimation[] t3_sawTween = new DOTweenAnimation[17];
     public DOTweenAnimation[] t4_PF = new DOTweenAnimation[2];
     public Collider topColl;
     public int t = -1;
+    int coinCount = 0;
     public GameObject t2_platform;
     bool onPF = false;
     PlayerMovement move;
@@ -53,16 +55,9 @@ public class GM_Tutorial : MonoBehaviour
             t = 2;
             t2_platform.SetActive(true);
         }
-        if (text[2].activeSelf && !onPF && collision.OnGround())
+        if (text[2].activeSelf && !coin_1.activeSelf && !coin_2.activeSelf)
         {
-            if (collision.onGroundDash[0].name == "t2_Platform")
-            {
-                if (!onPF)
-                {
-                    StartCoroutine("OnPF");
-                }
-                onPF = true;
-            }
+            StartCoroutine("OnPF");
         }
         if (text[3].activeSelf && t == 2)
         {
@@ -130,7 +125,7 @@ public class GM_Tutorial : MonoBehaviour
 
     IEnumerator OnPF()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.8f);
         t2_platform.SetActive(false);
         StartCoroutine("CloseUI", 2);
 

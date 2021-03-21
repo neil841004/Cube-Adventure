@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent win = new UnityEvent();
     public UnityEvent nextLevel = new UnityEvent();
     public bool reTrap = false;
-    int coinCountOrigin = 0;
-    int coinCount = 0;
-    int coinCheckCount = 0;
+    public int coinCountOrigin = 0; //coin總數
+    public int coinCount = 0; //到終點結算coin數
+    public int coinCheckCount = 0; //每到check point計算coin數
 
     public GameObject coinParent;
     public GameObject[] coinCheck;
