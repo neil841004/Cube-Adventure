@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
     public GameObject aimCircle;
     public GameObject aimTriangle;
     public GameObject checkPoint;
-    Vector3 DeathV3;
 
     [Space]
     [Header("Polish")]
@@ -86,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer trail_1, trail_2, trail_3, trail_4, trail_5;
     public Vector3 EntryPoint, checkPointV3;
+    Vector3 DeathV3;
     Tween rbTween, faceRotateTween, meshRotateTween;
     GameObject gm;
     BetterJumping _betterJumping;
@@ -106,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
     {
         xRaw = Input.GetAxisRaw("Horizontal");
         if (xRaw != 0) xRaw = xRaw > 0 ? 1 : -1;
+        if (isDeath) { xRaw = 0; x = 0; }
         if (!isWin)
         {
             //輸入
@@ -489,7 +490,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!bodyDown)
         {
             AccumulateParticle.Stop();
-            if ((((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash)
+            if ((((!Input.GetButton("Accumulate") && Input.GetAxis("AccumulateTrigger") == 0) && coll.OnGround()) || isJump || (!coll.OnGround() && !isWallJumpAnim && !IsPushWall())) && !isAnimDash && !isDeath)
             {
                 canMove = true;
             }
@@ -809,6 +810,7 @@ public class PlayerMovement : MonoBehaviour
         if (co.CompareTag("Portal") && canSend)
         {
             this.transform.position = co.GetComponent<Portal>().destination.transform.position;
+            StartCoroutine("DisableMovement");
             co.GetComponent<Portal>().SendMessage("PortalStart");
             GetComponentInChildren<PlayerMesh>().SendMessage("SendAnim");
             StopCoroutine("sendIenumerator");
@@ -890,10 +892,10 @@ public class PlayerMovement : MonoBehaviour
         rebirthParticle.Play();
         transform.position = checkPointV3;
         if (checkPoint) checkPoint.GetComponent<Animator>().Play("CheckPoint_Revival", 0, 0);
-        cubeMesh.transform.DOScale(0.5f, 1.3f).SetEase(Ease.OutElastic);
-        isDeath = false;
+        cubeMesh.transform.DOScale(0.5f, 1f).SetEase(Ease.OutElastic);
 
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(0.25f);
+        isDeath = false;
         canMove = true;
         speed = speedOrigin;
     }

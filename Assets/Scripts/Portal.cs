@@ -20,8 +20,6 @@ public class Portal : MonoBehaviour
     {
         if (!isClose)
         {
-            Debug.Log("A");
-
             _boxCollider.enabled = false;
             _otherBoxCollider.enabled = false;
             portalScaleBackTween.Kill();
@@ -35,8 +33,6 @@ public class Portal : MonoBehaviour
     IEnumerator PortalEenumerator()
     {
         yield return new WaitForSeconds(1f);
-
-        Debug.Log("B");
 
         portalScaleBackTween = this.transform.GetChild(0).DOScale(1f, 0.3f);
         portalScaleBackTween = destination.transform.GetChild(0).DOScale(1f, 0.3f);
