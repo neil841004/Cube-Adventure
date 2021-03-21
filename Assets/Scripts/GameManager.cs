@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     int deathCount = 0;
     int passlevelCount = 0;
     int deathCountByCP = 0;
-    public Text passLevelTip;
     public Image passLevelTipWhite;
     Sequence passSeq;
     // Start is called before the first frame update
@@ -71,11 +70,9 @@ public class GameManager : MonoBehaviour
             passSeq.Kill();
             passSeq = DOTween.Sequence();
             passSeq.AppendInterval(0.4f);
-            passSeq.Append(passLevelTip.DOFade(0.85f, 0.8f));
-            passSeq.Join(passLevelTipWhite.DOFade(0.2f, 0.8f));
-            passSeq.AppendInterval(3f);
-            passSeq.Append(passLevelTip.DOFade(0, 0.8f));
-            passSeq.Join(passLevelTipWhite.DOFade(0f, 0.8f));
+            passSeq.Append(passLevelTipWhite.DOFade(1f, 0.7f));
+            passSeq.AppendInterval(3.5f);
+            passSeq.Append(passLevelTipWhite.DOFade(0f, 0.7f));
         }
         DeactivateChildren(coinParent, true);
         for (int i = 0; i < coinCheck.Length; i++)

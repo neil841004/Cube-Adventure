@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5405,7 +5405,6 @@ MonoBehaviour:
   coinCheckCount: 0
   coinParent: {fileID: 747203136}
   coinCheck: []
-  passLevelTip: {fileID: 0}
   passLevelTipWhite: {fileID: 0}
 --- !u!4 &921092749
 Transform:
@@ -5873,7 +5872,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-109860
+  m_Name: pb_Mesh-19326
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -798,6 +798,17 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter(Collider co)
     {
         if (co.CompareTag("Hazard") && !isDeath) Death(true);
+        if (co.CompareTag("DeathZone") && !isDeath)
+        {
+            GameObject.FindWithTag("Camera").SendMessage("CameraStop");
+            StartCoroutine("DeathZoneIenumerator");
+        }
+    }
+
+    IEnumerator DeathZoneIenumerator()
+    {
+        yield return new WaitForSeconds(0.35f);
+        Death(false);
     }
 
     private void OnTriggerStay(Collider co)
@@ -870,6 +881,7 @@ public class PlayerMovement : MonoBehaviour
         cubeMesh.SetActive(false);
         canMove = false;
         yield return new WaitForSeconds(.6f);
+        GameObject.FindWithTag("Camera").SendMessage("CameraStart");
         transform.position = checkPointV3;
         isDeathNotBack = false;
         if (!isTutorial)
