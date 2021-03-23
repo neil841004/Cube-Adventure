@@ -8,22 +8,25 @@ public class BulletMove : MonoBehaviour
     public float speed;
     float saveTime = 8f;
     float nowTime;
+    public bool restartByDeath;
     Vector3 newPos;
     SphereCollider _collider;
-    public BoxCollider _cannonCollider; 
-    
-   public ParticleSystem exParticle;
-   public GameObject mesh;
-   GameManager gm; 
+    public BoxCollider _cannonCollider;
+
+    public ParticleSystem exParticle;
+    public GameObject mesh;
+    GameManager gm;
+    PlayerMovement move;
 
     // Start is called before the first frame update
     void Start()
     {
         _collider = this.GetComponent<SphereCollider>();
-        Physics.IgnoreCollision(_collider, _cannonCollider,true);  
+        Physics.IgnoreCollision(_collider, _cannonCollider, true);
         nowTime = Time.time;
         newPos = direction.rotation * new Vector3(0f, -speed, 0f);
         gm = GameObject.FindWithTag("GM").GetComponent<GameManager>();
+        move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
@@ -33,19 +36,24 @@ public class BulletMove : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-         if(gm.reTrap) Destroy(this.gameObject);
+        if (restartByDeath)
+        {
+            if (gm.reTrap) Destroy(this.gameObject);
+        }
         transform.Translate(newPos * Time.deltaTime);
+
     }
     // private void OnCollisionStay(Collision other) {
 
     // }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ground") || other.CompareTag("Hazard") || other.CompareTag("Player") )
-        Explosion();
+        if (other.CompareTag("Ground") || other.CompareTag("Hazard") || other.CompareTag("Player"))
+            Explosion();
     }
 
-    void Explosion(){
+    void Explosion()
+    {
         mesh.SetActive(false);
         _collider.enabled = false;
         transform.rotation = direction.rotation;
@@ -53,7 +61,8 @@ public class BulletMove : MonoBehaviour
         StartCoroutine("BulletOver");
     }
 
-    IEnumerator BulletOver(){
+    IEnumerator BulletOver()
+    {
         yield return new WaitForSeconds(1);
         Destroy(this.gameObject);
 

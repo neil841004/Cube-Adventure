@@ -20,27 +20,32 @@ public class DisappearPF : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(aniPlaying) _material.SetFloat("_Alpha", alpha);
+        if (aniPlaying) _material.SetFloat("_Alpha", alpha);
     }
 
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player")) {
+        
+
+        if (collision.gameObject.CompareTag("Player") && collision.contacts[0].normal.y != 1)
+        {
             StopCoroutine("RebootCollider");
             aniPlaying = true;
             Sequence seq = DOTween.Sequence();
-            seq.Append(this.transform.DOBlendableMoveBy(new Vector3(0,-4.5f,0), 0.9f).SetEase(Ease.InCubic));
-            seq.Insert(0.6f,DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
-            seq.InsertCallback(0.75f,CloseCollider);
+            seq.Append(this.transform.DOBlendableMoveBy(new Vector3(0, -4.5f, 0), 0.9f).SetEase(Ease.InCubic));
+            seq.Insert(0.6f, DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
+            seq.InsertCallback(0.75f, CloseCollider);
         }
     }
-    void CloseCollider() {
+    void CloseCollider()
+    {
         this.GetComponent<BoxCollider>().enabled = false;
         StartCoroutine("RebootCollider");
     }
 
-    IEnumerator RebootCollider() {
+    IEnumerator RebootCollider()
+    {
         yield return new WaitForSeconds(2.2f);
         this.transform.position = originPosition;
         DOTween.To(() => alpha, x => alpha = x, 1, 0.3f);

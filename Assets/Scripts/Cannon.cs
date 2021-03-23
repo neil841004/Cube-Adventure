@@ -15,6 +15,7 @@ public class Cannon : MonoBehaviour
     Tween scaleTween, posTween;
     BoxCollider _collider;
     GameManager gm;
+    public bool restartByDeath = true;
 
     void Start()
     {
@@ -29,16 +30,20 @@ public class Cannon : MonoBehaviour
 
     void Update()
     {
-        if (gm.reTrap)
+        if (restartByDeath)
         {
-            StartCoroutine("StartShoot");
+            if (gm.reTrap)
+            {
+                StartCoroutine("StartShoot");
+            }
         }
         if (Time.time >= cooldown)
         {
             Shoot();
         }
     }
-    IEnumerator StartShoot(){
+    IEnumerator StartShoot()
+    {
         yield return null;
         yield return null;
         yield return null;
@@ -58,6 +63,7 @@ public class Cannon : MonoBehaviour
         _bullet.GetComponent<BulletMove>().direction = _transform;
         _bullet.GetComponent<BulletMove>().speed = _speed;
         _bullet.GetComponent<BulletMove>()._cannonCollider = _collider;
+        _bullet.GetComponent<BulletMove>().restartByDeath = restartByDeath;
         cooldown = Time.time + cooldownOrigin;
     }
 }
