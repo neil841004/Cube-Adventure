@@ -35,22 +35,22 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         coinCountOrigin = coinParent.transform.childCount;
-        coinCheck = new GameObject[coinCountOrigin * 3];
+        coinCheck = new GameObject[coinCountOrigin * 5];
         InvokeRepeating("TimeCount", 1f, 1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-            if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            passlevelCount++;
+            if (passlevelCount >= 40)
             {
-                passlevelCount++;
-                if (passlevelCount >= 40)
-                {
-                    NextLevel();
-                }
+                NextLevel();
             }
-            else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
+        }
+        else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
     }
     void TimeCount()
     {
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
             {
                 coinCheck[coinCheckCount] = child.gameObject;
                 coinCheckCount++;
+                if (coinCheckCount >= coinCountOrigin * 5) coinCheckCount = 0;
             }
         }
     }

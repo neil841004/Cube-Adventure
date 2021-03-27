@@ -801,6 +801,7 @@ public class PlayerMovement : MonoBehaviour
         if (co.CompareTag("DeathZone") && !isDeath)
         {
             GameObject.FindWithTag("Camera").SendMessage("CameraStop");
+            canMove = false;
             StartCoroutine("DeathZoneIenumerator");
         }
     }

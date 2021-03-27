@@ -16,7 +16,7 @@ public class Coin : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playerMesh.SendMessage("GetCoin");
+            if(playerMesh) playerMesh.SendMessage("GetCoin");
             pool.ReUse(transform.position, Quaternion.Euler(-90, 0, 0));
             this.gameObject.SetActive(false);
         }
