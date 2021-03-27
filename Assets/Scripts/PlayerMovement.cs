@@ -860,10 +860,6 @@ public class PlayerMovement : MonoBehaviour
         // yield return new WaitForSeconds(0.5f);
         anim.SetBool("isWin", isWin);
     }
-    public void NextLevel()
-    {
-        gm.SendMessage("NextLevel");
-    }
 
     public void Death(bool active)
     {

@@ -5432,6 +5432,7 @@ MonoBehaviour:
   nextLevel:
     m_PersistentCalls:
       m_Calls: []
+  nextLevelId: 1
   reTrap: 0
   coinCountOrigin: 0
   coinCount: 0
@@ -5439,6 +5440,10 @@ MonoBehaviour:
   coinParent: {fileID: 1163473220}
   coinCheck: []
   passLevelTipWhite: {fileID: 820768341}
+  SattleIcon: {fileID: 0}
+  coinSattleText: {fileID: 0}
+  deathSattleText: {fileID: 0}
+  continueTip: {fileID: 0}
 --- !u!4 &921092749
 Transform:
   m_ObjectHideFlags: 0

@@ -13,19 +13,34 @@ public class GameManager : MonoBehaviour
     public UnityEvent resetLevel = new UnityEvent();
     public UnityEvent win = new UnityEvent();
     public UnityEvent nextLevel = new UnityEvent();
+
+    public int nextLevelId = 0;
     public bool reTrap = false;
+
+    [Header("Coin")]
     public int coinCountOrigin = 0; //coin總數
     public int coinCount = 0; //到終點結算coin數
     public int coinCheckCount = 0; //每到check point計算coin數
-
     public GameObject coinParent;
     public GameObject[] coinCheck;
+
+    [Header("GameObject")]
+    public Image passLevelTipWhite;
+
+    [Header("Sattle")]
+    public GameObject SattleIcon;
+    public Text coinSattleText;
+    public Text deathSattleText;
+    public Text timeText;
+    public Image continueTip;
+    bool canContinue = false;
+
     int timeCount = 0;
     int timeCheck = 0;
     int deathCount = 0;
     int passlevelCount = 0;
     int deathCountByCP = 0;
-    public Image passLevelTipWhite;
+
     Sequence passSeq;
     // Start is called before the first frame update
     private void Awake()
@@ -51,6 +66,14 @@ public class GameManager : MonoBehaviour
             }
         }
         else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
+
+        if (canContinue)
+        {
+            if (Input.GetButtonDown("Enter"))
+            {
+                StartCoroutine("NextLevelIEnumerator");
+            }
+        }
     }
     void TimeCount()
     {
@@ -124,21 +147,35 @@ public class GameManager : MonoBehaviour
         }
         win.Invoke();
         CancelInvoke("TimeCount");
+        StartCoroutine("SattleIEnumerator");
     }
     public void NextLevel()
     {
+        StartCoroutine("NextLevelIEnumerator");
+    }
+
+    IEnumerator SattleIEnumerator()
+    {
+        yield return new WaitForSeconds(1f);
+        SattleIcon.SetActive(true);
+        coinSattleText.text = coinCount + " / " + coinCountOrigin;
+        deathSattleText.text = "" + deathCount;
+        timeText.text = Mathf.Floor(timeCheck / 60) + " : " + (timeCount - (Mathf.Floor(timeCheck / 60) * 60));
+
+
+        yield return new WaitForSeconds(2f);
+        continueTip.DOFade(1, 0.7f);
+        canContinue = true;
+    }
+
+    IEnumerator NextLevelIEnumerator()
+    {
         nextLevel.Invoke();
-    }
+        if (SattleIcon) SattleIcon.SetActive(false);
+        if (continueTip) continueTip.DOFade(0, 0.5f);
 
-    public void LevelID(int levelNumber)
-    {
-        StartCoroutine("NextLevelIEnumerator", levelNumber);
-    }
-
-    IEnumerator NextLevelIEnumerator(int levelNumber)
-    {
-        yield return new WaitForSeconds(1.2f);
-        SceneManager.LoadScene(levelNumber);
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(nextLevelId);
     }
 
 }

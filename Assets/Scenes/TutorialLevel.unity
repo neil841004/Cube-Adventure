@@ -5735,17 +5735,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 921092748}
-        m_MethodName: LevelID
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextLevelId: 2
   reTrap: 0
   coinCountOrigin: 0
   coinCount: 0
@@ -5753,6 +5743,10 @@ MonoBehaviour:
   coinParent: {fileID: 747203136}
   coinCheck: []
   passLevelTipWhite: {fileID: 0}
+  SattleIcon: {fileID: 0}
+  coinSattleText: {fileID: 0}
+  deathSattleText: {fileID: 0}
+  continueTip: {fileID: 0}
 --- !u!4 &921092749
 Transform:
   m_ObjectHideFlags: 0
