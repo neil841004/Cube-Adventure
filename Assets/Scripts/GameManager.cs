@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,9 +34,14 @@ public class GameManager : MonoBehaviour
     public Text deathSattleText;
     public Text timeText;
     public Image continueTip;
+    public bool recordInData = false;
+    public bool uploadDate = false;
     bool canContinue = false;
+    int checkPointCount = 0;
+    int[] cpDeathCount = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    int timeCount = 0;
+    public int timeNotInDeathCount = 0;
+    public int timeInDeathCount = 0;
     int timeCheck = 0;
     int deathCount = 0;
     int passlevelCount = 0;
@@ -77,7 +83,8 @@ public class GameManager : MonoBehaviour
     }
     void TimeCount()
     {
-        timeCount++;
+        timeNotInDeathCount++;
+        timeInDeathCount++;
     }
     public void Death()
     {
@@ -86,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void ResetLevel()
     {
         deathCount++;
+        cpDeathCount[checkPointCount]++;
         deathCountByCP++;
         resetLevel.Invoke();
         if (deathCountByCP > 4)
@@ -105,13 +113,13 @@ public class GameManager : MonoBehaviour
         }
         reTrap = true;
         StartCoroutine("RestartTrap");
-        timeCount = timeCheck;
+        timeNotInDeathCount = timeCheck;
     }
     public void CheckCoin()
     {
-
+        checkPointCount++;
         deathCountByCP = 0;
-        timeCheck = timeCount;
+        timeCheck = timeNotInDeathCount;
         foreach (Transform child in coinParent.transform)
         {
             if (child.gameObject.activeSelf == false)
@@ -141,6 +149,7 @@ public class GameManager : MonoBehaviour
     }
     public void Win()
     {
+        checkPointCount++;
         foreach (Transform child in coinParent.transform)
         {
             if (child.gameObject.activeSelf == false) coinCount++;
@@ -148,6 +157,7 @@ public class GameManager : MonoBehaviour
         win.Invoke();
         CancelInvoke("TimeCount");
         StartCoroutine("SattleIEnumerator");
+        if (recordInData) { RecordInData(); }
     }
     public void NextLevel()
     {
@@ -160,12 +170,33 @@ public class GameManager : MonoBehaviour
         SattleIcon.SetActive(true);
         coinSattleText.text = coinCount + " / " + coinCountOrigin;
         deathSattleText.text = "" + deathCount;
-        timeText.text = Mathf.Floor(timeCheck / 60) + " : " + (timeCount - (Mathf.Floor(timeCheck / 60) * 60));
 
+        int hour = timeInDeathCount / 60;
+        int min = timeInDeathCount - ((timeInDeathCount / 60) * 60);
+        timeText.text = hour + " : " + min.ToString("00");
 
         yield return new WaitForSeconds(2f);
         continueTip.DOFade(1, 0.7f);
         canContinue = true;
+    }
+    void RecordInData()
+    {
+        GameData.levelName[GameData.levelCount] = SceneManager.GetActiveScene().name;
+        GameData.coinCount[GameData.levelCount] = coinCount;
+        GameData.deathCount[GameData.levelCount] = deathCount;
+        GameData.timeInDeathCount[GameData.levelCount] = timeInDeathCount;
+        GameData.timeNotInDeathCount[GameData.levelCount] = timeNotInDeathCount;
+        GameData.checkPointCount[GameData.levelCount] = checkPointCount;
+        for (int i = 0; i < 10; i++)
+        {
+            GameData.cpDeathCount[GameData.levelCount, i] = cpDeathCount[i];
+        }
+        if (uploadDate)
+        {
+            StartCoroutine("UploadIEnumerator");
+            // GameData.levelCount = 0;
+        }
+        GameData.levelCount++;
     }
 
     IEnumerator NextLevelIEnumerator()
@@ -176,6 +207,72 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(nextLevelId);
+    }
+
+    IEnumerator UploadIEnumerator()
+    {
+        // Create the form object.
+        WWWForm form = new WWWForm();
+        // Add the method data to the form object. (read or write data)
+        // form.AddField("method", "write");
+
+        form.AddField("levelName_0", GameData.levelName[0]);
+        form.AddField("coinCount_0", GameData.coinCount[0]);
+        form.AddField("deathCount_0", GameData.deathCount[0]);
+        form.AddField("timeInDeathCount_0", GameData.timeInDeathCount[0]);
+        form.AddField("timeNotInDeathCount_0", GameData.timeNotInDeathCount[0]);
+        form.AddField("checkPointCount_0", GameData.checkPointCount[0]);
+        form.AddField("cpDeathCount_0_0", GameData.cpDeathCount[0, 0]);
+        form.AddField("cpDeathCount_0_1", GameData.cpDeathCount[0, 1]);
+        form.AddField("cpDeathCount_0_2", GameData.cpDeathCount[0, 2]);
+        form.AddField("cpDeathCount_0_3", GameData.cpDeathCount[0, 3]);
+        form.AddField("cpDeathCount_0_4", GameData.cpDeathCount[0, 4]);
+        form.AddField("cpDeathCount_0_5", GameData.cpDeathCount[0, 5]);
+        form.AddField("cpDeathCount_0_6", GameData.cpDeathCount[0, 6]);
+        form.AddField("cpDeathCount_0_7", GameData.cpDeathCount[0, 7]);
+        form.AddField("cpDeathCount_0_8", GameData.cpDeathCount[0, 8]);
+        form.AddField("cpDeathCount_0_9", GameData.cpDeathCount[0, 9]);
+
+        form.AddField("levelName_1", GameData.levelName[1]);
+        form.AddField("coinCount_1", GameData.coinCount[1]);
+        form.AddField("deathCount_1", GameData.deathCount[1]);
+        form.AddField("timeInDeathCount_1", GameData.timeInDeathCount[1]);
+        form.AddField("timeNotInDeathCount_1", GameData.timeNotInDeathCount[1]);
+        form.AddField("checkPointCount_1", GameData.checkPointCount[1]);
+        form.AddField("cpDeathCount_1_0", GameData.cpDeathCount[1, 0]);
+        form.AddField("cpDeathCount_1_1", GameData.cpDeathCount[1, 1]);
+        form.AddField("cpDeathCount_1_2", GameData.cpDeathCount[1, 2]);
+        form.AddField("cpDeathCount_1_3", GameData.cpDeathCount[1, 3]);
+        form.AddField("cpDeathCount_1_4", GameData.cpDeathCount[1, 4]);
+        form.AddField("cpDeathCount_1_5", GameData.cpDeathCount[1, 5]);
+        form.AddField("cpDeathCount_1_6", GameData.cpDeathCount[1, 6]);
+        form.AddField("cpDeathCount_1_7", GameData.cpDeathCount[1, 7]);
+        form.AddField("cpDeathCount_1_8", GameData.cpDeathCount[1, 8]);
+        form.AddField("cpDeathCount_1_9", GameData.cpDeathCount[1, 9]);
+
+        Debug.Log(GameData.cpDeathCount[0, 1]);
+        Debug.Log(GameData.deathCount[1]);
+        Debug.Log(GameData.cpDeathCount[1, 9]);
+        Debug.Log(GameData.levelName[0]);
+        Debug.Log(GameData.levelName[1]);
+
+
+        // Sending the request to API url with form object.
+        using (UnityWebRequest www = UnityWebRequest.Post("https://script.google.com/macros/s/AKfycbzG2crWI37_SO3LQILD2y22tAKMRdtkouBzN4HytBpoPqLRTvv8lG1MTLJTmIcuy_Iohg/exec", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Done and get the response text.
+                print(www.downloadHandler.text);
+                Debug.Log("Form upload complete!");
+            }
+        }
     }
 
 }
