@@ -105,7 +105,12 @@ public class GameManager : MonoBehaviour
             passSeq.AppendInterval(3.5f);
             passSeq.Append(passLevelTipWhite.DOFade(0f, 0.7f));
         }
-        DeactivateChildren(coinParent, true);
+        
+        foreach (Transform child in coinParent.transform)
+        {
+            child.gameObject.SetActive(true);
+            child.SendMessage("ResetCoinState");
+        }
         for (int i = 0; i < coinCheck.Length; i++)
         {
             if (coinCheck[i])
@@ -136,17 +141,6 @@ public class GameManager : MonoBehaviour
         reTrap = false;
     }
 
-
-
-    void DeactivateChildren(GameObject g, bool state)
-    {
-        g.SetActive(state);
-
-        foreach (Transform child in g.transform)
-        {
-            DeactivateChildren(child.gameObject, state);
-        }
-    }
     public void Win()
     {
         checkPointCount++;

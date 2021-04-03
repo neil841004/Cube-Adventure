@@ -105,4 +105,4 @@ Material:
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0.99999964, g: 0.98431337, b: 7.0802024e-28, a: 0}
+    - _TintColor: {r: 0.9999837, g: 0.9843094, b: 0.000018981362, a: 0}

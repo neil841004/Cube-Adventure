@@ -130,7 +130,7 @@ Material:
     - _ShadowColor: {r: 1, g: 0.7058823, b: 0.5882353, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
-    - _TintColor: {r: 0, g: 1, b: 0.8580704, a: 1}
+    - _TintColor: {r: 0, g: 1, b: 0.85882354, a: 1}
     - _UnlitColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &4383087602695100237
 MonoBehaviour:
