@@ -5,12 +5,13 @@ using DG.Tweening;
 
 public class Coin : MonoBehaviour
 {
+    public bool neverNoPick = false;
     public ObjectPool pool;
     public GameObject[] coinEffects = new GameObject[2];
     public Transform coinMesh;
     Material[] coinMaterial = new Material[4];
     public Color green, gray;
-    public SphereCollider getTrigger, FailTrigger;
+    public SphereCollider getTrigger, failTrigger;
     Color coinMeshColor;
     PlayerMesh playerMesh;
     Tween colorTween;
@@ -24,6 +25,7 @@ public class Coin : MonoBehaviour
         {
             coinMaterial[i] = coinMesh.GetChild(i).GetComponent<MeshRenderer>().material;
         }
+        if (neverNoPick) failTrigger.gameObject.SetActive(false);
     }
 
     public void PickCoin()

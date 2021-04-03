@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f661862212f812b4c8d740f9278165aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  neverNoPick: 0
   pool: {fileID: 0}
   coinEffects:
   - {fileID: 1080937795850828879}
@@ -347,7 +348,7 @@ MonoBehaviour:
   green: {r: 0, g: 1, b: 0.85882354, a: 0}
   gray: {r: 0.7137255, g: 1, b: 0.9607843, a: 0}
   getTrigger: {fileID: 1390923514303628818}
-  FailTrigger: {fileID: 6517769914706720312}
+  failTrigger: {fileID: 6517769914706720312}
 --- !u!1 &405008721500081196
 GameObject:
   m_ObjectHideFlags: 0
