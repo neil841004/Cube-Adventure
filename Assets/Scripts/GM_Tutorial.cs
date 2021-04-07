@@ -13,6 +13,7 @@ public class GM_Tutorial : MonoBehaviour
     public Collider topColl;
     public int t = -1;
     int coinCount = 0;
+    public GameObject t1_Coin_1, t1_Coin_2;
     public GameObject t2_platform;
     bool onPF = false;
     PlayerMovement move;
@@ -30,10 +31,15 @@ public class GM_Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (text[0].activeSelf && t == -1 && move.xRaw != 0)
+        if (text[0].activeSelf && t == -1)
         {
-            StartCoroutine("CloseUI", 0);
-            t = 0;
+            if (!t1_Coin_1.activeSelf && !t1_Coin_2.activeSelf)
+            {
+                t = 0;
+                t1_Coin_1.SetActive(false);
+                t1_Coin_2.SetActive(false);
+                StartCoroutine("CloseUI", 0);
+            }
         }
         if (text[1].activeSelf && t == 0)
         {
@@ -84,14 +90,17 @@ public class GM_Tutorial : MonoBehaviour
         }
         if (text[4].activeSelf && !onPF && collision.OnGround())
         {
-            if (collision.onGroundDash[0].name == "TutorialEnd")
+            if (collision.onGroundDash[0])
             {
-                if (!onPF)
+                if (collision.onGroundDash[0].name == "TutorialEnd")
                 {
-                    text[4].SetActive(false);
-                    GetComponent<GameManager>().SendMessage("NextLevel");
+                    if (!onPF)
+                    {
+                        text[4].SetActive(false);
+                        GetComponent<GameManager>().SendMessage("NextLevel");
+                    }
+                    onPF = true;
                 }
-                onPF = true;
             }
         }
 
@@ -101,6 +110,11 @@ public class GM_Tutorial : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         text[i].SetActive(true);
+        if (text[0].activeSelf)
+        {
+            t1_Coin_1.SetActive(true);
+            t1_Coin_2.SetActive(true);
+        }
         if (text[2].activeSelf)
         {
             yield return new WaitForSeconds(0.8f);
@@ -110,7 +124,7 @@ public class GM_Tutorial : MonoBehaviour
 
     IEnumerator CloseUI(int i)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         text[i].SetActive(false);
         if (i < 4) StartCoroutine("OpenUI", i + 1);
     }

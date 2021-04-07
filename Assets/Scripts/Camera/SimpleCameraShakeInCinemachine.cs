@@ -28,6 +28,9 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
 
     VolumeProfile profile;
     ChromaticAberration myChromaticAberration;
+    LensDistortion myLensDistortion;
+    float lensIntensity = 0;
+    Tween portalTween;
     PlayerMovement move;
 
     // Use this for initialization
@@ -74,7 +77,8 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
                     {
                         virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.05f;
                         virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.0025f;
-                    }else if (bodyDownCount == 42)
+                    }
+                    else if (bodyDownCount == 42)
                     {
                         virtualCameraNoise.m_AmplitudeGain = bodyDownCount * 0.05f;
                         virtualCameraNoise.m_FrequencyGain = bodyDownCount * 0.0025f;
@@ -82,9 +86,12 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
                 }
                 profile.TryGet(out myChromaticAberration);
                 myChromaticAberration.intensity.Override(bodyDownCount * 0.0238f);
-                VirtualCamera.m_Lens.FieldOfView = originalLen +  (bodyDownCount * 0.1f);
+                VirtualCamera.m_Lens.FieldOfView = originalLen + (bodyDownCount * 0.1f);
             }
         }
+        // profile.TryGet(out myLensDistortion);
+        // myLensDistortion.intensity.Override(lensIntensity);
+
     }
 
     public void ScreenShake_Dash()
@@ -117,4 +124,10 @@ public class SimpleCameraShakeInCinemachine : MonoBehaviour
         shakeTimeL.PlayForward();
         shakeTimeL = DOTween.To(() => ShakeAmplitude, x => ShakeAmplitude = x, 0, 0.65f).SetEase(Ease.OutSine);
     }
+    // public void PortalEffect()
+    // {
+    //     portalTween.Kill();
+    //     lensIntensity = -0.5f;
+    //     portalTween = DOTween.To(() => lensIntensity, x => lensIntensity = x, 0, 1.2f).SetEase(Ease.OutCubic);
+    // }
 }

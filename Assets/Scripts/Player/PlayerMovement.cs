@@ -291,14 +291,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // 重置
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            transform.position = EntryPoint;
-        }
-        else if (Input.GetButtonDown("Rebirth") && !isDeath)
-        {
-            Death(true);
-        }
+        // if (Input.GetKeyDown(KeyCode.T))
+        // {
+        //     transform.position = EntryPoint;
+        // }
+        // else if (Input.GetButtonDown("Rebirth") && !isDeath)
+        // {
+        //     Death(true);
+        // }
 
         // 蹬牆轉向時速度增加
         if (isWallJump)
@@ -438,6 +438,7 @@ public class PlayerMovement : MonoBehaviour
                 if (!isDeath)
                 {
                     canMove = true;
+                    _betterJumping.fallMultiplier = fallMultiplier;
                 }
                 DOVirtual.Float(0, speedOrigin, .45f, speedBackOrigin);
             }
@@ -823,7 +824,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DeathZoneIenumerator()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.35f);
         Death(false);
         yield return new WaitForSeconds(0.8f);
         GameObject.FindWithTag("Camera").SendMessage("CameraStart");
@@ -838,6 +839,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (co.CompareTag("Portal") && canSend)
         {
+            // gm.SendMessage("PortalEffect");
             this.transform.position = co.GetComponent<Portal>().destination.transform.position;
             StartCoroutine("DisableMovement");
             co.GetComponent<Portal>().SendMessage("PortalStart");

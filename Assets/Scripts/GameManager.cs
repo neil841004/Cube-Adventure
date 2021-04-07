@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         cpDeathCount[checkPointCount]++;
         deathCountByCP++;
         resetLevel.Invoke();
-        if (deathCountByCP > 4)
+        if (deathCountByCP > 4 && passLevelTipWhite)
         {
             passSeq.Kill();
             passSeq = DOTween.Sequence();
