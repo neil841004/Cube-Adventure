@@ -10,6 +10,7 @@ public class CheckPoint : MonoBehaviour
     private Animator anim;
     PlayerMovement move;
     GameObject gm;
+    SoundEffectManager _sound;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class CheckPoint : MonoBehaviour
         anim = GetComponent<Animator>();
         move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         gm = GameObject.FindWithTag("GM");
+        _sound = GameObject.Find("Level_SE_Manager").GetComponent<SoundEffectManager>();
     }
 
     // Update is called once per frame
@@ -42,6 +44,7 @@ public class CheckPoint : MonoBehaviour
             this.GetComponent<BoxCollider>().enabled = false;
             GameObject.FindWithTag("UI_cpTip").GetComponent<ProgressTip>().SendMessage("PassCP");
             PassEvent.Invoke();
+            _sound.PlayOneSound(2,0.7f);
         }
     }
 }

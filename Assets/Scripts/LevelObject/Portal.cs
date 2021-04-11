@@ -9,11 +9,13 @@ public class Portal : MonoBehaviour
     Tween portalScaleTween, portalScaleBackTween;
     bool isClose = false;
     BoxCollider _boxCollider, _otherBoxCollider;
+    SoundEffectManager _sound;
 
     private void Start()
     {
         _boxCollider = this.GetComponent<BoxCollider>();
         _otherBoxCollider = destination.GetComponent<BoxCollider>();
+        _sound = GameObject.Find("Level_SE_Manager").GetComponent<SoundEffectManager>();
     }
 
     public void PortalStart()
@@ -27,6 +29,7 @@ public class Portal : MonoBehaviour
             portalScaleTween = this.transform.GetChild(0).DOScale(0.4f, 0.2f);
             portalScaleTween = destination.transform.GetChild(0).DOScale(0.4f, 0.2f);
             StartCoroutine("PortalEenumerator");
+            _sound.PlayOneSound(1,0.7f);
         }
         isClose = true;
     }

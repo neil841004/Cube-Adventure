@@ -10,12 +10,15 @@ public class RhythmPF : MonoBehaviour
     public GameObject mesh;
     Sequence seq;
     GameManager gm;
+    AudioSource _sound;
+    public AudioClip[] _clip = new AudioClip[2];
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("StartTrap");
         gm = GameObject.FindWithTag("GM").GetComponent<GameManager>();
+        _sound = GetComponent<AudioSource>();
     }
 
 
@@ -24,10 +27,12 @@ public class RhythmPF : MonoBehaviour
         seq = DOTween.Sequence();
         seq.Append(this.transform.DOLocalRotate(new Vector3(-180, 0, 0), 0.3f, RotateMode.LocalAxisAdd));
         seq.AppendInterval(standbyTime - 0.8f);
-        seq.Append(mesh.transform.DOShakePosition(0.5f, new Vector3(0.08f, 0.15f, 0.1f), 16, fadeOut: false));
+        seq.AppendCallback(ShakeSound);
+        seq.Append(mesh.transform.DOShakePosition(0.5f, new Vector3(0.08f, 0.15f, 0.1f), 16, fadeOut: false).OnComplete(FlipSound));
         seq.Append(this.transform.DOLocalRotate(new Vector3(-180 , 0, 0), 0.3f, RotateMode.LocalAxisAdd));
-        seq.AppendInterval(standbyTime - 0.8f);
-        seq.Append(mesh.transform.DOShakePosition(0.5f, new Vector3(0.08f, 0.15f, 0.1f), 16, fadeOut: false));
+        seq.AppendInterval(standbyTime - 0.8f).OnComplete(ShakeSound);
+        seq.AppendCallback(ShakeSound);
+        seq.Append(mesh.transform.DOShakePosition(0.5f, new Vector3(0.08f, 0.15f, 0.1f), 16, fadeOut: false).OnComplete(FlipSound));
         seq.SetLoops(-1);
     }
 
@@ -40,4 +45,13 @@ public class RhythmPF : MonoBehaviour
         yield return new WaitForSeconds(delayStartTime);
         seq.Restart();
     }
+    void ShakeSound(){
+        _sound.PlayOneShot(_clip[0],0.7f);
+        Debug.Log("A");
+    }
+    void FlipSound(){
+        _sound.PlayOneShot(_clip[1],0.7f);
+    }
+
+
 }

@@ -46,12 +46,14 @@ public class GameManager : MonoBehaviour
     int deathCount = 0;
     int passlevelCount = 0;
     int deathCountByCP = 0;
+    SoundEffectManager _sound;
 
     Sequence passSeq;
     // Start is called before the first frame update
     private void Awake()
     {
         start.Invoke();
+        _sound = GetComponent<SoundEffectManager>();
     }
     private void Start()
     {
@@ -66,9 +68,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             passlevelCount++;
-            if (passlevelCount >= 40)
+            if (passlevelCount == 40)
             {
                 NextLevel();
+                _sound.PlayOneSound(0,0.5f);
             }
         }
         else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetButtonDown("Enter"))
             {
                 StartCoroutine("NextLevelIEnumerator");
+                _sound.PlayOneSound(0,0.5f);
             }
         }
     }
@@ -89,6 +93,7 @@ public class GameManager : MonoBehaviour
     public void Death()
     {
         death.Invoke();
+        _sound.PlayOneSound(4,0.7f);
     }
     public void ResetLevel()
     {
@@ -151,6 +156,7 @@ public class GameManager : MonoBehaviour
         win.Invoke();
         CancelInvoke("TimeCount");
         StartCoroutine("SattleIEnumerator");
+        _sound.PlayOneSound(3,0.7f);
         if (recordInData) { RecordInData(); }
     }
     public void NextLevel()

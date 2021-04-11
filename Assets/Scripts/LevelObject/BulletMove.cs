@@ -17,6 +17,7 @@ public class BulletMove : MonoBehaviour
     public GameObject mesh;
     GameManager gm;
     PlayerMovement move;
+    AudioSource _sound;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class BulletMove : MonoBehaviour
         newPos = direction.rotation * new Vector3(0f, -speed, 0f);
         gm = GameObject.FindWithTag("GM").GetComponent<GameManager>();
         move = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        _sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -59,6 +61,8 @@ public class BulletMove : MonoBehaviour
         transform.rotation = direction.rotation;
         exParticle.Play();
         StartCoroutine("BulletOver");
+        _sound.pitch = Random.Range(1.08f, 0.92f);
+        _sound.Play();
     }
 
     IEnumerator BulletOver()

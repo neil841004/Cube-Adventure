@@ -10,6 +10,9 @@ public class PlayerMesh : MonoBehaviour
     public GameObject GetCoinParticle;
     float thick = 5.4f;
     float fadeTime = 1f;
+    public float coinPitch = 0;
+    int getCoinTimeCount = 0;
+    bool getCoin_3sec = false;
     Tween colorTween, scaleTween;
     Material _material;
     public Material _trail;
@@ -44,8 +47,21 @@ public class PlayerMesh : MonoBehaviour
 
     void GetCoin()
     {
+        if (getCoin_3sec)
+        {
+            coinPitch += 0.04f;
+        }
         scaleTween.Kill();
         transform.localScale = new Vector3(0.72f, 0.72f, 0.72f);
         scaleTween = transform.DOScale(1f, 0.8f).SetEase(Ease.OutElastic);
+        StopCoroutine("GetCoinEnumerator");
+        StartCoroutine("GetCoinEnumerator");
+    }
+    IEnumerator GetCoinEnumerator()
+    {
+        getCoin_3sec = true;
+        yield return new WaitForSeconds(3);
+        getCoin_3sec = false;
+        coinPitch = 0;
     }
 }

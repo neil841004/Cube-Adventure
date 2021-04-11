@@ -16,6 +16,7 @@ public class Cannon : MonoBehaviour
     BoxCollider _collider;
     GameManager gm;
     public bool restartByDeath = true;
+    AudioSource _sound;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class Cannon : MonoBehaviour
         oriPos = _transform.position;
         StartCoroutine("StartShoot");
         gm = GameObject.FindWithTag("GM").GetComponent<GameManager>();
+        _sound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -65,5 +67,7 @@ public class Cannon : MonoBehaviour
         _bullet.GetComponent<BulletMove>()._cannonCollider = _collider;
         _bullet.GetComponent<BulletMove>().restartByDeath = restartByDeath;
         cooldown = Time.time + cooldownOrigin;
+        _sound.pitch = Random.Range(1.08f, 0.92f);
+        _sound.Play();
     }
 }

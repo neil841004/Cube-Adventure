@@ -15,6 +15,7 @@ public class Coin : MonoBehaviour
     Color coinMeshColor;
     PlayerMesh playerMesh;
     Tween colorTween;
+    SoundEffectManager _sound;
 
 
 
@@ -26,6 +27,7 @@ public class Coin : MonoBehaviour
             coinMaterial[i] = coinMesh.GetChild(i).GetComponent<MeshRenderer>().material;
         }
         if (neverNoPick) failTrigger.gameObject.SetActive(false);
+        _sound = GameObject.Find("Level_SE_Manager").GetComponent<SoundEffectManager>();
     }
 
     public void PickCoin()
@@ -33,6 +35,7 @@ public class Coin : MonoBehaviour
         if (playerMesh) playerMesh.SendMessage("GetCoin");
         pool.ReUse(transform.position, Quaternion.Euler(-90, 0, 0));
         this.gameObject.SetActive(false);
+        _sound.PlayOneSoundFixedPitch(0, 0.7f, playerMesh.coinPitch);
     }
 
     public void NotPickCoin()
