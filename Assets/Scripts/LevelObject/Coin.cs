@@ -35,7 +35,7 @@ public class Coin : MonoBehaviour
         if (playerMesh) playerMesh.SendMessage("GetCoin");
         pool.ReUse(transform.position, Quaternion.Euler(-90, 0, 0));
         this.gameObject.SetActive(false);
-        _sound.PlayOneSoundFixedPitch(0, 0.7f, playerMesh.coinPitch);
+        _sound.PlayOneSoundFixedPitch(0, 0.53f, playerMesh.coinPitch);
     }
 
     public void NotPickCoin()

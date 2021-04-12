@@ -28,7 +28,6 @@ public class CheckPoint : MonoBehaviour
     {
         yield return new WaitForSeconds(1.15f);
 
-            Debug.Log("A");
             anim.Play("CheckPoint_Revival",0,0);
         
     }

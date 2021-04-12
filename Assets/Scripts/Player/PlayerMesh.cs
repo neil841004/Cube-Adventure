@@ -37,6 +37,7 @@ public class PlayerMesh : MonoBehaviour
         _material.SetColor("_OutLineColor", color);
         _material.SetFloat("_EdgeThickness", thick);
         _trail.SetColor("_TintColor", color);
+        if (move.isDeath) { coinPitch = 0; }
     }
     void SendAnim()
     {

@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
             if (passlevelCount == 40)
             {
                 NextLevel();
-                _sound.PlayOneSound(0,0.5f);
+                _sound.PlayOneSound(0,0.4f);
             }
         }
         else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetButtonDown("Enter"))
             {
                 StartCoroutine("NextLevelIEnumerator");
-                _sound.PlayOneSound(0,0.5f);
+                _sound.PlayOneSound(0,0.4f);
             }
         }
     }
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
         win.Invoke();
         CancelInvoke("TimeCount");
         StartCoroutine("SattleIEnumerator");
-        _sound.PlayOneSound(3,0.7f);
+        _sound.PlayOneSound(3,0.56f);
         if (recordInData) { RecordInData(); }
     }
     public void NextLevel()

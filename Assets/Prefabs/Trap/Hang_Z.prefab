@@ -3382,6 +3382,7 @@ GameObject:
   - component: {fileID: 7100980995289875647}
   - component: {fileID: 7100980995289875646}
   - component: {fileID: 279447752223312891}
+  - component: {fileID: 2189640979068073999}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -3438,15 +3439,14 @@ MonoBehaviour:
   onStepComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 279447752223312891}
-        m_MethodName: PlayOneShot
-        m_Mode: 2
+      - m_Target: {fileID: 2189640979068073999}
+        m_MethodName: PlayTrapSound
+        m_Mode: 4
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: dad22fda1b5d2fb45b3ef7449cbf643e,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.2
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -3547,8 +3547,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: dad22fda1b5d2fb45b3ef7449cbf643e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
-  m_Pitch: 0.92
+  m_Volume: 0.45
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -3649,6 +3649,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2189640979068073999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100980995289875644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd750a8fef41b7409b3c1ac3e28098f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7100980995316478644
 GameObject:
   m_ObjectHideFlags: 0

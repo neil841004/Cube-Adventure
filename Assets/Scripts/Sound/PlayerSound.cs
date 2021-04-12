@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerSound : MonoBehaviour
 {
@@ -9,19 +10,35 @@ public class PlayerSound : MonoBehaviour
     public AudioSource canStopAudio;
     public AudioClip[] audioClip;
     public bool strongLanding = false;
+    PlayerMovement _player;
+    public AudioMixer mixer;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        _player = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (_player.isDeath)
+        {
+            mixer.SetFloat("TrapVolume", -80);
+        }
+        else if (!_player.isDeath)
+        {
+            mixer.SetFloat("TrapVolume", 0);
+        }
+        if (_player.bodyDown)
+        {
+            mixer.SetFloat("TrapLowPass",700);
+        }else if (!_player.bodyDown)
+        {
+            mixer.SetFloat("TrapLowPass",22000);
+        }
     }
     public void PlayOneSound(int number)
     {
@@ -30,14 +47,17 @@ public class PlayerSound : MonoBehaviour
     }
     public void LandingSound()
     {
-        singleAudio.pitch = Random.Range(1f, 0.68f);
-        if (strongLanding)
+        if (!_player.isDeath)
         {
-            singleAudio.PlayOneShot(audioClip[2], 0.5f);
-            singleAudio.PlayOneShot(audioClip[3], 0.2f);
+            singleAudio.pitch = Random.Range(1f, 0.68f);
+            if (strongLanding)
+            {
+                singleAudio.PlayOneShot(audioClip[2], 0.28f);
+                singleAudio.PlayOneShot(audioClip[3], 0.15f);
+            }
+            else
+                singleAudio.PlayOneShot(audioClip[2], 0.21f);
         }
-        else
-            singleAudio.PlayOneShot(audioClip[2], 0.32f);
     }
 
     public void PlayOneSound(int number, float volume)

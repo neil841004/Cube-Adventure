@@ -5517,8 +5517,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: fbf3d7aa36f2564418c10d171a2dcbc4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
-  m_Pitch: 0.92
+  m_Volume: 0.25
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -5526,7 +5526,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 25
+  MaxDistance: 22
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -5593,7 +5593,7 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.71861506
+      time: 0.52263117
       value: 0
       inSlope: 0
       outSlope: 0

@@ -29,7 +29,7 @@ public class Portal : MonoBehaviour
             portalScaleTween = this.transform.GetChild(0).DOScale(0.4f, 0.2f);
             portalScaleTween = destination.transform.GetChild(0).DOScale(0.4f, 0.2f);
             StartCoroutine("PortalEenumerator");
-            _sound.PlayOneSound(1,0.7f);
+            _sound.PlayOneSound(1,0.76f);
         }
         isClose = true;
     }

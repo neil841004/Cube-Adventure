@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (bodyDownCount == 1)
                 {
-                    _sound.PlaySound(4, 0.7f);
+                    _sound.PlaySound(4, 0.46f);
                 }
                 if (bodyDownCount <= 40)
                 {
@@ -413,7 +413,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (IsPushWall() && !isStickWall && !coll.OnGround() && !isWallJump && !coll.OnGroundEdge()) //持續黏牆
         {
-            _sound.PlayOneSound(12, 0.7f, 0.08f);
+            _sound.PlayOneSound(12, 0.34f, 0.08f);
             StopCoroutine("StickWall");
             isStickWall = true;
             speed = 0;
@@ -510,8 +510,8 @@ public class PlayerMovement : MonoBehaviour
             if (bodyDownCount < 42) bodyDownCount++;
             if (bodyDownCount == 41)
             {
-                _sound.PlayOneSound(5, 0.7f);
-                _sound.PlayLoopSound(6, 0.7f);
+                _sound.PlayOneSound(5, 0.54f);
+                _sound.PlayLoopSound(6, 0.48f);
             }
             if (bodyDownCount >= 42)
             {
@@ -602,12 +602,12 @@ public class PlayerMovement : MonoBehaviour
 
                     meshRotateTween = cubeMesh.transform.DOLocalRotate(new Vector3(0, 0, faceAngle), 1f, RotateMode.FastBeyond360);
                     gm.SendMessage("ScreenShake_DownJump");
-                    _sound.PlayOneSound(7, 0.7f);
+                    _sound.PlayOneSound(7, 0.82f);
                 }
                 else
                 {
                     rb.AddForce(Vector3.up * jumpForce);
-                    _sound.PlayOneSound(0, 0.7f, 0.09f);
+                    _sound.PlayOneSound(0, 0.37f, 0.03f);
                 }
                 isJumpUp = true;
                 startJump = false;
@@ -719,7 +719,7 @@ public class PlayerMovement : MonoBehaviour
         isAnimDash = true;
         StartTrail();
         anim.Play("Dash");
-        _sound.PlayOneSound(1, 0.7f, 0.08f);
+        _sound.PlayOneSound(1, 0.42f, 0.08f);
         rb.velocity = Vector2.zero;
         Vector3 dir = new Vector2(value, 0);
         rb.velocity += dir.normalized * dashSpeed;
@@ -912,7 +912,7 @@ public class PlayerMovement : MonoBehaviour
     public void Death(bool active)
     {
         if (active) deathParticle.Play();
-        _sound.PlayOneSound(8, 0.7f);
+        _sound.PlayOneSound(8, 0.75f);
         gm.SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;
@@ -956,7 +956,7 @@ public class PlayerMovement : MonoBehaviour
             _sound.PlayOneSound(11, 0.7f);
         }
         cubeMesh.transform.DOScale(0.5f, 1f).SetEase(Ease.OutElastic);
-        _sound.PlayOneSound(9, 0.7f);
+        _sound.PlayOneSound(9, 0.78f);
 
         yield return new WaitForSeconds(0.25f);
         isDeath = false;

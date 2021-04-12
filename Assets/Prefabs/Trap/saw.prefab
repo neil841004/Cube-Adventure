@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8002820146867631801}
   - component: {fileID: 4879118111309843613}
   - component: {fileID: 4829283439164681940}
-  - component: {fileID: 7621733179397910953}
   m_Layer: 0
   m_Name: Sparks (2)
   m_TagString: Untagged
@@ -4719,121 +4718,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!82 &7621733179397910953
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3208543119723882585}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5430360331920015354, guid: 2b18653c151652a47a7fb137b0878946,
-    type: 2}
-  m_audioClip: {fileID: 8300000, guid: b828894f341892f49b7b208a555607ad, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.18
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 20
-  Pan2D: 0
-  rolloffMode: 2
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.06783867
-      value: 0.9296303
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.82662964
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.045219064
-      value: 0.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5452447
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.0025138855
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &3862035842588201772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4851,6 +4735,7 @@ GameObject:
   - component: {fileID: 3862035842588201769}
   - component: {fileID: 3826404185569651470}
   - component: {fileID: 6275376259153154239}
+  - component: {fileID: 4959645957862712166}
   m_Layer: 0
   m_Name: saw
   m_TagString: Hazard
@@ -8217,7 +8102,7 @@ MonoBehaviour:
   hasOnStart: 0
   hasOnPlay: 0
   hasOnUpdate: 0
-  hasOnStepComplete: 1
+  hasOnStepComplete: 0
   hasOnComplete: 0
   hasOnTweenCreated: 0
   hasOnRewind: 0
@@ -8233,15 +8118,14 @@ MonoBehaviour:
   onStepComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6275376259153154239}
-        m_MethodName: PlayOneShot
-        m_Mode: 2
+      - m_Target: {fileID: 4959645957862712166}
+        m_MethodName: PlayTrapSound
+        m_Mode: 4
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 25922b04a82f7814c9d6696cd6438dc9,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.3
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -8446,10 +8330,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 5430360331920015354, guid: 2b18653c151652a47a7fb137b0878946,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 8093c5a44e1f78d4390597f5e9472017, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.4
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8549,3 +8433,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4959645957862712166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862035842588201772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd750a8fef41b7409b3c1ac3e28098f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
