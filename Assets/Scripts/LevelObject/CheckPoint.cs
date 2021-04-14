@@ -43,7 +43,7 @@ public class CheckPoint : MonoBehaviour
             this.GetComponent<BoxCollider>().enabled = false;
             GameObject.FindWithTag("UI_cpTip").GetComponent<ProgressTip>().SendMessage("PassCP");
             PassEvent.Invoke();
-            _sound.PlayOneSound(2,0.7f);
+            _sound.PlayOneSound(2,0.6f);
         }
     }
 }

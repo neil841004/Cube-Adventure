@@ -61,7 +61,7 @@ public class PlayerMesh : MonoBehaviour
     IEnumerator GetCoinEnumerator()
     {
         getCoin_3sec = true;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         getCoin_3sec = false;
         coinPitch = 0;
     }

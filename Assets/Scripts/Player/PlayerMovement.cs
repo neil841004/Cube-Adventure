@@ -912,7 +912,7 @@ public class PlayerMovement : MonoBehaviour
     public void Death(bool active)
     {
         if (active) deathParticle.Play();
-        _sound.PlayOneSound(8, 0.75f);
+        _sound.PlayOneSound(8, 0.88f);
         gm.SendMessage("ScreenShake_Death");
         isDeath = true;
         isDeathNotBack = true;

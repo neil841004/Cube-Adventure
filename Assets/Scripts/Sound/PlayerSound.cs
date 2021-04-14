@@ -52,11 +52,11 @@ public class PlayerSound : MonoBehaviour
             singleAudio.pitch = Random.Range(1f, 0.68f);
             if (strongLanding)
             {
-                singleAudio.PlayOneShot(audioClip[2], 0.28f);
-                singleAudio.PlayOneShot(audioClip[3], 0.15f);
+                singleAudio.PlayOneShot(audioClip[2], 0.16f);
+                singleAudio.PlayOneShot(audioClip[3], 0.13f);
             }
             else
-                singleAudio.PlayOneShot(audioClip[2], 0.21f);
+                singleAudio.PlayOneShot(audioClip[2], 0.11f);
         }
     }
 

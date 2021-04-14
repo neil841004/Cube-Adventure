@@ -180,6 +180,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGM
       objectReference: {fileID: 0}
+    - target: {fileID: 5585023387914720327, guid: 388a93f8f7dad0946a9b2f9db47a28c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 388a93f8f7dad0946a9b2f9db47a28c8, type: 3}
 --- !u!4 &4201499143406386541 stripped

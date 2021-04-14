@@ -444,7 +444,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570542
+  m_Name: pb_Mesh-1630994
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -932,6 +932,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1 &170076733
@@ -1125,6 +1140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
         type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
       propertyPath: easeType
       value: 1
       objectReference: {fileID: 0}
@@ -1193,6 +1213,51 @@ PrefabInstance:
       propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnPlay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1333980113}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayTrapSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1001 &193813920
@@ -1327,6 +1392,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1001 &196710317
@@ -1440,7 +1520,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1572042
+  m_Name: pb_Mesh-1632970
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1705,6 +1785,85 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4336490849556822757}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &303920083
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 702763045840839861, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_Name
+      value: Sound
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083349121961129578, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4201499143406386540, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d72744ae69927b4388f3b1169e5be6c, type: 3}
+    - target: {fileID: 4201499143406386540, guid: 21422266f3528d64a8116e2415bd5fca,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.42
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 21422266f3528d64a8116e2415bd5fca, type: 3}
 --- !u!4 &313052939 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 645771787514896649, guid: c7a74fa9a62424b42b201808dd2e82a9,
@@ -2108,6 +2267,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1001 &346231195
@@ -2468,7 +2642,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571852
+  m_Name: pb_Mesh-1632574
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2813,7 +2987,6 @@ GameObject:
   m_Component:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
-  - component: {fileID: 534669903}
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
   - component: {fileID: 534669909}
@@ -2824,14 +2997,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &534669903
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
 --- !u!20 &534669904
 Camera:
   m_ObjectHideFlags: 0
@@ -3056,7 +3221,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570470
+  m_Name: pb_Mesh-1630910
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3219,7 +3384,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1572018
+  m_Name: pb_Mesh-1632942
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3406,7 +3571,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571614
+  m_Name: pb_Mesh-1632206
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3894,7 +4059,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571710
+  m_Name: pb_Mesh-1632318
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4183,6 +4348,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!4 &672592907 stripped
@@ -4229,7 +4409,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571970
+  m_Name: pb_Mesh-1632696
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4392,7 +4572,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571662
+  m_Name: pb_Mesh-1632262
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4825,6 +5005,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!4 &780750371 stripped
@@ -4839,7 +5034,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571804
+  m_Name: pb_Mesh-1632424
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5729,7 +5924,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1572188
+  m_Name: pb_Mesh-1633120
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6353,6 +6548,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1 &939948716
@@ -6591,6 +6801,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!4 &943221095 stripped
@@ -6605,7 +6830,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570762
+  m_Name: pb_Mesh-1631246
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6768,7 +6993,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570494
+  m_Name: pb_Mesh-1630938
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6943,7 +7168,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1572212
+  m_Name: pb_Mesh-1633148
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7136,7 +7361,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571686
+  m_Name: pb_Mesh-1632290
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7591,7 +7816,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570738
+  m_Name: pb_Mesh-1631218
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7967,6 +8192,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!4 &1164575944 stripped
@@ -8379,6 +8619,11 @@ PrefabInstance:
       objectReference: {fileID: 1416924792}
     - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
         type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
       propertyPath: easeType
       value: 1
       objectReference: {fileID: 0}
@@ -8417,6 +8662,51 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnPlay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1823458601}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlayTrapSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onPlay.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!114 &1199209533 stripped
@@ -8563,6 +8853,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!114 &1205475310 stripped
@@ -8583,7 +8888,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1572236
+  m_Name: pb_Mesh-1633176
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8850,13 +9155,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 767ea4c9d6e8fb644aaef58a3256c010, type: 3}
+--- !u!114 &1333980113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4959645957862712166, guid: def1093366c370a4c8b036a693547ccb,
+    type: 3}
+  m_PrefabInstance: {fileID: 192267987}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd750a8fef41b7409b3c1ac3e28098f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1348506610
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571828
+  m_Name: pb_Mesh-1632546
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9124,7 +9441,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571780
+  m_Name: pb_Mesh-1632396
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9665,6 +9982,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1 &1558119449 stripped
@@ -10309,7 +10641,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1570518
+  m_Name: pb_Mesh-1630966
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10592,7 +10924,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571584
+  m_Name: pb_Mesh-1632172
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10881,6 +11213,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1001 &1784760336
@@ -11061,6 +11408,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811372932}
   m_CullTransparentMesh: 0
+--- !u!114 &1823458601 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4959645957862712166, guid: def1093366c370a4c8b036a693547ccb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1196352635}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd750a8fef41b7409b3c1ac3e28098f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1826060496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11193,6 +11552,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!114 &1856534803 stripped
@@ -11735,7 +12109,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571994
+  m_Name: pb_Mesh-1632818
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11898,7 +12272,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571638
+  m_Name: pb_Mesh-1632234
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12205,6 +12579,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!1 &1992955598 stripped
@@ -12450,6 +12839,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!4 &2041631642 stripped
@@ -12590,6 +12994,21 @@ PrefabInstance:
       propertyPath: endValueV3.y
       value: -13
       objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: hasOnStepComplete
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862035842588201775, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: onStepComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275376259153154239, guid: def1093366c370a4c8b036a693547ccb,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3979bf741d4bec24d89ca0caa9fcf5e4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: def1093366c370a4c8b036a693547ccb, type: 3}
 --- !u!43 &2057892736
@@ -12598,7 +13017,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571554
+  m_Name: pb_Mesh-1632138
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12803,7 +13222,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1571734
+  m_Name: pb_Mesh-1632346
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
