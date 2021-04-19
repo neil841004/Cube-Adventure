@@ -1926,6 +1926,6 @@ AnimationClip:
     functionName: PlayDancingSound
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0.52
+    floatParameter: 0.13
     intParameter: 0
     messageOptions: 0

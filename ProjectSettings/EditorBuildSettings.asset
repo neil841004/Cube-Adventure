@@ -11,55 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialLevel.unity
     guid: 5e2c02edcfd1d3f48af4afea4d16450a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level_0.unity
     guid: b8501104e5e06ae47b6a6ea16b0201d4
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level_1.unity
     guid: 832a3ea44b85e2f4e84b5b637d5b7da1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level_2.unity
     guid: 0322aa0db0fdade4595c1daab28d4242
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_1_A_NoRhythm.unity
-    guid: 5b7af5946e2e0c94ba309a90641b1dcf
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_1_B_Rhythm.unity
-    guid: 557f900ed12385c4ba428ed14a866fa6
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/Level_1_Question.unity
-    guid: 901595535a6932f4f903f3ab7d21d865
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_2_A_Rhythm.unity
-    guid: 5c234697009f7504ba5eef19c60fadec
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_2_B_NoRhythm.unity
-    guid: 3189d1ddac08ef34eab4e4f914d0cbeb
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/Level_2_Question.unity
-    guid: f415d4e180b621240966ddb2b7366a47
   - enabled: 1
-    path: Assets/Scenes/PilotTesting/PilotTesting_3_A_NoRhythm.unity
-    guid: 9a7338b3cb095cc4e906d749270768b2
-  - enabled: 1
-    path: Assets/Scenes/PilotTesting/PilotTesting_3_B_Rhythm.unity
-    guid: 18d910fa59781ee46bf04b4c59d017cc
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/Level_3_Question.unity
-    guid: b7c400c0c4ac3414ba2e621d1c4a404e
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_4_A_NoRhythm.unity
-    guid: 2f0cfa849d4d93c48aff5754dbd03ae7
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/PilotTesting_4_B_Rhythm.unity
-    guid: b9301773e02933744b2841d0741688aa
-  - enabled: 0
-    path: Assets/Scenes/PilotTesting/Level_4_Question.unity
-    guid: 8569db049c099ea4fbead8f2cb9593d4
-  - enabled: 0
     path: Assets/Scenes/Ending.unity
     guid: 650d5cc4020b7ba4bb5e3ee0d31c056d
-  - enabled: 1
-    path: Assets/Scenes/PilotTesting/Ending_2.unity
-    guid: 4e3c87559ec8c9b4ea49279fd5a6e476
   m_configObjects: {}
