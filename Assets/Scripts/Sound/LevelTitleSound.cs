@@ -14,10 +14,10 @@ public class LevelTitleSound : MonoBehaviour
     // Update is called once per frame
     public void Start_1()
     {
-        _sound.PlayOneSound(1, 0.7f);
+        _sound.PlayOneSound(1, 0.85f);
     }
     public void Start_2()
     {
-        _sound.PlayOneSound(2, 0.7f);
+        _sound.PlayOneSound(2, 0.85f);
     }
 }
