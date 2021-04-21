@@ -93,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
     Tween rbTween, faceRotateTween, meshRotateTween;
     GameObject gm;
     BetterJumping _betterJumping;
+    CapsuleCollider _collider;
 
     void Start()
     {
@@ -100,6 +101,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<Collision>();
         anim = GetComponent<Animator>();
+        _collider = GetComponent<CapsuleCollider>();
         EntryPoint = this.transform.position;
         checkPointV3 = EntryPoint;
         gm = GameObject.FindWithTag("GM");
@@ -915,6 +917,7 @@ public class PlayerMovement : MonoBehaviour
         _sound.PlayOneSound(8, 0.88f);
         gm.SendMessage("ScreenShake_Death");
         isDeath = true;
+        _collider.enabled = false;
         isDeathNotBack = true;
         StartCoroutine("Rebirth");
         DeathV3 = this.transform.position;
@@ -957,6 +960,7 @@ public class PlayerMovement : MonoBehaviour
         }
         cubeMesh.transform.DOScale(0.5f, 1f).SetEase(Ease.OutElastic);
         _sound.PlayOneSound(9, 0.78f);
+        _collider.enabled = true;
 
         yield return new WaitForSeconds(0.25f);
         isDeath = false;

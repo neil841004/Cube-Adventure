@@ -6193,6 +6193,8 @@ GameObject:
   - component: {fileID: 921092748}
   - component: {fileID: 921092750}
   - component: {fileID: 921092751}
+  - component: {fileID: 921092752}
+  - component: {fileID: 921092753}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GM
@@ -6416,6 +6418,120 @@ MonoBehaviour:
   t1_Coin_1: {fileID: 1558119449}
   t1_Coin_2: {fileID: 1964426223}
   t2_platform: {fileID: 917074411}
+--- !u!114 &921092752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921092747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068e129861d439e43a5c84eb78ea7df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip:
+  - {fileID: 8300000, guid: 0e51bbb2747c13042bbae8672c7499e3, type: 3}
+  - {fileID: 8300000, guid: 1039a0621a00c214eaa3b6a1c7577af0, type: 3}
+  - {fileID: 8300000, guid: 25a33ff03b3019d47a816d1b8107f8a2, type: 3}
+  - {fileID: 8300000, guid: 1086e2d4b568c994a9e8172a64f91f69, type: 3}
+  - {fileID: 8300000, guid: 3e37cf38bf350f64cb68a5cd4fc6a826, type: 3}
+--- !u!82 &921092753
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921092747}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &932136165
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9062,7 +9178,17 @@ PrefabInstance:
     - target: {fileID: 2921879124544731606, guid: 3350f3eea1a94a040b2ab9a380a733cf,
         type: 3}
       propertyPath: m_Text
-      value: Tutorial
+      value: "\u6559\u5B78"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2921879124544731606, guid: 3350f3eea1a94a040b2ab9a380a733cf,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2921879124544731606, guid: 3350f3eea1a94a040b2ab9a380a733cf,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2921879124656050950, guid: 3350f3eea1a94a040b2ab9a380a733cf,
         type: 3}
@@ -9177,7 +9303,17 @@ PrefabInstance:
     - target: {fileID: 2921879125067586252, guid: 3350f3eea1a94a040b2ab9a380a733cf,
         type: 3}
       propertyPath: m_Text
-      value: Tutorial
+      value: "\u6559\u5B78"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2921879125067586252, guid: 3350f3eea1a94a040b2ab9a380a733cf,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2921879125067586252, guid: 3350f3eea1a94a040b2ab9a380a733cf,
+        type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3350f3eea1a94a040b2ab9a380a733cf, type: 3}

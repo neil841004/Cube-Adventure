@@ -9,6 +9,7 @@ public class Cannon : MonoBehaviour
     public float _speed = 3f;
     public float cooldown = 2f;
     public float delay = 0;
+    public int trapNumber = 0;
     float cooldownOrigin;
     Transform _transform;
     Vector3 newPos, oriPos;
@@ -66,6 +67,7 @@ public class Cannon : MonoBehaviour
         _bullet.GetComponent<BulletMove>().speed = _speed;
         _bullet.GetComponent<BulletMove>()._cannonCollider = _collider;
         _bullet.GetComponent<BulletMove>().restartByDeath = restartByDeath;
+        _bullet.GetComponent<TrapNumberReturn>().trapNumber = trapNumber;
         cooldown = Time.time + cooldownOrigin;
         _sound.pitch = Random.Range(1.08f, 0.92f);
         _sound.Play();

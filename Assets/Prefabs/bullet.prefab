@@ -5434,6 +5434,7 @@ GameObject:
   - component: {fileID: 6338908704187800550}
   - component: {fileID: 97868780}
   - component: {fileID: 49426341970546318}
+  - component: {fileID: 3353242755318469196}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Hazard
@@ -5619,3 +5620,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3353242755318469196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311056947710406763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b94a28871c5a8744ace836fb3be7e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trapNumber: 0

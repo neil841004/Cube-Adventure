@@ -1992,8 +1992,9 @@ GameObject:
   - component: {fileID: 7100980995112027118}
   - component: {fileID: 7100980995112027117}
   - component: {fileID: 7100980995112027116}
+  - component: {fileID: 313171603485876268}
   m_Layer: 0
-  m_Name: Icosphere
+  m_Name: IcosphereZ
   m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2638,6 +2639,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.72
   m_Center: {x: 0.4205849, y: 0.6805206, z: 0}
+--- !u!114 &313171603485876268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100980995112027114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b94a28871c5a8744ace836fb3be7e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trapNumber: 0
 --- !u!1 &7100980995153907190
 GameObject:
   m_ObjectHideFlags: 0

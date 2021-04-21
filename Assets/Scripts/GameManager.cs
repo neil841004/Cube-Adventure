@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     public int nextLevelId = 0;
     public bool reTrap = false;
+    bool startNextLevel = false;
 
     [Header("Coin")]
     public int coinCountOrigin = 0; //coin總數
@@ -38,7 +39,6 @@ public class GameManager : MonoBehaviour
     public bool uploadDate = false;
     bool canContinue = false;
     int checkPointCount = 0;
-    int[] cpDeathCount = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     public int timeNotInDeathCount = 0;
     public int timeInDeathCount = 0;
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     int deathCount = 0;
     int passlevelCount = 0;
     int deathCountByCP = 0;
+    public int[] trapNumber = new int[]{0,0,0,0,0};
     SoundEffectManager _sound;
 
     Sequence passSeq;
@@ -68,20 +69,20 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             passlevelCount++;
-            if (passlevelCount == 40)
+            if (passlevelCount == 40 && !startNextLevel)
             {
                 NextLevel();
-                _sound.PlayOneSound(0,0.4f);
+                _sound.PlayOneSound(0, 0.4f);
             }
         }
         else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
 
         if (canContinue)
         {
-            if (Input.GetButtonDown("Enter"))
+            if (Input.GetButtonDown("Enter") && !startNextLevel)
             {
                 StartCoroutine("NextLevelIEnumerator");
-                _sound.PlayOneSound(0,0.4f);
+                _sound.PlayOneSound(0, 0.4f);
             }
         }
     }
@@ -93,12 +94,11 @@ public class GameManager : MonoBehaviour
     public void Death()
     {
         death.Invoke();
-        _sound.PlayOneSound(4,0.7f);
+        _sound.PlayOneSound(4, 0.7f);
     }
     public void ResetLevel()
     {
         deathCount++;
-        cpDeathCount[checkPointCount]++;
         deathCountByCP++;
         resetLevel.Invoke();
         if (deathCountByCP > 4 && passLevelTipWhite)
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
             passSeq.AppendInterval(3.5f);
             passSeq.Append(passLevelTipWhite.DOFade(0f, 0.7f));
         }
-        
+
         foreach (Transform child in coinParent.transform)
         {
             child.gameObject.SetActive(true);
@@ -124,6 +124,11 @@ public class GameManager : MonoBehaviour
         reTrap = true;
         StartCoroutine("RestartTrap");
         timeNotInDeathCount = timeCheck;
+    }
+    public void TrapNumberRecord(int number)
+    {
+        if (number == 5) number = 0;
+        trapNumber[number]++;
     }
     public void CheckCoin()
     {
@@ -156,7 +161,7 @@ public class GameManager : MonoBehaviour
         win.Invoke();
         CancelInvoke("TimeCount");
         StartCoroutine("SattleIEnumerator");
-        _sound.PlayOneSound(3,0.56f);
+        _sound.PlayOneSound(3, 0.56f);
         if (recordInData) { RecordInData(); }
     }
     public void NextLevel()
@@ -187,10 +192,7 @@ public class GameManager : MonoBehaviour
         GameData.timeInDeathCount[GameData.levelCount] = timeInDeathCount;
         GameData.timeNotInDeathCount[GameData.levelCount] = timeNotInDeathCount;
         GameData.checkPointCount[GameData.levelCount] = checkPointCount;
-        for (int i = 0; i < 10; i++)
-        {
-            GameData.cpDeathCount[GameData.levelCount, i] = cpDeathCount[i];
-        }
+
         if (uploadDate)
         {
             StartCoroutine("UploadIEnumerator");
@@ -201,6 +203,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator NextLevelIEnumerator()
     {
+        startNextLevel = true;
         nextLevel.Invoke();
         if (SattleIcon) SattleIcon.SetActive(false);
         if (continueTip) continueTip.DOFade(0, 0.5f);
@@ -222,16 +225,7 @@ public class GameManager : MonoBehaviour
         form.AddField("timeInDeathCount_0", GameData.timeInDeathCount[0]);
         form.AddField("timeNotInDeathCount_0", GameData.timeNotInDeathCount[0]);
         form.AddField("checkPointCount_0", GameData.checkPointCount[0]);
-        form.AddField("cpDeathCount_0_0", GameData.cpDeathCount[0, 0]);
-        form.AddField("cpDeathCount_0_1", GameData.cpDeathCount[0, 1]);
-        form.AddField("cpDeathCount_0_2", GameData.cpDeathCount[0, 2]);
-        form.AddField("cpDeathCount_0_3", GameData.cpDeathCount[0, 3]);
-        form.AddField("cpDeathCount_0_4", GameData.cpDeathCount[0, 4]);
-        form.AddField("cpDeathCount_0_5", GameData.cpDeathCount[0, 5]);
-        form.AddField("cpDeathCount_0_6", GameData.cpDeathCount[0, 6]);
-        form.AddField("cpDeathCount_0_7", GameData.cpDeathCount[0, 7]);
-        form.AddField("cpDeathCount_0_8", GameData.cpDeathCount[0, 8]);
-        form.AddField("cpDeathCount_0_9", GameData.cpDeathCount[0, 9]);
+
 
         form.AddField("levelName_1", GameData.levelName[1]);
         form.AddField("coinCount_1", GameData.coinCount[1]);
@@ -239,20 +233,9 @@ public class GameManager : MonoBehaviour
         form.AddField("timeInDeathCount_1", GameData.timeInDeathCount[1]);
         form.AddField("timeNotInDeathCount_1", GameData.timeNotInDeathCount[1]);
         form.AddField("checkPointCount_1", GameData.checkPointCount[1]);
-        form.AddField("cpDeathCount_1_0", GameData.cpDeathCount[1, 0]);
-        form.AddField("cpDeathCount_1_1", GameData.cpDeathCount[1, 1]);
-        form.AddField("cpDeathCount_1_2", GameData.cpDeathCount[1, 2]);
-        form.AddField("cpDeathCount_1_3", GameData.cpDeathCount[1, 3]);
-        form.AddField("cpDeathCount_1_4", GameData.cpDeathCount[1, 4]);
-        form.AddField("cpDeathCount_1_5", GameData.cpDeathCount[1, 5]);
-        form.AddField("cpDeathCount_1_6", GameData.cpDeathCount[1, 6]);
-        form.AddField("cpDeathCount_1_7", GameData.cpDeathCount[1, 7]);
-        form.AddField("cpDeathCount_1_8", GameData.cpDeathCount[1, 8]);
-        form.AddField("cpDeathCount_1_9", GameData.cpDeathCount[1, 9]);
 
-        Debug.Log(GameData.cpDeathCount[0, 1]);
+
         Debug.Log(GameData.deathCount[1]);
-        Debug.Log(GameData.cpDeathCount[1, 9]);
         Debug.Log(GameData.levelName[0]);
         Debug.Log(GameData.levelName[1]);
 

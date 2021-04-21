@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8954613932670436006}
   - component: {fileID: 8954613932670436007}
   - component: {fileID: 8954613932670436000}
+  - component: {fileID: 3216598965993839750}
   m_Layer: 0
   m_Name: Hazard
   m_TagString: Hazard
@@ -366,3 +367,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &3216598965993839750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954613932670436001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b94a28871c5a8744ace836fb3be7e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trapNumber: 0
