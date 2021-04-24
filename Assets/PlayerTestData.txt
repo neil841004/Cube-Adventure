@@ -1,10 +1,49 @@
  
-Celeste
  
-InputField0
-neil841004@gmail.com
+26~35歲
+女
+15~21小時
+4~6款
+ 
+遊戲手把
+ 
+Level_1_Rhythm
+Coin 19
+Death 1
+timeDeath 73
+timeNotDeath 67
+CP 6
+Trap_0 0
+Trap_1 1
+Trap_2 0
+Trap_3 0
+Trap_4 0
  
 1-A
+ 
+InputField0
+1-A好玩
+123
+456
+還行
+555	
+ 
+InputField1
+ㄇㄉ
+ 
+Level_2_Rhythm
+Coin 21
+Death 4
+timeDeath 111
+timeNotDeath 71
+CP 6
+Trap_0 0
+Trap_1 0
+Trap_2 0
+Trap_3 4
+Trap_4 0
+ 
+2-B
  
 InputField0
 
@@ -12,14 +51,7 @@ InputField0
 InputField1
 
  
-Level_1_Rhythm
-Coin 16
-Death 4
-timeDeath 196
-timeNotDeath 134
-CP 6
-Trap_0 1
-Trap_1 1
-Trap_2 1
-Trap_3 1
-Trap_4 0
+Super Meat Boy
+ 
+InputField0
+

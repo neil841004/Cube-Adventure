@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.P))
         {
             passlevelCount++;
             if (passlevelCount == 40 && !startNextLevel)
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
                 _sound.PlayOneSound(0, 0.4f);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Escape)) { passlevelCount = 0; }
+        else if (Input.GetKeyUp(KeyCode.P)) { passlevelCount = 0; }
 
         if (canContinue)
         {
@@ -104,15 +104,15 @@ public class GameManager : MonoBehaviour
         deathCount++;
         deathCountByCP++;
         resetLevel.Invoke();
-        if (deathCountByCP > 4 && passLevelTipWhite)
-        {
-            passSeq.Kill();
-            passSeq = DOTween.Sequence();
-            passSeq.AppendInterval(0.4f);
-            passSeq.Append(passLevelTipWhite.DOFade(1f, 0.7f));
-            passSeq.AppendInterval(3.5f);
-            passSeq.Append(passLevelTipWhite.DOFade(0f, 0.7f));
-        }
+        // if (deathCountByCP > 4 && passLevelTipWhite)
+        // {
+        //     passSeq.Kill();
+        //     passSeq = DOTween.Sequence();
+        //     passSeq.AppendInterval(0.4f);
+        //     passSeq.Append(passLevelTipWhite.DOFade(1f, 0.7f));
+        //     passSeq.AppendInterval(3.5f);
+        //     passSeq.Append(passLevelTipWhite.DOFade(0f, 0.7f));
+        // }
 
         foreach (Transform child in coinParent.transform)
         {
@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
         sw.WriteLine("Death " + deathCount);
         sw.WriteLine("timeDeath " + timeInDeathCount);
         sw.WriteLine("timeNotDeath " + timeNotInDeathCount);
-        sw.WriteLine("CP " + checkPointCount);
+        // sw.WriteLine("CP " + checkPointCount);
         sw.WriteLine("Trap_0 " + trapNumber[0]);
         sw.WriteLine("Trap_1 " + trapNumber[1]);
         sw.WriteLine("Trap_2 " + trapNumber[2]);

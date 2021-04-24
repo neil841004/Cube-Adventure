@@ -31,7 +31,7 @@ EditorBuildSettings:
     guid: 0322aa0db0fdade4595c1daab28d4242
   - enabled: 1
     path: Assets/Scenes/Question_AfterLevel_2.unity
-    guid: 9a827e10c71ac80458a4c916b400ad4f
+    guid: 749331a9194ce634f9ce7990eeb71b54
   - enabled: 1
     path: Assets/Scenes/Ending_Precautions.unity
     guid: 27502ffec70ff3c46bfd8ab2d2bd07c6
