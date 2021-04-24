@@ -1,9 +1,25 @@
  
-1 - B
+Celeste
  
 InputField0
-恩
-好	
+neil841004@gmail.com
+ 
+1-A
+ 
+InputField0
+
  
 InputField1
-不錯 加油
+
+ 
+Level_1_Rhythm
+Coin 16
+Death 4
+timeDeath 196
+timeNotDeath 134
+CP 6
+Trap_0 1
+Trap_1 1
+Trap_2 1
+Trap_3 1
+Trap_4 0

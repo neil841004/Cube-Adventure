@@ -25,7 +25,7 @@ public class Question_GM : MonoBehaviour
     void Start()
     {
         StartCoroutine("OpenUI");
-        QuestCount = dropDown.childCount;
+        if (dropDown) QuestCount = dropDown.childCount;
         if (InputField) InputCount = InputField.childCount;
     }
 

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -377,9 +377,9 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: 2 - A
+    - m_Text: 2-A
       m_Image: {fileID: 0}
-    - m_Text: 2 - B
+    - m_Text: 2-B
       m_Image: {fileID: 0}
     - m_Text: "\u4E0D\u77E5\u9053"
       m_Image: {fileID: 0}
@@ -1400,7 +1400,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2 - A
+  m_Text: 2-A
 --- !u!222 &520481460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3111,7 +3111,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7a7cb6d32d5afa247a73e0e6f17481fe, type: 3}
-    m_FontSize: 46
+    m_FontSize: 44
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -3122,8 +3122,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u8ACB\u63CF\u8FF0\u5169\u7A2E\u8B8A\u5316\u578B\u95DC\u5361\u4E4B\u9593\u611F\u53D7\u5230\u7684\u9AD4\u9A57\u4E4B\u5DEE\u7570(\u6BD4\u5982:1-A\u66F4\u80FD\u9810\u6E2C\u9677\u9631\u7684\u6642\u6A5F\uFF0C1-B\u95DC\u5361\u8F03\u55AE\u8ABF\u7B49)
-    \u6C92\u6709\u5DEE\u7570\u5247\u7559\u7A7A"
+  m_Text: "\u8ACB\u63CF\u8FF0\u5169\u7A2E\u8B8A\u5316\u578B\u95DC\u5361\u4E4B\u9593\u611F\u53D7\u5230\u7684\u9AD4\u9A57\u4E4B\u5DEE\u7570(\u6BD4\u5982:2-A\u95DC\u5361\u904E\u65BC\u55AE\u8ABF\u30012-B\u4E0D\u6613\u65BC\u9810\u5224\u9583\u8EB2\u9677\u9631\u7684\u6642\u6A5F\u7B49\uFF0C
+    \u6B64\u7BC4\u4F8B\u50C5\u70BA\u6558\u8FF0\u53C3\u8003) \u8A8D\u70BA\u6C92\u6709\u5DEE\u7570\u5247\u7559\u7A7A"
 --- !u!222 &1999034676
 CanvasRenderer:
   m_ObjectHideFlags: 0

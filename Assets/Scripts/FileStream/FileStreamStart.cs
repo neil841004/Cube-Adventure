@@ -14,7 +14,7 @@ public class FileStreamStart : MonoBehaviour
 
         fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Append);
         StreamWriter sw = new StreamWriter(fs);
-        sw.WriteLine("ABC");
+        sw.WriteLine(" ");
         sw.Close();
     }
 

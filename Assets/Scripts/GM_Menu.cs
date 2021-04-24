@@ -14,6 +14,9 @@ public class GM_Menu : MonoBehaviour
     {
         startLevel.Invoke();
     }
+    void Start() {
+        QualitySettings.vSyncCount = 1;
+    }
 
     // Update is called once per frame
     void Update()
