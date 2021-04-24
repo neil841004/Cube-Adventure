@@ -99,7 +99,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6317,7 +6317,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  nextLevelId: 2
+  nextLevelId: 3
   reTrap: 0
   coinCountOrigin: 0
   coinCount: 0
@@ -6334,6 +6334,7 @@ MonoBehaviour:
   uploadDate: 0
   timeNotInDeathCount: 0
   timeInDeathCount: 0
+  trapNumber: 0000000000000000000000000000000000000000
 --- !u!4 &921092749
 Transform:
   m_ObjectHideFlags: 0

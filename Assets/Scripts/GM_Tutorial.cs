@@ -97,7 +97,7 @@ public class GM_Tutorial : MonoBehaviour
                     if (!onPF)
                     {
                         text[4].SetActive(false);
-                        GetComponent<GameManager>().SendMessage("NextLevel");
+                        GetComponent<GameManager>().SendMessage("SkipLevel");
                     }
                     onPF = true;
                 }

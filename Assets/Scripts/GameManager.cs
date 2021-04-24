@@ -6,6 +6,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.Networking;
+using System.Text;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
     public int nextLevelId = 0;
     public bool reTrap = false;
     bool startNextLevel = false;
+    bool isWin = false;
 
     [Header("Coin")]
     public int coinCountOrigin = 0; //coin總數
@@ -46,7 +49,7 @@ public class GameManager : MonoBehaviour
     int deathCount = 0;
     int passlevelCount = 0;
     int deathCountByCP = 0;
-    public int[] trapNumber = new int[]{0,0,0,0,0};
+    public int[] trapNumber = new int[] { 0, 0, 0, 0, 0 };
     SoundEffectManager _sound;
 
     Sequence passSeq;
@@ -71,7 +74,7 @@ public class GameManager : MonoBehaviour
             passlevelCount++;
             if (passlevelCount == 40 && !startNextLevel)
             {
-                NextLevel();
+                SkipLevel();
                 _sound.PlayOneSound(0, 0.4f);
             }
         }
@@ -153,6 +156,7 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
+        isWin = true;
         checkPointCount++;
         foreach (Transform child in coinParent.transform)
         {
@@ -162,11 +166,18 @@ public class GameManager : MonoBehaviour
         CancelInvoke("TimeCount");
         StartCoroutine("SattleIEnumerator");
         _sound.PlayOneSound(3, 0.56f);
-        if (recordInData) { RecordInData(); }
+        if (recordInData)
+        {
+            RecordInFile();
+        }
     }
-    public void NextLevel()
+    public void SkipLevel()
     {
         StartCoroutine("NextLevelIEnumerator");
+        if (recordInData)
+        {
+            RecordInFile();
+        }
     }
 
     IEnumerator SattleIEnumerator()
@@ -184,22 +195,42 @@ public class GameManager : MonoBehaviour
         continueTip.DOFade(1, 0.7f);
         canContinue = true;
     }
-    void RecordInData()
-    {
-        GameData.levelName[GameData.levelCount] = SceneManager.GetActiveScene().name;
-        GameData.coinCount[GameData.levelCount] = coinCount;
-        GameData.deathCount[GameData.levelCount] = deathCount;
-        GameData.timeInDeathCount[GameData.levelCount] = timeInDeathCount;
-        GameData.timeNotInDeathCount[GameData.levelCount] = timeNotInDeathCount;
-        GameData.checkPointCount[GameData.levelCount] = checkPointCount;
 
-        if (uploadDate)
-        {
-            StartCoroutine("UploadIEnumerator");
-            // GameData.levelCount = 0;
-        }
-        GameData.levelCount++;
+    void RecordInFile()
+    {
+        FileStream fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Append);
+        StreamWriter sw = new StreamWriter(fs);
+        sw.WriteLine(" ");
+        sw.WriteLine(SceneManager.GetActiveScene().name);
+        sw.WriteLine("Coin " + coinCount);
+        sw.WriteLine("Death " + deathCount);
+        sw.WriteLine("timeDeath " + timeInDeathCount);
+        sw.WriteLine("timeNotDeath " + timeNotInDeathCount);
+        sw.WriteLine("CP " + checkPointCount);
+        sw.WriteLine("Trap_0 " + trapNumber[0]);
+        sw.WriteLine("Trap_1 " + trapNumber[1]);
+        sw.WriteLine("Trap_2 " + trapNumber[2]);
+        sw.WriteLine("Trap_3 " + trapNumber[3]);
+        sw.WriteLine("Trap_4 " + trapNumber[4]);
+        sw.Close();
     }
+
+    // void RecordInData()
+    // {
+    //     GameData.levelName[GameData.levelCount] = SceneManager.GetActiveScene().name;
+    //     GameData.coinCount[GameData.levelCount] = coinCount;
+    //     GameData.deathCount[GameData.levelCount] = deathCount;
+    //     GameData.timeInDeathCount[GameData.levelCount] = timeInDeathCount;
+    //     GameData.timeNotInDeathCount[GameData.levelCount] = timeNotInDeathCount;
+    //     GameData.checkPointCount[GameData.levelCount] = checkPointCount;
+
+    //     // if (uploadDate)
+    //     // {
+    //     //     StartCoroutine("UploadIEnumerator");
+    //     //     // GameData.levelCount = 0;
+    //     // }
+    //     GameData.levelCount++;
+    // }
 
     IEnumerator NextLevelIEnumerator()
     {
@@ -212,50 +243,50 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextLevelId);
     }
 
-    IEnumerator UploadIEnumerator()
-    {
-        // Create the form object.
-        WWWForm form = new WWWForm();
-        // Add the method data to the form object. (read or write data)
-        // form.AddField("method", "write");
+    // IEnumerator UploadIEnumerator()
+    // {
+    //     // Create the form object.
+    //     WWWForm form = new WWWForm();
+    //     // Add the method data to the form object. (read or write data)
+    //     // form.AddField("method", "write");
 
-        form.AddField("levelName_0", GameData.levelName[0]);
-        form.AddField("coinCount_0", GameData.coinCount[0]);
-        form.AddField("deathCount_0", GameData.deathCount[0]);
-        form.AddField("timeInDeathCount_0", GameData.timeInDeathCount[0]);
-        form.AddField("timeNotInDeathCount_0", GameData.timeNotInDeathCount[0]);
-        form.AddField("checkPointCount_0", GameData.checkPointCount[0]);
-
-
-        form.AddField("levelName_1", GameData.levelName[1]);
-        form.AddField("coinCount_1", GameData.coinCount[1]);
-        form.AddField("deathCount_1", GameData.deathCount[1]);
-        form.AddField("timeInDeathCount_1", GameData.timeInDeathCount[1]);
-        form.AddField("timeNotInDeathCount_1", GameData.timeNotInDeathCount[1]);
-        form.AddField("checkPointCount_1", GameData.checkPointCount[1]);
+    //     form.AddField("levelName_0", GameData.levelName[0]);
+    //     form.AddField("coinCount_0", GameData.coinCount[0]);
+    //     form.AddField("deathCount_0", GameData.deathCount[0]);
+    //     form.AddField("timeInDeathCount_0", GameData.timeInDeathCount[0]);
+    //     form.AddField("timeNotInDeathCount_0", GameData.timeNotInDeathCount[0]);
+    //     form.AddField("checkPointCount_0", GameData.checkPointCount[0]);
 
 
-        Debug.Log(GameData.deathCount[1]);
-        Debug.Log(GameData.levelName[0]);
-        Debug.Log(GameData.levelName[1]);
+    //     form.AddField("levelName_1", GameData.levelName[1]);
+    //     form.AddField("coinCount_1", GameData.coinCount[1]);
+    //     form.AddField("deathCount_1", GameData.deathCount[1]);
+    //     form.AddField("timeInDeathCount_1", GameData.timeInDeathCount[1]);
+    //     form.AddField("timeNotInDeathCount_1", GameData.timeNotInDeathCount[1]);
+    //     form.AddField("checkPointCount_1", GameData.checkPointCount[1]);
 
 
-        // Sending the request to API url with form object.
-        using (UnityWebRequest www = UnityWebRequest.Post("https://script.google.com/macros/s/AKfycbzG2crWI37_SO3LQILD2y22tAKMRdtkouBzN4HytBpoPqLRTvv8lG1MTLJTmIcuy_Iohg/exec", form))
-        {
-            yield return www.SendWebRequest();
+    //     Debug.Log(GameData.deathCount[1]);
+    //     Debug.Log(GameData.levelName[0]);
+    //     Debug.Log(GameData.levelName[1]);
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Done and get the response text.
-                print(www.downloadHandler.text);
-                Debug.Log("Form upload complete!");
-            }
-        }
-    }
+
+    //     // Sending the request to API url with form object.
+    //     using (UnityWebRequest www = UnityWebRequest.Post("https://script.google.com/macros/s/AKfycbzG2crWI37_SO3LQILD2y22tAKMRdtkouBzN4HytBpoPqLRTvv8lG1MTLJTmIcuy_Iohg/exec", form))
+    //     {
+    //         yield return www.SendWebRequest();
+
+    //         if (www.isNetworkError || www.isHttpError)
+    //         {
+    //             Debug.Log(www.error);
+    //         }
+    //         else
+    //         {
+    //             // Done and get the response text.
+    //             print(www.downloadHandler.text);
+    //             Debug.Log("Form upload complete!");
+    //         }
+    //     }
+    // }
 
 }
