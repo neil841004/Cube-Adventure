@@ -29,10 +29,9 @@ public class Question_GM : MonoBehaviour
         if (InputField) InputCount = InputField.childCount;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeNextLevelID(int i)
     {
-
+        nextLevelId = GameData.levelOrder[i];
     }
 
     IEnumerator OpenUI()

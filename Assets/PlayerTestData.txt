@@ -1,20 +1,30 @@
  
  
 26~35歲
-女
-15~21小時
-4~6款
+男
+1~7小時
+0款
  
-遊戲手把
+鍵盤
  
-Level_1_Rhythm
-Coin 19
+06_Level_1_NoRhythm
+Coin 0
 Death 1
-timeDeath 73
-timeNotDeath 67
-CP 6
+timeDeath 4
+timeNotDeath 1
 Trap_0 0
 Trap_1 1
+Trap_2 0
+Trap_3 0
+Trap_4 0
+ 
+05_Level_1_Rhythm
+Coin 0
+Death 0
+timeDeath 2
+timeNotDeath 2
+Trap_0 0
+Trap_1 0
 Trap_2 0
 Trap_3 0
 Trap_4 0
@@ -22,28 +32,34 @@ Trap_4 0
 1-A
  
 InputField0
-1-A好玩
-123
-456
-還行
-555	
+
  
 InputField1
-ㄇㄉ
+
  
-Level_2_Rhythm
-Coin 21
-Death 4
-timeDeath 111
-timeNotDeath 71
-CP 6
+08_Level_2_Rhythm
+Coin 0
+Death 0
+timeDeath 1
+timeNotDeath 1
 Trap_0 0
 Trap_1 0
 Trap_2 0
-Trap_3 4
+Trap_3 0
 Trap_4 0
  
-2-B
+09_Level_2_NoRhythm
+Coin 0
+Death 0
+timeDeath 2
+timeNotDeath 2
+Trap_0 0
+Trap_1 0
+Trap_2 0
+Trap_3 0
+Trap_4 0
+ 
+2-A
  
 InputField0
 
@@ -51,7 +67,7 @@ InputField0
 InputField1
 
  
-Super Meat Boy
+Celeste
  
 InputField0
 

@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public Image continueTip;
     public bool recordInData = false;
     public bool uploadDate = false;
+    public bool canSkipLevel = true;
     bool canContinue = false;
     int checkPointCount = 0;
 
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
         {
             passlevelCount++;
-            if (passlevelCount == 40 && !startNextLevel)
+            if (passlevelCount == 40 && !startNextLevel && canSkipLevel)
             {
                 SkipLevel();
                 _sound.PlayOneSound(0, 0.4f);
@@ -241,6 +242,29 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(nextLevelId);
+    }
+    public void ChangeLevelID(int levelID)
+    {
+        if (levelID == 5)
+        {
+            if (GameData.levelOrder[0] == 6) nextLevelId = 7;
+            if (GameData.levelOrder[0] == 5) nextLevelId = 6;
+        }
+        if (levelID == 6)
+        {
+            if (GameData.levelOrder[0] == 5) nextLevelId = 7;
+            if (GameData.levelOrder[0] == 6) nextLevelId = 5;
+        }
+        if (levelID == 8)
+        {
+            if (GameData.levelOrder[2] == 9) nextLevelId = 10;
+            if (GameData.levelOrder[2] == 8) nextLevelId = 9;
+        }
+        if (levelID == 9)
+        {
+            if (GameData.levelOrder[2] == 8) nextLevelId = 10;
+            if (GameData.levelOrder[2] == 9) nextLevelId = 8;
+        }
     }
 
     // IEnumerator UploadIEnumerator()

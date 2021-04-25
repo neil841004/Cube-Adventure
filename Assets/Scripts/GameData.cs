@@ -20,7 +20,7 @@ public static class GameData
     // 4 = 挑戰組反覆
     public static string[,] question = new string[2,3]; //兩關, 三題
 
-
+    public static int[] levelOrder = new int[4]{5,6,9,8};
     // public static int[,] cpDeathCount = new int[4,10]; 
 
 }
