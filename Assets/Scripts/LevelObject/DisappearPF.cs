@@ -41,7 +41,7 @@ public class DisappearPF : MonoBehaviour
     IEnumerator DropPFIEnumerator()
     {
         aniPlaying = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.22f);
         Sequence seq = DOTween.Sequence();
         seq.Append(this.transform.DOBlendableMoveBy(new Vector3(0, -4.5f, 0), 0.9f).SetEase(Ease.InCubic));
         seq.Insert(0.6f, DOTween.To(() => alpha, x => alpha = x, 0, 0.3f));
