@@ -17,6 +17,7 @@ public class Question_GM : MonoBehaviour
     public int QuestCount = 0;
     public int InputCount = 0;
     bool startNextLevel = false;
+    AsyncOperation async;
 
     private void Awake()
     {
@@ -36,8 +37,11 @@ public class Question_GM : MonoBehaviour
 
     IEnumerator OpenUI()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.35f);
         ui.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        async = SceneManager.LoadSceneAsync(nextLevelId);
+        async.allowSceneActivation = false;
     }
 
     public void NextLevel()
@@ -51,7 +55,7 @@ public class Question_GM : MonoBehaviour
 
     public void RecordReply()
     {
-        FileStream fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Append);
+        FileStream fs = new FileStream(Application.dataPath + "/../PlayerTestData.txt", FileMode.Append);
         StreamWriter sw = new StreamWriter(fs);
         sw.WriteLine(" ");
         for (int i = 0; i < QuestCount; i++)
@@ -74,7 +78,8 @@ public class Question_GM : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         nextLevel.Invoke();
         yield return new WaitForSeconds(.5f);
-        SceneManager.LoadScene(nextLevelId);
+        // SceneManager.LoadScene(nextLevelId);
+        async.allowSceneActivation = true;
     }
 
 }

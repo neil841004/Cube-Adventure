@@ -1,73 +1,8 @@
  
  
-26~35歲
+15歲以下
 男
 1~7小時
 0款
  
 鍵盤
- 
-06_Level_1_NoRhythm
-Coin 0
-Death 1
-timeDeath 4
-timeNotDeath 1
-Trap_0 0
-Trap_1 1
-Trap_2 0
-Trap_3 0
-Trap_4 0
- 
-05_Level_1_Rhythm
-Coin 0
-Death 0
-timeDeath 2
-timeNotDeath 2
-Trap_0 0
-Trap_1 0
-Trap_2 0
-Trap_3 0
-Trap_4 0
- 
-1-A
- 
-InputField0
-
- 
-InputField1
-
- 
-08_Level_2_Rhythm
-Coin 0
-Death 0
-timeDeath 1
-timeNotDeath 1
-Trap_0 0
-Trap_1 0
-Trap_2 0
-Trap_3 0
-Trap_4 0
- 
-09_Level_2_NoRhythm
-Coin 0
-Death 0
-timeDeath 2
-timeNotDeath 2
-Trap_0 0
-Trap_1 0
-Trap_2 0
-Trap_3 0
-Trap_4 0
- 
-2-A
- 
-InputField0
-
- 
-InputField1
-
- 
-Celeste
- 
-InputField0
-

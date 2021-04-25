@@ -21,10 +21,10 @@ public class FileStreamStart : MonoBehaviour
         }
 
         //創建、刷新資料
-        FileStream fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Create);
+        FileStream fs = new FileStream(Application.dataPath + "/../PlayerTestData.txt", FileMode.Create);
         fs.Close();
 
-        fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Append);
+        fs = new FileStream(Application.dataPath + "/../PlayerTestData.txt", FileMode.Append);
         StreamWriter sw = new StreamWriter(fs);
         sw.WriteLine(" ");
         sw.Close();

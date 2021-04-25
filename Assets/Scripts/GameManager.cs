@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
 
     void RecordInFile()
     {
-        FileStream fs = new FileStream(Application.dataPath + "/PlayerTestData.txt", FileMode.Append);
+        FileStream fs = new FileStream(Application.dataPath + "/../PlayerTestData.txt", FileMode.Append);
         StreamWriter sw = new StreamWriter(fs);
         sw.WriteLine(" ");
         sw.WriteLine(SceneManager.GetActiveScene().name);
