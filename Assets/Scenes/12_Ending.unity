@@ -1290,7 +1290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150, y: 95}
+  m_AnchoredPosition: {x: 150, y: 97.9}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464388573
@@ -1313,8 +1313,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7a7cb6d32d5afa247a73e0e6f17481fe, type: 3}
-    m_FontSize: 49
+    m_Font: {fileID: 12800000, guid: 19ecd568395677d498b8dd3cbfc47142, type: 3}
+    m_FontSize: 32
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 6
@@ -1609,11 +1609,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7a7cb6d32d5afa247a73e0e6f17481fe, type: 3}
-    m_FontSize: 35
+    m_Font: {fileID: 12800000, guid: 19ecd568395677d498b8dd3cbfc47142, type: 3}
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 7
+    m_MinSize: 2
     m_MaxSize: 171
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -1621,9 +1621,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u7279\u5225\u611F\u8B1D : \u5433\u512A \u3001 \u9673\u5BA3\u8000 \u3001
-    \u694A\u58EB\u5F18 \u3001 Ayo \u3001 \u6631\u7FD4 \u3001 \u9806\u9D3B \u3001
-    \u6606\u9716 \u3001 Maso \u3001 PP\n"
+  m_Text: "\u7279\u5225\u611F\u8B1D : \u5433\u512A \u3001 \u5BA3\u8000 \u3001 \u58EB\u5F18
+    \u3001 Ayo \u3001 \u6631\u7FD4 \u3001 \u9806\u9D3B \u3001 \u6606\u9716 \u3001
+    Maso \u3001 PP\u3001 \u5F65\u8FB0"
 --- !u!222 &2113660049
 CanvasRenderer:
   m_ObjectHideFlags: 0

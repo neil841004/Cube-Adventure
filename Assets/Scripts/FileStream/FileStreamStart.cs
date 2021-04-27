@@ -15,10 +15,6 @@ public class FileStreamStart : MonoBehaviour
         if(i == 0){
             GameData.levelOrder = new int[4] {5,6,9,8};
         }else if(i == 1) GameData.levelOrder = new int[4] {6,5,8,9};
-        for (int x = 0; x < 4; x++)
-        {
-            Debug.Log(GameData.levelOrder[x]);
-        }
 
         //創建、刷新資料
         FileStream fs = new FileStream(Application.dataPath + "/../PlayerTestData.txt", FileMode.Create);

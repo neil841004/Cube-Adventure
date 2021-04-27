@@ -7,35 +7,41 @@
  
 鍵盤
  
-09_Level_2_NoRhythm
-Coin 23
+05_Level_1_Rhythm
+Coin 16
 Death 2
-timeDeath 97
-timeNotDeath 79
-Trap_0 0
-Trap_1 1
+timeDeath 69
+timeNotDeath 59
+Trap_0 1
+Trap_1 0
 Trap_2 0
 Trap_3 1
 Trap_4 0
  
-鍵盤
- 
-05_Level_1_Rhythm
-Coin 19
-Death 1
-timeDeath 66
-timeNotDeath 60
+06_Level_1_NoRhythm
+Coin 16
+Death 3
+timeDeath 78
+timeNotDeath 64
 Trap_0 1
 Trap_1 0
 Trap_2 0
-Trap_3 0
-Trap_4 0
+Trap_3 1
+Trap_4 1
  
-08_Level_2_Rhythm
-Coin 24
+1-A
+ 
+InputField0
+
+ 
+InputField1
+
+ 
+09_Level_2_NoRhythm
+Coin 22
 Death 0
-timeDeath 71
-timeNotDeath 71
+timeDeath 77
+timeNotDeath 77
 Trap_0 0
 Trap_1 0
 Trap_2 0
@@ -43,12 +49,34 @@ Trap_3 0
 Trap_4 0
  
 08_Level_2_Rhythm
-Coin 6
+Coin 17
 Death 0
-timeDeath 23
-timeNotDeath 23
+timeDeath 79
+timeNotDeath 79
 Trap_0 0
 Trap_1 0
 Trap_2 0
 Trap_3 0
+Trap_4 0
+ 
+06_Level_1_NoRhythm
+Coin 19
+Death 3
+timeDeath 76
+timeNotDeath 66
+Trap_0 2
+Trap_1 0
+Trap_2 0
+Trap_3 1
+Trap_4 0
+ 
+09_Level_2_NoRhythm
+Coin 25
+Death 1
+timeDeath 84
+timeNotDeath 73
+Trap_0 0
+Trap_1 0
+Trap_2 0
+Trap_3 1
 Trap_4 0
