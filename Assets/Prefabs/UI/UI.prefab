@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1431327177925676937}
   - component: {fileID: 3222738774488911352}
   - component: {fileID: 5345752234945347742}
+  - component: {fileID: 2308487037531443254}
   m_Layer: 5
   m_Name: ContunueTip
   m_TagString: Untagged
@@ -182,6 +183,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2308487037531443254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068740205126601145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb38d6e9419eb34f9e5de90ca9c39d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  en_Image: {fileID: 21300000, guid: 02c082c224ab16a4f9ccc1a161d541f4, type: 3}
 --- !u!1 &3024230719668113287
 GameObject:
   m_ObjectHideFlags: 0

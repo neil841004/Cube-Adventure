@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/00_Menu.unity
-    guid: a309e106693b51c4d8107190a0d4d80d
+    path: Assets/Scenes/00_LocalizationSeclect.unity
+    guid: 326f8e440bc28a1418fd2ef05f87bb50
   - enabled: 1
     path: Assets/Scenes/01_Question_BeforeTest.unity
     guid: d19308cff0de03b48948cba94a58e620
@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/12_Ending.unity
     guid: 650d5cc4020b7ba4bb5e3ee0d31c056d
+  - enabled: 1
+    path: Assets/Scenes/13_Menu.unity
+    guid: a309e106693b51c4d8107190a0d4d80d
   m_configObjects: {}

@@ -22,5 +22,5 @@ public static class GameData
 
     public static int[] levelOrder = new int[4]{5,6,9,8};
     // public static int[,] cpDeathCount = new int[4,10]; 
-
+    public static bool isEnglish = false;
 }

@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 112179957}
   - component: {fileID: 112179956}
   - component: {fileID: 112179955}
+  - component: {fileID: 112179958}
   m_Layer: 5
   m_Name: Q_GameMethod_Dropdown
   m_TagString: Untagged
@@ -248,8 +249,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -196}
-  m_SizeDelta: {x: 96.82, y: 30}
+  m_AnchoredPosition: {x: 85, y: -213}
+  m_SizeDelta: {x: 141.76, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &112179955
 MonoBehaviour:
@@ -344,6 +345,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112179953}
   m_CullTransparentMesh: 0
+--- !u!114 &112179958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112179953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - Keyboard
+  - Game controller
 --- !u!21 &158535033
 Material:
   serializedVersion: 6
@@ -1743,6 +1759,7 @@ GameObject:
   - component: {fileID: 721086801}
   - component: {fileID: 721086803}
   - component: {fileID: 721086802}
+  - component: {fileID: 721086804}
   m_Layer: 5
   m_Name: Q_GameMethod
   m_TagString: Untagged
@@ -1766,8 +1783,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -498, y: -243}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -348.3, y: -260}
+  m_SizeDelta: {x: 459.26544, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721086802
 MonoBehaviour:
@@ -1790,7 +1807,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 19ecd568395677d498b8dd3cbfc47142, type: 3}
-    m_FontSize: 36
+    m_FontSize: 31
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1798,7 +1815,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u672C\u6B21\u6E2C\u8A66\u4F7F\u7528\u7684\u63A7\u5236\u5668\u70BA?"
@@ -1810,6 +1827,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721086800}
   m_CullTransparentMesh: 0
+--- !u!114 &721086804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721086800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Which input device will you be using during the test?
 --- !u!114 &1397455589 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4647233924882570201, guid: cbca6a4f7e0f68147b32e131c42a917d,
@@ -2003,6 +2033,7 @@ GameObject:
   - component: {fileID: 1703030632}
   - component: {fileID: 1703030634}
   - component: {fileID: 1703030633}
+  - component: {fileID: 1703030635}
   m_Layer: 5
   m_Name: Word
   m_TagString: Untagged
@@ -2026,8 +2057,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -18, y: 55}
-  m_SizeDelta: {x: 1118.49, y: 315}
+  m_AnchoredPosition: {x: 151.3, y: 55}
+  m_SizeDelta: {x: 1457.2166, y: 315}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1703030633
 MonoBehaviour:
@@ -2058,12 +2089,12 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.5
   m_Text: "\u6CE8 \u610F \u4E8B \u9805\n1. \u6B63\u5F0F\u6E2C\u9A57\u4E2D\u6703\u8A18\u9304\u901A\u95DC\u6642\u9593\u7B49\u6578\u64DA\uFF0C
     \u56E0\u5176\u4ED6\u4E8B\u52D9\u800C\u9700\u8981\u9592\u7F6E\u6642\uFF0C\u8ACB\u6309\u4E0BESC\u66AB\u505C\u904A\u6232\u3002\n2.
-    \u672C\u6E2C\u9A57\u9577\u5EA6\u7D04\u70BA20~60\u5206\u9418\uFF0C\u6E2C\u9A57\u4E4B\u524D\u8ACB\u5148\u9810\u7559\u8DB3\u5920\u6642\u9593\u3002\n\n\u6E2C
+    \u672C\u6E2C\u9A57\u9577\u5EA6\u7D04\u70BA10~50\u5206\u9418\uFF0C\u6E2C\u9A57\u4E4B\u524D\u8ACB\u5148\u9810\u7559\u8DB3\u5920\u6642\u9593\u3002\n\n\u6E2C
     \u9A57 \u8AAA \u660E\n\u63A5\u4E0B\u4F86\u6703\u904A\u73A9\u5169\u500B\u95DC\u5361
     (\u5404\u6709\u5169\u7A2E\u8B8A\u5316\u5F62\u614B)\uFF0C \u8ACB\u5728\u95DC\u5361\u5F8C\u4F9D\u64DA\u904A\u73A9\u72C0\u6CC1\u586B\u5BEB\u554F\u5377\u3002"
 --- !u!222 &1703030634
@@ -2074,6 +2105,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703030631}
   m_CullTransparentMesh: 0
+--- !u!114 &1703030635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703030631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: 'Caution
+
+    1. The test keeps track of the time you spent in levels.
+    If you have to pause the test due to other affairs, please press ESC to pause
+    the game.
+
+    2. The test is about 10 ~ 50 minutes long. Please reserve enough
+    time before you start the test.
+
+
+    Test Instructions/Explanation
+
+    You
+    will play through two levels, each with two variations (four levels in total).
+    After finishing each level, you will have to fill out a survey based on your
+    gameplay experience.'
 --- !u!1 &1763125395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,6 +2465,7 @@ GameObject:
   - component: {fileID: 1897074524}
   - component: {fileID: 1897074526}
   - component: {fileID: 1897074525}
+  - component: {fileID: 1897074527}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -2473,6 +2533,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897074523}
   m_CullTransparentMesh: 0
+--- !u!114 &1897074527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897074523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Before the test, please read the following carefully
 --- !u!1 &2037621786
 GameObject:
   m_ObjectHideFlags: 0

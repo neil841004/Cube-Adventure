@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 112179957}
   - component: {fileID: 112179956}
   - component: {fileID: 112179955}
+  - component: {fileID: 112179958}
   m_Layer: 5
   m_Name: Q_1_Dropdown
   m_TagString: Untagged
@@ -326,8 +327,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40, y: 205.1}
-  m_SizeDelta: {x: 90, y: 30}
+  m_AnchoredPosition: {x: -4.8, y: 205.1}
+  m_SizeDelta: {x: 127.105255, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &112179955
 MonoBehaviour:
@@ -424,6 +425,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112179953}
   m_CullTransparentMesh: 0
+--- !u!114 &112179958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112179953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - 2-A
+  - 2-B
+  - I don't know.
 --- !u!21 &158535033
 Material:
   serializedVersion: 6
@@ -2198,6 +2215,7 @@ GameObject:
   - component: {fileID: 666232949}
   - component: {fileID: 666232951}
   - component: {fileID: 666232950}
+  - component: {fileID: 666232952}
   m_Layer: 5
   m_Name: Q_3
   m_TagString: Untagged
@@ -2265,6 +2283,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666232948}
   m_CullTransparentMesh: 0
+--- !u!114 &666232952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666232948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Do you have any addtional comments/suggestions regarding these two level
+    variations?
 --- !u!1 &697158099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,6 +2382,7 @@ GameObject:
   - component: {fileID: 721086801}
   - component: {fileID: 721086803}
   - component: {fileID: 721086802}
+  - component: {fileID: 721086804}
   m_Layer: 5
   m_Name: Q_1
   m_TagString: Untagged
@@ -2373,8 +2406,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -488, y: 204.29999}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -364.7, y: 204.29999}
+  m_SizeDelta: {x: 406.58002, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721086802
 MonoBehaviour:
@@ -2405,7 +2438,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u4F60\u8A8D\u70BA\u54EA\u500B\u95DC\u5361\u66F4\u5177\u6709\u6A02\u8DA3
@@ -2418,6 +2451,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721086800}
   m_CullTransparentMesh: 0
+--- !u!114 &721086804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721086800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Which level variation did you find more fun/exciting?
 --- !u!1 &1052179034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2429,6 +2475,7 @@ GameObject:
   - component: {fileID: 1052179035}
   - component: {fileID: 1052179037}
   - component: {fileID: 1052179036}
+  - component: {fileID: 1052179038}
   m_Layer: 5
   m_Name: Q_2_2
   m_TagString: Untagged
@@ -2497,6 +2544,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052179034}
   m_CullTransparentMesh: 0
+--- !u!114 &1052179038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052179034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b2d47685ec33a4790083150824b9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1397455589 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4647233924882570201, guid: cbca6a4f7e0f68147b32e131c42a917d,
@@ -2660,6 +2719,7 @@ GameObject:
   - component: {fileID: 1507932414}
   - component: {fileID: 1507932416}
   - component: {fileID: 1507932415}
+  - component: {fileID: 1507932417}
   m_Layer: 5
   m_Name: Q_1_2
   m_TagString: Untagged
@@ -2718,7 +2778,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1.18
-  m_Text: "(1-A\u70BA\u7B2C\u4E00\u8B8A\u5316\u578B\uFF0C1-B\u70BA\u7B2C\u4E8C\u8B8A\u5316\u578B)"
+  m_Text: "(2-A\u70BA\u7B2C\u4E00\u8B8A\u5316\u578B\uFF0C2-B\u70BA\u7B2C\u4E8C\u8B8A\u5316\u578B)"
 --- !u!222 &1507932416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2727,6 +2787,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507932413}
   m_CullTransparentMesh: 0
+--- !u!114 &1507932417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507932413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63b2d47685ec33a4790083150824b9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1510464821
 GameObject:
   m_ObjectHideFlags: 0
@@ -3229,6 +3301,7 @@ GameObject:
   - component: {fileID: 1897074524}
   - component: {fileID: 1897074526}
   - component: {fileID: 1897074525}
+  - component: {fileID: 1897074527}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3253,7 +3326,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 327.1}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 1119.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1897074525
 MonoBehaviour:
@@ -3284,7 +3357,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u8ACB\u4F9D\u64DA\u904A\u73A9\u72C0\u6CC1\u586B\u5BEB\u4EE5\u4E0B\u554F\u984C"
@@ -3296,6 +3369,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897074523}
   m_CullTransparentMesh: 0
+--- !u!114 &1897074527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897074523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Please anwser the following questions based on your gameplay experience
+    earlier
 --- !u!1 &1999034673
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,6 +3394,7 @@ GameObject:
   - component: {fileID: 1999034674}
   - component: {fileID: 1999034676}
   - component: {fileID: 1999034675}
+  - component: {fileID: 1999034677}
   m_Layer: 5
   m_Name: Q_2
   m_TagString: Untagged
@@ -3374,6 +3462,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999034673}
   m_CullTransparentMesh: 0
+--- !u!114 &1999034677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999034673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Please describe how you feel about the differences between the two level
+    variations. You can leave it empty if you feel like there aren't any differences.
 --- !u!1 &2037621786
 GameObject:
   m_ObjectHideFlags: 0

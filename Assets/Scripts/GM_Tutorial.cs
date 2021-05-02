@@ -7,6 +7,7 @@ public class GM_Tutorial : MonoBehaviour
 {
     public GameObject[] text = new GameObject[5];
     public GameObject coin_1, coin_2;
+    public GameObject endTip;
     public DOTweenAnimation[] t1_sawTween = new DOTweenAnimation[8];
     public DOTweenAnimation[] t3_sawTween = new DOTweenAnimation[17];
     public DOTweenAnimation[] t4_PF = new DOTweenAnimation[2];
@@ -86,6 +87,7 @@ public class GM_Tutorial : MonoBehaviour
             topColl.enabled = false;
             t4_PF[0].DOPlay();
             t4_PF[1].DOPlay();
+            StartCoroutine("ShowEntTip");
             t = 4;
         }
         if (text[4].activeSelf && !onPF && collision.OnGround())
@@ -104,6 +106,10 @@ public class GM_Tutorial : MonoBehaviour
             }
         }
 
+    }
+    IEnumerator ShowEntTip(){
+        yield return new WaitForSeconds(1.5f);
+        endTip.SetActive(true);
     }
 
     IEnumerator OpenUI(int i)

@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6460,6 +6460,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   tip: {fileID: 1263100039}
+  iLevel: 0
 --- !u!1 &939948716
 GameObject:
   m_ObjectHideFlags: 0
@@ -8763,6 +8764,7 @@ GameObject:
   - component: {fileID: 1263100043}
   - component: {fileID: 1263100041}
   - component: {fileID: 1263100042}
+  - component: {fileID: 1263100044}
   m_Layer: 5
   m_Name: t0_text
   m_TagString: Untagged
@@ -8931,6 +8933,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263100039}
   m_CullTransparentMesh: 0
+--- !u!114 &1263100044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263100039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bb38d6e9419eb34f9e5de90ca9c39d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  en_Image: {fileID: 21300000, guid: 689ce516952d8684eaddabe5ba358921, type: 3}
+  isEnglish: 0
 --- !u!1001 &1311101659
 PrefabInstance:
   m_ObjectHideFlags: 0

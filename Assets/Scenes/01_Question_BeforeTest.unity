@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 95383697}
   - component: {fileID: 95383696}
   - component: {fileID: 95383695}
+  - component: {fileID: 95383698}
   m_Layer: 5
   m_Name: Q_Gender_Dropdown
   m_TagString: Untagged
@@ -446,6 +447,10 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "\u5973"
       m_Image: {fileID: 0}
+    - m_Text: "\u975E\u4E8C\u5143\u6027\u5225"
+      m_Image: {fileID: 0}
+    - m_Text: "\u4E0D\u9858\u610F\u56DE\u7B54"
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -487,6 +492,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95383693}
   m_CullTransparentMesh: 0
+--- !u!114 &95383698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95383693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - Male
+  - Female
+  - Non-binary
+  - Prefer not to anwser
 --- !u!1 &112179953
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +521,7 @@ GameObject:
   - component: {fileID: 112179957}
   - component: {fileID: 112179956}
   - component: {fileID: 112179955}
+  - component: {fileID: 112179958}
   m_Layer: 5
   m_Name: Q_Age_Dropdown
   m_TagString: Untagged
@@ -625,6 +648,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112179953}
   m_CullTransparentMesh: 0
+--- !u!114 &112179958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112179953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - Below 15
+  - 16~25
+  - 26~35
+  - Above 36
 --- !u!1 &125949589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2775,6 +2815,7 @@ GameObject:
   - component: {fileID: 605833551}
   - component: {fileID: 605833553}
   - component: {fileID: 605833552}
+  - component: {fileID: 605833554}
   m_Layer: 5
   m_Name: Q_GameCount_2
   m_TagString: Untagged
@@ -2798,7 +2839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -169, y: -254.4}
+  m_AnchoredPosition: {x: -169, y: -266}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605833552
@@ -2842,6 +2883,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605833550}
   m_CullTransparentMesh: 0
+--- !u!114 &605833554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605833550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: (i.e. Super Mario, Celeste...etc)
 --- !u!1 &621383915
 GameObject:
   m_ObjectHideFlags: 0
@@ -3151,6 +3205,7 @@ GameObject:
   - component: {fileID: 721086801}
   - component: {fileID: 721086803}
   - component: {fileID: 721086802}
+  - component: {fileID: 721086804}
   m_Layer: 5
   m_Name: Q_Age
   m_TagString: Untagged
@@ -3218,6 +3273,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721086800}
   m_CullTransparentMesh: 0
+--- !u!114 &721086804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721086800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Age
 --- !u!1 &730154263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3384,7 @@ GameObject:
   - component: {fileID: 880288242}
   - component: {fileID: 880288241}
   - component: {fileID: 880288240}
+  - component: {fileID: 880288243}
   m_Layer: 5
   m_Name: Q_GameCount_Dropdown
   m_TagString: Untagged
@@ -3442,6 +3511,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880288238}
   m_CullTransparentMesh: 0
+--- !u!114 &880288243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880288238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - 0
+  - 1~3
+  - 4~6
+  - More than 7
 --- !u!1 &937877121
 GameObject:
   m_ObjectHideFlags: 0
@@ -3453,6 +3539,7 @@ GameObject:
   - component: {fileID: 937877122}
   - component: {fileID: 937877124}
   - component: {fileID: 937877123}
+  - component: {fileID: 937877125}
   m_Layer: 5
   m_Name: Q_GameCount_1
   m_TagString: Untagged
@@ -3476,8 +3563,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -169, y: -202.4}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -493.09, y: -202.4}
+  m_SizeDelta: {x: 808.18823, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &937877123
 MonoBehaviour:
@@ -3508,7 +3595,7 @@ MonoBehaviour:
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u73A9\u904E\u591A\u5C11\u6B3E\u5E73\u53F0\u52D5\u4F5C\u904A\u6232"
@@ -3520,6 +3607,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937877121}
   m_CullTransparentMesh: 0
+--- !u!114 &937877125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937877121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: How many action platformer games have you played before?
 --- !u!1 &1192657147
 GameObject:
   m_ObjectHideFlags: 0
@@ -4128,6 +4228,7 @@ GameObject:
   - component: {fileID: 1356378518}
   - component: {fileID: 1356378520}
   - component: {fileID: 1356378519}
+  - component: {fileID: 1356378521}
   m_Layer: 5
   m_Name: Q_GameTime
   m_TagString: Untagged
@@ -4151,8 +4252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -169, y: -68}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -493.1, y: -68}
+  m_SizeDelta: {x: 808.1764, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1356378519
 MonoBehaviour:
@@ -4183,7 +4284,7 @@ MonoBehaviour:
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u6BCF\u9031\u904A\u6232\u6642\u6578(\u5E73\u5747)"
@@ -4195,6 +4296,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356378517}
   m_CullTransparentMesh: 0
+--- !u!114 &1356378521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356378517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: What is the average time you spent playing video games per week?
 --- !u!114 &1397455589 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4647233924882570201, guid: cbca6a4f7e0f68147b32e131c42a917d,
@@ -4219,6 +4333,7 @@ GameObject:
   - component: {fileID: 1430342382}
   - component: {fileID: 1430342381}
   - component: {fileID: 1430342380}
+  - component: {fileID: 1430342383}
   m_Layer: 5
   m_Name: Q_GameTime_Dropdown
   m_TagString: Untagged
@@ -4345,6 +4460,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1430342378}
   m_CullTransparentMesh: 0
+--- !u!114 &1430342383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430342378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a7d408b900ff4cb81f0b1d77f0969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText:
+  - 1~7 hours
+  - 8~14 hours
+  - 15~21 hours
+  - Above 22 hours
 --- !u!1 &1440667231
 GameObject:
   m_ObjectHideFlags: 0
@@ -5424,6 +5556,7 @@ GameObject:
   - component: {fileID: 1897074524}
   - component: {fileID: 1897074526}
   - component: {fileID: 1897074525}
+  - component: {fileID: 1897074527}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5448,7 +5581,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 324}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 1449.2139, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1897074525
 MonoBehaviour:
@@ -5479,7 +5612,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u8ACB\u586B\u5BEB\u57FA\u672C\u8CC7\u6599 (\u4EE5\u6ED1\u9F20\u4F5C\u7B54)"
@@ -5491,6 +5624,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1897074523}
   m_CullTransparentMesh: 0
+--- !u!114 &1897074527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897074523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Please answer the following questions regarding some basic information
+    (answer with a mouse)
 --- !u!1 &1927505638
 GameObject:
   m_ObjectHideFlags: 0
@@ -5757,6 +5904,7 @@ GameObject:
   - component: {fileID: 1999034674}
   - component: {fileID: 1999034676}
   - component: {fileID: 1999034675}
+  - component: {fileID: 1999034677}
   m_Layer: 5
   m_Name: Q_Gender
   m_TagString: Untagged
@@ -5824,6 +5972,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999034673}
   m_CullTransparentMesh: 0
+--- !u!114 &1999034677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999034673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8c34e2f5220b4ba824e7840a0bd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enText: Sex
 --- !u!1 &2037621786
 GameObject:
   m_ObjectHideFlags: 0
